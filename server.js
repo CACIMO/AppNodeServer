@@ -3,25 +3,17 @@ let express = require('express');
 let bodyParser = require('body-parser');
 let params = require("./config");
 let mongoose = require('mongoose');
-
+let apiRoutes= require('./api');
 let app = express();
 
 app.use(bodyParser.urlencoded({
     extended: true
 }));
 app.use(bodyParser.json());
-mongoose.connect(params.conf.mongoUrl, { useNewUrlParser: true });
-var db = mongoose.connection;
-
-
-if (!db)
-    console.log("Error connecting db")
-else
-    console.log("Db connected successfully")
-
-
+mongoose.connect(params.conf.mongoUrl, { useNewUrlParser: true })
+app.use('/', apiRoutes)
 // Send message for default URL
-app.get('/', (req, res) => res.send('Hello World with Express'));
+//app.get('/', (req, res) => res.send('Hello World with Express'));
 
 // Use Api routes in the App
 //app.use('/api', apiRoutes);
