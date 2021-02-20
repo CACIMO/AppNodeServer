@@ -10,8 +10,8 @@ app.use(bodyParser.urlencoded({
     extended: true
 }));
 app.use(bodyParser.json());
-mongoose.connect(params.conf.mongoUrl, { useNewUrlParser: true });
-var db = mongoose.connection;
+//mongoose.connect(params.conf.mongoUrl, { useNewUrlParser: true });
+//var db = mongoose.connection;
 
 
 if (!db)
