@@ -2,7 +2,7 @@
 let express = require('express');
 let bodyParser = require('body-parser');
 let params = require("./config");
-let mongoose = require('mongoose');
+//let mongoose = require('mongoose');
 
 let app = express();
 
@@ -13,12 +13,12 @@ app.use(bodyParser.json());
 //mongoose.connect(params.conf.mongoUrl, { useNewUrlParser: true });
 //var db = mongoose.connection;
 
-
+/* 
 if (!db)
     console.log("Error connecting db")
 else
     console.log("Db connected successfully")
-
+ */
 
 // Send message for default URL
 app.get('/', (req, res) => res.send('Hello World with Express'));
