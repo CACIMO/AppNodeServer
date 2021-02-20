@@ -11,16 +11,14 @@ module.exports ={
         User.password = req.body.password
         
         User.save((err,data)=>{
-            if(err)res.json({
-                message: 'Error',
-                data:err
-            })
-            else res.json({
-                message: 'New contact created!',
+            if(err)res.status(400).json({
+                err:err,
                 data:data
             })
-        })
-
-        
+            else res.status(200).json({
+                err:err,
+                data:data
+            })
+        }) 
     }
 }
