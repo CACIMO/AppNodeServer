@@ -26,6 +26,6 @@ app.get('/', (req, res) => res.send('Hello World with Express'));
 // Use Api routes in the App
 //app.use('/api', apiRoutes);
 // Launch app to listen to specified port
-app.listen(params.conf.mongoUrl, function () {
+app.listen(params.conf.port, function () {
     console.log("Running RestHub on port ");
 });
