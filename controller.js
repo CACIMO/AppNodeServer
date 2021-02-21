@@ -13,7 +13,7 @@ module.exports ={
         User.save((err,data)=>{
             if(err)res.status(400).json({
                 err:err,
-                data:data
+                data:data||null
             })
             else res.status(200).json({
                 err:err,
