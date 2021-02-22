@@ -1,5 +1,6 @@
 let models = require('./models')
 let con = require('./config')
+let jwt = require('jsonwebtoken')
 module.exports ={
     nuevoUsuario:(req, res)=>{
         let User = new models.Usuario()
@@ -22,10 +23,16 @@ module.exports ={
             })
         }) 
     },
-    makeToken :(jwt)=>{
+    makeToken :(req, res)=>{
         jwt.sign({expiresIn:"1s"},con.conf.key,(err,tk)=>{
-            if(err)console.log('err')
-            else console.log(tk)
+            if(err)res.status(400).json({
+                err:err,
+                data:data||null
+            })
+            else res.status(200).json({
+                err:err,
+                data:tk
+            })
         })
 
     }
