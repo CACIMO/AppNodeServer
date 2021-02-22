@@ -1,9 +1,12 @@
-let router = require('express').Router();
-var controller = require('./controller');
+let router = require('express').Router()
+var controller = require('./controller')
+let jwt = require('jsonwebtoken')
 // Set default API response
 
 // Import contact controller
 // Contact routes
+router.route('./auth')
+    .get(controller.makeToken(jwt))
 router.route('/usuario')
     .post(controller.nuevoUsuario);
 /* router.route('/contacts/:contact_id')

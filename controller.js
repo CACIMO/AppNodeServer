@@ -1,4 +1,5 @@
 let models = require('./models')
+let con = require('./config')
 module.exports ={
     nuevoUsuario:(req, res)=>{
         let User = new models.Usuario()
@@ -20,5 +21,12 @@ module.exports ={
                 data:data
             })
         }) 
+    },
+    makeToken :(jwt)=>{
+        jwt.sign({expiresIn:"1s"},con.conf.key,(err,tk)=>{
+            if(err)console.log('err')
+            else console.log(tk)
+        })
+
     }
 }
