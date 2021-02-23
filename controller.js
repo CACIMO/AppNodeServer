@@ -31,18 +31,15 @@ module.exports = {
         let token = req.headers['access-token']
         let usu = req.body.usuario
         let pass = req.body.password
-        let User = new models.Usuario()
 
-        console.log(User)
-        res.status(400).json({})
-        User.findOne({ usuario: usu, password: pass }, (err, data) => {
+        models.Usuario().findOne({ usuario: usu, password: pass }, (err, data) => {
             if (err) res.status(400).json({
                 err: err,
                 data: data || null
             })
             else {
                 console.log(data)
-                /*
+
                 jwt.sign({ expiresIn: "30d" }, con.conf.key, (err, tk) => {
                     if (err) res.status(400).json({
                         err: err,
@@ -53,7 +50,7 @@ module.exports = {
                         data: tk
                     })
                 })
-                */
+
             }
         })
     }
