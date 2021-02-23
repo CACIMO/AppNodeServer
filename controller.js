@@ -41,7 +41,15 @@ module.exports ={
         
         if(token){
             jwt.verify(token, con.conf.key, (err, decoded)=> {
-                console.log(decoded) // bar
+                if(err)res.status(400).json({
+                    err:err,
+                    data:data||null
+                })
+                else res.status(200).json({
+                    err:err,
+                    data:decoded
+                })
+               /// console.log(decoded) // bar
               });
         }
 
