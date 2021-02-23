@@ -38,9 +38,8 @@ module.exports = {
                 data: data || null
             })
             else {
-                console.log(data)
 
-                jwt.sign({ expiresIn: "30d" }, con.conf.key, (err, tk) => {
+                if (data) jwt.sign({ expiresIn: "30d" }, con.conf.key, (err, tk) => {
                     if (err) res.status(400).json({
                         err: err,
                         data: data || null
@@ -50,7 +49,10 @@ module.exports = {
                         data: tk
                     })
                 })
-
+                else res.status(401).json({
+                    err: {msg:'Clave o usario incorrectos'},
+                    data: data || null})
+               
             }
         })
     }
