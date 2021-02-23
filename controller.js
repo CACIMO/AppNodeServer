@@ -35,5 +35,15 @@ module.exports ={
             })
         })
 
+    },
+    logIn:(req, res)=>{
+        let token = req.headers['access-token']
+        
+        if(token){
+            jwt.verify(token, con.conf.key, (err, decoded)=> {
+                console.log(decoded) // bar
+              });
+        }
+
     }
 }
