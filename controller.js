@@ -23,12 +23,24 @@ module.exports = {
             })
         })
     },
-    makeToken: (req, res) => {
+    auth: (req, res) => {
+        let token = req.headers['access-token']
+
+        if (token) jwt.verify(token, con.conf.key, (err, decoded) => {
+            if (err) res.status(400).json({
+                err: err,
+                data: decoded || null
+            })
+            else res.status(200).json({
+                err: err,
+                data: decoded
+            })
+        });
 
 
     },
     logIn: (req, res) => {
-        let token = req.headers['access-token']
+
         let usu = req.body.usuario
         let pass = req.body.password
 
@@ -50,9 +62,10 @@ module.exports = {
                     })
                 })
                 else res.status(401).json({
-                    err: {msg:'Clave o usario incorrectos'},
-                    data: data || null})
-               
+                    err: { msg: 'Clave o usario incorrectos' },
+                    data: data || null
+                })
+
             }
         })
     }

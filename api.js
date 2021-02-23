@@ -7,7 +7,7 @@ var controller = require('./controller')
 router.route('/login')
     .post(controller.logIn)
 router.route('/auth')
-    .get(controller.makeToken)
+    .get(controller.auth)
 router.route('/usuario')
     .post(controller.nuevoUsuario);
 /* router.route('/contacts/:contact_id')
