@@ -33,7 +33,7 @@ module.exports = {
         let pass = req.body.password
         let User = new models.Usuario()
 
-        User.find({ usuario: usu, password: pass }, (err, data) => {
+        User.findOne({ usuario: usu, password: pass }, (err, data) => {
             if (err) res.status(400).json({
                 err: err,
                 data: data || null
