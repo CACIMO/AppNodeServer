@@ -4,6 +4,8 @@ var controller = require('./controller')
 
 // Import contact controller
 // Contact routes
+router.route('/login')
+    .post(controller.logIn)
 router.route('/auth')
     .get(controller.makeToken)
 router.route('/usuario')
