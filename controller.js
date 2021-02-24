@@ -70,43 +70,23 @@ module.exports = {
         })
     },
     newProd: (req, res) => {
+        
+        let Producto = new models.Producto()
+        Producto.titulo = req.body.titulo
+        Producto.valor= req.body.valor
+        Producto.nombre= req.body.nombre
+        Producto.descripcion= req.body.descripcion
+        Producto.data= req.file.buffer
 
-        //let usu = req.body.usuario
-        //let pass = req.filelds.password
-        console.log(req.file.buffer)
-        //console.log(req)
-        if (false) res.status(400).json({
-            err: 'err',
-            data: 'data' || null
-        })
-        else res.status(200).json({
-            err: 'err',
-            data: 'tk'
-        })
-
-        /* models.Usuario.findOne({ usuario: usu, password: pass }, (err, data) => {
+        User.save((err, data) => {
             if (err) res.status(400).json({
                 err: err,
                 data: data || null
             })
-            else {
-
-                if (data) jwt.sign({ expiresIn: "30d" }, con.conf.key, (err, tk) => {
-                    if (err) res.status(400).json({
-                        err: err,
-                        data: data || null
-                    })
-                    else res.status(200).json({
-                        err: err,
-                        data: tk
-                    })
-                })
-                else res.status(401).json({
-                    err: { msg: 'Clave o usario incorrectos' },
-                    data: data || null
-                })
-
-            }
-        }) */
+            else res.status(200).json({
+                err: err,
+                data: 'Producto Creado Correctamente.'
+            })
+        })       
     }
 }
