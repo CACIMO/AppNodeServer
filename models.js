@@ -68,6 +68,13 @@ let ColorSchema = mongoose.Schema({
         type: String,
         required: true
     },
+    primario: {
+        type: String,
+        required: true
+    },
+    segundario: {
+        type: String,
+    },
     active: {
         type: Number,
         required: true

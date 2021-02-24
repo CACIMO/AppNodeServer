@@ -122,6 +122,36 @@ module.exports = {
             })
         })
     },
+    newColor: (req, res) => {
+        let Color = new models.Color()
+        Color.titulo = req.body.titulo
+        Color.active = req.body.active
+        Color.primario = req.body.primario
+        Color.segundario = req.body.segundario
+
+        Color.save((err, data) => {
+            if (err) res.status(400).json({
+                err: err,
+                data: data || null
+            })
+            else res.status(200).json({
+                err: err,
+                data: data
+            })
+        })
+    },
+    getColor: (req, res) => {
+        models.Color.find({}, (err, data) => {
+            if (err) res.status(400).json({
+                err: err,
+                data: data || null
+            })
+            else res.status(200).json({
+                err: err,
+                data: data
+            })
+        });
+    },
     getCat: (req, res) => {
         models.Categoria.find({}, (err, data) => {
             if (err) res.status(400).json({
