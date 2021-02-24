@@ -79,7 +79,7 @@ let CategoriaSchema = mongoose.Schema({
         required: true
     },
     active: {
-        type: String,
+        type: Boolean,
         required: true
     }
 });

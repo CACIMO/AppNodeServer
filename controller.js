@@ -92,6 +92,7 @@ module.exports = {
     newCat: (req, res) => {
         let Categoria = new models.Categoria()
         Categoria.titulo = req.body.titulo
+        Categoria.active = req.body.active
 
         Categoria.save((err, data) => {
             if (err) res.status(400).json({
@@ -108,6 +109,7 @@ module.exports = {
     newTag: (req, res) => {
         let Tag = new models.Tag()
         Tag.titulo = req.body.titulo
+        Tag.active = req.body.active
 
         Tag.save((err, data) => {
             if (err) res.status(400).json({
