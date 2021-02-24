@@ -78,7 +78,7 @@ module.exports = {
         Producto.descripcion= req.body.descripcion
         Producto.data= req.file.buffer
 
-        User.save((err, data) => {
+        Producto.save((err, data) => {
             if (err) res.status(400).json({
                 err: err,
                 data: data || null
