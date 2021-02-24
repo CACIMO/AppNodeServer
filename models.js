@@ -1,6 +1,6 @@
-var mongoose = require('mongoose');
+let mongoose = require('mongoose');
 mongoose.pluralize(null);
-var usuarioSchema = mongoose.Schema({
+let usuarioSchema = mongoose.Schema({
     usuario: {
         type: String,
         required: true
@@ -30,6 +30,7 @@ var usuarioSchema = mongoose.Schema({
         required: true
     }
 });
+
 // Export Contact model
 module.exports = { 
     Usuario: mongoose.model('usuario', usuarioSchema) 
