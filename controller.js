@@ -93,7 +93,7 @@ module.exports = {
         let Categoria = new models.Categoria()
         Categoria.titulo = req.body.titulo
 
-        User.save((err, data) => {
+        Categoria.save((err, data) => {
             if (err) res.status(400).json({
                 err: err,
                 data: data || null
@@ -109,7 +109,7 @@ module.exports = {
         let Tag = new models.Tag()
         Tag.titulo = req.body.titulo
 
-        User.save((err, data) => {
+        Tag.save((err, data) => {
             if (err) res.status(400).json({
                 err: err,
                 data: data || null
