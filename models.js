@@ -59,7 +59,7 @@ let TagSchema = mongoose.Schema({
     },
     
     active: {
-        type: Number,
+        type: Boolean,
         required: true
     }
 });
