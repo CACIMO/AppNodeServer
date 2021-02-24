@@ -76,7 +76,7 @@ let ColorSchema = mongoose.Schema({
         type: String,
     },
     active: {
-        type: Number,
+        type: Boolean,
         required: true
     }
 });
