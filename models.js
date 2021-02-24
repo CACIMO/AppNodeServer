@@ -68,7 +68,6 @@ let ColorSchema = mongoose.Schema({
         type: String,
         required: true
     },
-    
     active: {
         type: Number,
         required: true
@@ -79,9 +78,8 @@ let CategoriaSchema = mongoose.Schema({
         type: String,
         required: true
     },
-    
     active: {
-        type: Number,
+        type: String,
         required: true
     }
 });
