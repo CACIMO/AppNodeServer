@@ -73,8 +73,8 @@ module.exports = {
 
         //let usu = req.body.usuario
         //let pass = req.filelds.password
-        console.log(req.fields)
-        console.log(req)
+        console.log(req.file.buffer)
+        //console.log(req)
         if (false) res.status(400).json({
             err: 'err',
             data: 'data' || null
