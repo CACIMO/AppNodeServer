@@ -56,17 +56,32 @@ let TagSchema = mongoose.Schema({
     titulo: {
         type: String,
         required: true
+    },
+    
+    active: {
+        type: Boolean,
+        required: true
     }
 });
 let ColorSchema = mongoose.Schema({
     titulo: {
         type: String,
         required: true
+    },
+    
+    active: {
+        type: Boolean,
+        required: true
     }
 });
 let CategoriaSchema = mongoose.Schema({
     titulo: {
         type: String,
+        required: true
+    },
+    
+    active: {
+        type: Boolean,
         required: true
     }
 });
