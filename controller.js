@@ -164,11 +164,9 @@ module.exports = {
             })
         });
     },
+    
     getTag: (req, res) => {
-        let Tag = new models.Tag()
-        Tag.titulo = req.body.titulo
-
-        Tag.save((err, data) => {
+        models.Tag.find({}, (err, data) => {
             if (err) res.status(400).json({
                 err: err,
                 data: data || null
@@ -177,6 +175,6 @@ module.exports = {
                 err: err,
                 data: data
             })
-        })
+        });
     }
 }
