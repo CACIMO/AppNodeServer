@@ -4,7 +4,7 @@ let bodyParser = require('body-parser')
 let params = require("./config")
 let mongoose = require('mongoose')
 let apiRoutes= require('./api')
-let multer = require('multer')
+let multer = require('multer')()
 let app = express()
 
 app.use(bodyParser.urlencoded({
