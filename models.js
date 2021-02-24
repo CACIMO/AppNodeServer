@@ -59,7 +59,7 @@ let TagSchema = mongoose.Schema({
     },
     
     active: {
-        type: Boolean,
+        type: Number,
         required: true
     }
 });
@@ -70,7 +70,7 @@ let ColorSchema = mongoose.Schema({
     },
     
     active: {
-        type: Boolean,
+        type: Number,
         required: true
     }
 });
@@ -81,7 +81,7 @@ let CategoriaSchema = mongoose.Schema({
     },
     
     active: {
-        type: Boolean,
+        type: Number,
         required: true
     }
 });
