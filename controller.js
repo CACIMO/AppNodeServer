@@ -70,13 +70,13 @@ module.exports = {
         })
     },
     newProd: (req, res) => {
-        
+
         let Producto = new models.Producto()
         Producto.titulo = req.body.titulo
-        Producto.valor= req.body.valor
-        Producto.nombre= req.body.nombre
-        Producto.descripcion= req.body.descripcion
-        Producto.data= req.file.buffer
+        Producto.valor = req.body.valor
+        Producto.nombre = req.body.nombre
+        Producto.descripcion = req.body.descripcion
+        Producto.data = req.file.buffer
 
         Producto.save((err, data) => {
             if (err) res.status(400).json({
@@ -87,6 +87,37 @@ module.exports = {
                 err: err,
                 data: 'Producto Creado Correctamente.'
             })
-        })       
+        })
+    },
+    newCat: (req, res) => {
+        let Categoria = new models.Categoria()
+        Categoria.titulo = req.body.titulo
+
+        User.save((err, data) => {
+            if (err) res.status(400).json({
+                err: err,
+                data: data || null
+            })
+            else res.status(200).json({
+                err: err,
+                data: data
+            })
+        })
+
+    },
+    newTag: (req, res) => {
+        let Tag = new models.Tag()
+        Tag.titulo = req.body.titulo
+
+        User.save((err, data) => {
+            if (err) res.status(400).json({
+                err: err,
+                data: data || null
+            })
+            else res.status(200).json({
+                err: err,
+                data: data
+            })
+        })
     }
 }

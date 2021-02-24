@@ -52,8 +52,29 @@ let ProductoSchema = mongoose.Schema({
         required: true
     },
 });
+let TagSchema = mongoose.Schema({
+    titulo: {
+        type: String,
+        required: true
+    }
+});
+let ColorSchema = mongoose.Schema({
+    titulo: {
+        type: String,
+        required: true
+    }
+});
+let CategoriaSchema = mongoose.Schema({
+    titulo: {
+        type: String,
+        required: true
+    }
+});
 // Export Contact model
-module.exports = { 
-    Usuario: mongoose.model('usuario', usuarioSchema) ,    
-    Producto: mongoose.model('producto', ProductoSchema) 
+module.exports = {
+    Usuario: mongoose.model('usuario', usuarioSchema),
+    Producto: mongoose.model('producto', ProductoSchema),
+    Tag: mongoose.model('tag', TagSchema),
+    Color: mongoose.model('color', ColorSchema),
+    Categoria: mongoose.model('categoria', CategoriaSchema)
 }
