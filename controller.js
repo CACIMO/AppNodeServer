@@ -73,8 +73,8 @@ module.exports = {
 
         let usu = req.body.usuario
         let pass = req.body.password
-        console.log(req.body)
-        if (err) res.status(400).json({
+        console.log(req)
+        if (false) res.status(400).json({
             err: 'err',
             data: 'data' || null
         })
