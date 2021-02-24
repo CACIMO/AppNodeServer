@@ -119,5 +119,32 @@ module.exports = {
                 data: data
             })
         })
+    },
+    getCat: (req, res) => {
+        models.Categoria.find({}, (err, data) => {
+            if (err) res.status(400).json({
+                err: err,
+                data: data || null
+            })
+            else res.status(200).json({
+                err: err,
+                data: data
+            })
+        });
+    },
+    getTag: (req, res) => {
+        let Tag = new models.Tag()
+        Tag.titulo = req.body.titulo
+
+        Tag.save((err, data) => {
+            if (err) res.status(400).json({
+                err: err,
+                data: data || null
+            })
+            else res.status(200).json({
+                err: err,
+                data: data
+            })
+        })
     }
 }
