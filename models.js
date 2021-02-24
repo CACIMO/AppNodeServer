@@ -30,8 +30,30 @@ let usuarioSchema = mongoose.Schema({
         required: true
     }
 });
-
+let ProductoSchema = mongoose.Schema({
+    titulo: {
+        type: String,
+        required: true
+    },
+    valor: {
+        type: Number,
+        required: true
+    },
+    nombre: {
+        type: String,
+        required: true
+    },
+    descripcion: {
+        type: String,
+        required: true
+    },
+    data: {
+        type: Buffer,
+        required: true
+    },
+});
 // Export Contact model
 module.exports = { 
-    Usuario: mongoose.model('usuario', usuarioSchema) 
+    Usuario: mongoose.model('usuario', usuarioSchema) ,    
+    Producto: mongoose.model('producto', ProductoSchema) 
 }

@@ -71,8 +71,9 @@ module.exports = {
     },
     newProd: (req, res) => {
 
-        let usu = req.body.usuario
-        let pass = req.body.password
+        //let usu = req.body.usuario
+        //let pass = req.filelds.password
+        console.log(req.fields)
         console.log(req)
         if (false) res.status(400).json({
             err: 'err',
