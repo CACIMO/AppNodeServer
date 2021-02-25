@@ -164,9 +164,51 @@ module.exports = {
             })
         });
     },
-    
+
     getTag: (req, res) => {
         models.Tag.find({}, (err, data) => {
+            if (err) res.status(400).json({
+                err: err,
+                data: data || null
+            })
+            else res.status(200).json({
+                err: err,
+                data: data
+            })
+        });
+    },
+    updTag: (req, res) => {
+        let titulo = req.body.titulo
+        let active = req.body.active
+        models.Tag.update({ titulo: titulo }, { active: active }, (err, data) => {
+            if (err) res.status(400).json({
+                err: err,
+                data: data || null
+            })
+            else res.status(200).json({
+                err: err,
+                data: data
+            })
+        });
+    },
+    updCat: (req, res) => {
+        let titulo = req.body.titulo
+        let active = req.body.active
+        models.Categoria.update({ titulo: titulo }, { active: active }, (err, data) => {
+            if (err) res.status(400).json({
+                err: err,
+                data: data || null
+            })
+            else res.status(200).json({
+                err: err,
+                data: data
+            })
+        });
+    },
+    updColor: (req, res) => {
+        let titulo = req.body.titulo
+        let active = req.body.active
+        models.Color.update({ titulo: titulo }, { active: active }, (err, data) => {
             if (err) res.status(400).json({
                 err: err,
                 data: data || null
