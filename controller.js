@@ -74,9 +74,14 @@ module.exports = {
         let Producto = new models.Producto()
         Producto.titulo = req.body.titulo
         Producto.valor = req.body.valor
-        Producto.nombre = req.body.nombre
+        Producto.fileName = req.body.nombre
         Producto.descripcion = req.body.descripcion
-        Producto.data = req.file.buffer
+        Producto.refVendedora = req.body.refVendedora
+        Producto.refInterna = req.body.refInterna
+        Producto.color = req.body.color
+        Producto.categoria = req.body.categoria
+        Producto.tag = req.body.tag
+        Producto.img = req.file.buffer
 
         Producto.save((err, data) => {
             if (err) res.status(400).json({

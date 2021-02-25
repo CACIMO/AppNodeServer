@@ -35,11 +35,20 @@ let ProductoSchema = mongoose.Schema({
         type: String,
         required: true
     },
+    refVendedora: {
+        type: String,
+        required: true
+    },
+    refInterna: {
+        type: String,
+        required: true
+    },
+
     valor: {
         type: Number,
         required: true
     },
-    nombre: {
+    fileName: {
         type: String,
         required: true
     },
@@ -47,17 +56,26 @@ let ProductoSchema = mongoose.Schema({
         type: String,
         required: true
     },
-    data: {
+    img: {
         type: Buffer,
         required: true
     },
+    tag: {
+        type: Array
+    },
+    color: {
+        type: Array
+    },
+    categoria: {
+        type: Array
+    }
 });
 let TagSchema = mongoose.Schema({
     titulo: {
         type: String,
         required: true
     },
-    
+
     active: {
         type: Boolean,
         required: true
