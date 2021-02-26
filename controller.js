@@ -230,8 +230,8 @@ module.exports = {
         let id = req.params.prod_id
         models.Producto.find({ _id: ObjectId(id) }, { img: 1 }, (err, data) => {
             console.log(data)
-            //res.contentType('image/jpg')
-            res.status(200).json({})
+            res.contentType('image/jpg')
+            res.status(200).sendFile(data[0].img)
 
         });
     }
