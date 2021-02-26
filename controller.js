@@ -1,6 +1,7 @@
 let models = require('./models')
 let con = require('./config')
 let jwt = require('jsonwebtoken')
+const { ObjectID } = require('bson')
 module.exports = {
     nuevoUsuario: (req, res) => {
         let User = new models.Usuario()
@@ -224,5 +225,11 @@ module.exports = {
                 data: data
             })
         });
+    },
+    getFile :(req, res) => {
+        console.log(req)
+        res.status(200).json({})
+       /*  let id = req.par
+        models.Producto.find({_id : ObjectID()}) */
     }
 }

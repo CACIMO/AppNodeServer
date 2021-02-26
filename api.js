@@ -24,6 +24,8 @@ router.route('/auth')
     .get(controller.auth)
 router.route('/usuario')
     .post(controller.nuevoUsuario);
+router.route('/getImg/:prod_id')
+    .get(controller.getFile)
 /* router.route('/contacts/:contact_id')
     .get(contactController.view)
     .patch(contactController.update)
