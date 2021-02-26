@@ -80,9 +80,9 @@ module.exports = {
         Producto.descripcion = req.body.descripcion
         Producto.refVendedora = req.body.refVendedora
         Producto.refInterna = req.body.refInterna
-        Producto.color = JSON.parse(req.body.color)
-        Producto.categoria = JSON.parse(req.body.categoria)
-        Producto.tag = JSON.parse(req.body.tag)
+        Producto.color = req.body.color
+        Producto.categoria = req.body.categoria
+        Producto.tag = req.body.tag
         Producto.pesoImg = req.body.pesoImg
         Producto.img = req.file.buffer
 
