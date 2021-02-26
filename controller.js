@@ -229,21 +229,28 @@ module.exports = {
     },
     getFile: (req, res) => {
         let id = req.params.prod_id
-        models.Producto.find({ _id: ObjectId(id) }, { img: 1 ,fileName:1}, (err, data) => {
-            
+        models.Producto.find({ _id: ObjectId(id) }, { img: 1, fileName: 1 }, (err, data) => {
+
             let name = data[0].fileName
             let imgBinary = data[0].img
-            if(err)res.status(400).json({})
-            else{ 
-                
-                if (!fs.existsSync(`/tmp/nodetmp`))fs.mkdirSync(`/tmp/nodetmp`);
-                if (!fs.existsSync(`/tmp/nodetmp/${name}`))fs.writeFileSync(`/tmp/nodetmp/${name}`, imgBinary, 'binary')
+            if (err) res.status(400).json({})
+            else {
+
+                if (!fs.existsSync(`/tmp/nodetmp`)) fs.mkdirSync(`/tmp/nodetmp`);
+                if (!fs.existsSync(`/tmp/nodetmp/${name}`)) fs.writeFileSync(`/tmp/nodetmp/${name}`, imgBinary, 'binary')
                 res.contentType('image/jpg')
                 res.status(200).sendFile(`/tmp/nodetmp/${name}`)
-            }            
+            }
         });
     },
     getProductList: (req, res) => {
-        res.status(400).json({})
+        let id = req.params.prod_id
+        let params = !id ? {} : {
+            _id: ObjectId(id)
+        }
+        models.Producto.find(params).sort({fecha:1},(err, data) => {
+            console.log(data)
+            res.status(400).json({})
+        })
     }
 }
