@@ -81,6 +81,7 @@ module.exports = {
         Producto.color = req.body.color
         Producto.categoria = req.body.categoria
         Producto.tag = req.body.tag
+        Producto.pesoImg = req.body.pesoImg
         Producto.img = req.file.buffer
 
         Producto.save((err, data) => {
