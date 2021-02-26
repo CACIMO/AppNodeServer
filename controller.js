@@ -248,7 +248,7 @@ module.exports = {
         let params = !id ? {} : {
             _id: ObjectId(id)
         }
-        models.Producto.find(params).sort({fecha:1}).exec((err, data) => {
+        models.Producto.find(params,{img:0}).sort({fecha:1}).exec((err, data) => {
             if (err) res.status(400).json({
                 err: err,
                 data: data || null
