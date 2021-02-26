@@ -226,10 +226,13 @@ module.exports = {
             })
         });
     },
-    getFile :(req, res) => {
-        console.log(req.params.prod_id)
-        res.status(200).json({})
-       /*  let id = req.par
-        models.Producto.find({_id : ObjectID()}) */
+    getFile: (req, res) => {
+        let id = req.params.prod_id
+        models.Producto.find({ _id: ObjectIDid(id) }, { img: 1 }, (err, data) => {
+            console.log(data)
+            //res.contentType('image/jpg')
+            res.status(200).json({})
+
+        });
     }
 }
