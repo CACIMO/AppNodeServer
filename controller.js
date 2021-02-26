@@ -248,7 +248,8 @@ module.exports = {
         let params = !id ? {} : {
             _id: ObjectId(id)
         }
-        models.Producto.find(params).sort({fecha:1},(err, data) => {
+        console.log(params)
+        models.Producto.find(params).sort({fecha:1}).toArray((err, data) => {
             console.log(data)
             res.status(400).json({})
         })
