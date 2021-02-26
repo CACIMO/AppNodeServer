@@ -35,6 +35,11 @@ let ProductoSchema = mongoose.Schema({
         type: String,
         required: true
     },
+    fecha:{
+        type: Date,
+        default: new Date().toLocaleString("en-US", {timeZone: "America/Bogota"}),
+        //required: true
+    },
     refVendedora: {
         type: String,
         required: true
