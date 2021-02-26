@@ -60,6 +60,11 @@ let ProductoSchema = mongoose.Schema({
         type: Buffer,
         required: true
     },
+    pesoImg: {
+        type: Number,
+        required: true
+
+    },
     tag: {
         type: Array
     },
@@ -69,6 +74,7 @@ let ProductoSchema = mongoose.Schema({
     categoria: {
         type: Array
     }
+
 });
 let TagSchema = mongoose.Schema({
     titulo: {
