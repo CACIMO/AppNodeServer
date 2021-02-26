@@ -227,7 +227,7 @@ module.exports = {
         });
     },
     getFile :(req, res) => {
-        console.log(req)
+        console.log(req.params.prod_id)
         res.status(200).json({})
        /*  let id = req.par
         models.Producto.find({_id : ObjectID()}) */
