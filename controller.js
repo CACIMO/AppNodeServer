@@ -228,7 +228,7 @@ module.exports = {
     },
     getFile: (req, res) => {
         let id = req.params.prod_id
-        models.Producto.find({ _id: ObjectIDid(id) }, { img: 1 }, (err, data) => {
+        models.Producto.find({ _id: ObjectId(id) }, { img: 1 }, (err, data) => {
             console.log(data)
             //res.contentType('image/jpg')
             res.status(200).json({})
