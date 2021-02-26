@@ -245,7 +245,7 @@ module.exports = {
     },
     getProductList: (req, res) => {
         let id = req.params.prod_id
-        let params = !id ? {} : {
+        let params = id!='null' ? {} : {
             titulo: {
                 $regex:`^${id}`,
                 $options:'i'
