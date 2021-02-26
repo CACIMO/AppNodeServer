@@ -242,5 +242,8 @@ module.exports = {
                 res.status(200).sendFile(`/tmp/nodetmp/${name}`)
             }            
         });
+    },
+    getProductList: (req, res) => {
+        res.status(400).json({})
     }
 }
