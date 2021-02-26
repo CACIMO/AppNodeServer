@@ -12,7 +12,7 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(bodyParser.json());
 
-mongoose.connect(params.conf.mongoUrl, { useNewUrlParser: true })
+mongoose.connect(params.conf.mongoUrl,  {useNewUrlParser: true, useUnifiedTopology: true})
 app.use('/',multer.single('file'), apiRoutes)
 
 app.listen(params.conf.port, function () {
