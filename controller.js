@@ -1,6 +1,7 @@
 let models = require('./models')
 let con = require('./config')
 let jwt = require('jsonwebtoken')
+let fs = require('fs')
 const { ObjectID, ObjectId } = require('bson')
 module.exports = {
     nuevoUsuario: (req, res) => {
@@ -228,10 +229,20 @@ module.exports = {
     },
     getFile: (req, res) => {
         let id = req.params.prod_id
-        models.Producto.find({ _id: ObjectId(id) }, { img: 1 }, (err, data) => {
-            console.log(data)
-            res.contentType('image/jpg')
-            res.status(200).sendFile(data[0].img)
+        models.Producto.find({ _id: ObjectId(id) }, { img: 1 ,fileName:1}, (err, data) => {
+            
+            let token = req.headers['access-token']
+            let name = data[0].fileName
+            let imgBinary = data[0].img
+            if(err)res.status(400).json({})
+            else{
+                fs.writeFileSync(`/tmp/nodetmp/${token}/${name}`, imgBinary, 'binary')
+                res.contentType('image/jpg')
+                res.status(200).sendFile(`/tmp/nodetmp/${token}/${name}`)
+                console.log('sigo')                                
+            }
+            
+
 
         });
     }
