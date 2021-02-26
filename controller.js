@@ -240,7 +240,6 @@ module.exports = {
                 fs.writeFileSync(`/tmp/nodetmp/${token}/${name}`, imgBinary, 'binary')
                 res.contentType('image/jpg')
                 res.status(200).sendFile(`/tmp/nodetmp/${token}/${name}`)
-                fs.rmdirSync(`/tmp/nodetmp/${token}`, { recursive: true });
             }
             
 
