@@ -1,7 +1,7 @@
 let models = require('./models')
 let con = require('./config')
 let jwt = require('jsonwebtoken')
-const { ObjectID } = require('bson')
+const { ObjectID, ObjectId } = require('bson')
 module.exports = {
     nuevoUsuario: (req, res) => {
         let User = new models.Usuario()
