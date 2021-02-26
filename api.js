@@ -4,7 +4,7 @@ var controller = require('./controller')
 
 // Import contact controller
 // Contact routes
-router.route('/producto')
+router.route('/producto/:prod_id')
     .post(controller.newProd)
     .get(controller.getProductList)
 router.route('/categoria')
