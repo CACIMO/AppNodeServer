@@ -235,7 +235,8 @@ module.exports = {
             let name = data[0].fileName
             let imgBinary = data[0].img
             if(err)res.status(400).json({})
-            else{
+            else{ 
+                fs.mkdirSync(`/tmp/nodetmp/${token}`);
                 fs.writeFileSync(`/tmp/nodetmp/${token}/${name}`, imgBinary, 'binary')
                 res.contentType('image/jpg')
                 res.status(200).sendFile(`/tmp/nodetmp/${token}/${name}`)
