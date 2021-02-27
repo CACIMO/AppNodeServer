@@ -310,7 +310,7 @@ module.exports = {
                 }
             ]
         }
-        await models.Producto.find(params, { img: 0 }).sort({ fecha: -1 }).exec((err, data) => {
+        await models.Producto.find(params, { img: 0 }).sort({ fecha: -1 }).exec(async (err, data) => {
 
             let auxColor = [];
             let promiseColor = new Promise((resolve, reject) => {
