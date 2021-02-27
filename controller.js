@@ -81,9 +81,9 @@ module.exports = {
         Producto.refVendedora = req.body.refVendedora
         Producto.refInterna = req.body.refInterna
         Producto.color = JSON.parse(req.body.color)
-        Producto.categoria = JSON.parse(req.body.categoria)
-        Producto.tag = JSON.parse(req.body.tag)
-        Producto.talla = JSON.parse(req.body.talla)
+        Producto.categoria = JSON.parse(req.body.categoria).map((id)=>ObjectId(id))
+        Producto.tag = JSON.parse(req.body.tag).map((id)=>ObjectId(id))
+        Producto.talla = JSON.parse(req.body.talla).map((id)=>ObjectId(id))
         Producto.pesoImg = req.body.pesoImg
         Producto.img = req.file.buffer
 
