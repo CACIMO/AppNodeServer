@@ -315,7 +315,7 @@ module.exports = {
             data.forEach((prod)=>{
                 
                 prod.color=prod.color.map((color)=>{
-                    let colorData = model.Color.find({_id: ObjectId(color)},{primario:1,segundario:1});
+                    let colorData = models.Color.find({_id: ObjectId(color)},{primario:1,segundario:1});
                     console.log(colorData);
                     return colorData;
                 });
