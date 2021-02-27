@@ -316,9 +316,9 @@ module.exports = {
 
                 data.forEach((prod) => {
                     var auxColor = [];
-                    prod.color.forEach((color) => {
+                    prod.color.forEach(async(color) => {
                         
-                        models.Color.find({ _id: ObjectId(color) }, { primario: 1, segundario: 1, _id: 0 }, (err, dataColor) => {
+                        await models.Color.find({ _id: ObjectId(color) }, { primario: 1, segundario: 1, _id: 0 }, (err, dataColor) => {
 
                             if (err) reject(err)
                             else {
