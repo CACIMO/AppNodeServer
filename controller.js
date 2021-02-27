@@ -72,7 +72,7 @@ module.exports = {
         })
     },
     newProd: (req, res) => {
-
+        JSON.parse(req.body.categoria);
         let Producto = new models.Producto()
         Producto.titulo = req.body.titulo
         Producto.valor = req.body.valor
