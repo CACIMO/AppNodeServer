@@ -80,7 +80,7 @@ module.exports = {
         Producto.descripcion = req.body.descripcion
         Producto.refVendedora = req.body.refVendedora
         Producto.refInterna = req.body.refInterna
-        Producto.color = JSON.parse(req.body.color)
+        Producto.color = JSON.parse(req.body.color).map((id)=>ObjectId(id))
         Producto.categoria = JSON.parse(req.body.categoria).map((id)=>ObjectId(id))
         Producto.tag = JSON.parse(req.body.tag).map((id)=>ObjectId(id))
         Producto.talla = JSON.parse(req.body.talla).map((id)=>ObjectId(id))
