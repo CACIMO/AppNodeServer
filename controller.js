@@ -322,6 +322,7 @@ module.exports = {
                             if (err) reject(err)
                             else {
                                 auxColor = dataColor
+                                console.log(auxColor)
                             }
                         });
                     });
