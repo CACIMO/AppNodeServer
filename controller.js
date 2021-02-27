@@ -72,10 +72,9 @@ module.exports = {
         })
     },
     newProd: (req, res) => {
-        console.log('no Entra')
         try {
-            
-            JSON.parse(req.body.categoria);
+            console.log(req.body.categoria)
+            JSON.parse(req.body.categoria)
         } catch (error) {
             console.log(typeof(req.body.categoria))
             console.log(error)            
