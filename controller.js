@@ -293,11 +293,15 @@ module.exports = {
                     titulo: {
                         $regex: `^${id}`,
                         $options: 'i'
-                    },
+                    }
+                },
+                {
                     refVendedora: {
                         $regex: `^${id}`,
                         $options: 'i'
-                    },
+                    }
+                },
+                {
                     refInterna: {
                         $regex: `^${id}`,
                         $options: 'i'
