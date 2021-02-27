@@ -322,7 +322,7 @@ module.exports = {
 
                             if (err) reject(err)
                             else {
-                                desColor.push(dataColor[0])
+                                prod.desColor.push(dataColor[0])
                             }
                         });  
                         console.log(prod)                      
