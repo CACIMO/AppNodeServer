@@ -288,10 +288,22 @@ module.exports = {
     getProductList: (req, res) => {
         let id = req.params.prod_id
         let params = id == 'null' ? {} : {
-            titulo: {
-                $regex: `^${id}`,
-                $options: 'i'
-            }
+            $or: [
+                {
+                    titulo: {
+                        $regex: `^${id}`,
+                        $options: 'i'
+                    },
+                    refVendedora: {
+                        $regex: `^${id}`,
+                        $options: 'i'
+                    },
+                    refInterna: {
+                        $regex: `^${id}`,
+                        $options: 'i'
+                    }
+                }
+            ]
         }
         models.Producto.find(params, { img: 0 }).sort({ fecha: -1 }).exec((err, data) => {
             if (err) res.status(400).json({
