@@ -286,7 +286,7 @@ module.exports = {
             }
         });
     },
-    getProductList:  (req, res) => {
+    getProductList: (req, res) => {
         let id = req.params.prod_id
         let params = id == 'null' ? {} : {
             $or: [
@@ -314,10 +314,10 @@ module.exports = {
 
             let promiseColor = new Promise((resolve, reject) => {
 
-                data.forEach(async(prod) => {
+                data.forEach(async (prod) => {
                     var auxColor = [];
-                    await prod.color.forEach(async(color) => {
-                        
+                    await prod.color.forEach(async (color) => {
+
                         await models.Color.find({ _id: ObjectId(color) }, { primario: 1, segundario: 1, _id: 0 }, (err, dataColor) => {
 
                             if (err) reject(err)
@@ -325,8 +325,8 @@ module.exports = {
                                 auxColor.push(dataColor[0])
                             }
                         });
-                        prod.color = auxColor;
                     });
+                    prod.color = auxColor;
                     console.log(prod)
                 })
                 resolve(true);
