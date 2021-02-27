@@ -317,34 +317,10 @@ module.exports = {
             { $lookup: { from: 'tag', localField: 'tag', foreignField: '_id', as: 'tagData' } },
             { $lookup: { from: 'categoria', localField: 'categoria', foreignField: '_id', as: 'categoriaData' } },
             { $lookup: { from: 'talla', localField: 'talla', foreignField: '_id', as: 'tallaData' } },
-            { $project: { img: 0 } }
+            { $project: { img: 0 ,color:0,talla:0,tag:0} }
         ]
 
         models.Producto.aggregate(params).sort({ fecha: -1 }).exec((err, data) => {
-
-            let promiseColor = new Promise((resolve, reject) => {
-
-                data.forEach((prod) => {
-                    prod.desColor = [];
-                    prod.color.forEach(async (color) => {
-
-                        await models.Color.find({ _id: ObjectId(color) }, { primario: 1, segundario: 1, _id: 0 }, (err, dataColor) => {
-
-                            if (err) reject(err)
-                            else {
-                                prod.desColor.push(dataColor[0])
-                            }
-                        });
-                        console.log(prod)
-                    });
-                })
-                resolve(true);
-            });
-
-            let promiseAll = Promise.all(
-                [promiseColor]
-            )
-
             if (err) res.status(400).json({
                 err: err,
                 data: data || null
