@@ -314,21 +314,19 @@ module.exports = {
             
             let auxColor = [];
             let promiseColor = new Promise((resolve, reject) => {
+
                 data.forEach((prod) => {
                     auxColor = []
-                    prod.color.map((color) => {
+                    var aux= prod.color.map((color) => {
                         models.Color.find({ _id: ObjectId(color) }, { primario: 1, segundario: 1, _id: 0 }, (err, dataColor) => {
                          
                             if (err) reject(err)
                             else {
-                                auxColor.push(dataColor[0])
+                                return(dataColor[0])
                             }
                         });
-                    });
-                    
-                    
-                    prod.color = auxColor
-                    console.log( prod.color)
+                    });   
+                    console.log(aux);
                 })
                 resolve(true);
             });
