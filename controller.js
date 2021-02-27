@@ -314,6 +314,7 @@ module.exports = {
 
             let promiseColor = new Promise((resolve, reject) => {
                 data.forEach((prod) => {
+                    console.log(prod);
                     let auxColor = [];
                     prod.color.map((color) => {
                         models.Color.find({ _id: ObjectId(color) }, { primario: 1, segundario: 1, _id: 0 }, (err, data) => {
