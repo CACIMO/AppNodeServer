@@ -314,8 +314,9 @@ module.exports = {
 
             let promiseColor = new Promise((resolve, reject) => {
 
-                data.forEach(async (prod) => {
+                data.forEach(async(prod) => {
                     var auxColor = [];
+                    
                     await prod.color.forEach(async (color) => {
 
                         await models.Color.find({ _id: ObjectId(color) }, { primario: 1, segundario: 1, _id: 0 }, (err, dataColor) => {
@@ -325,7 +326,9 @@ module.exports = {
                                 auxColor.push(dataColor[0])
                             }
                         });
+                        console.log(`T Valor auxColor ${auxColor}`)
                     });
+                    console.log(`s Valor auxColor ${auxColor}`)
                     prod.color = auxColor;
                     console.log(prod)
                 })
