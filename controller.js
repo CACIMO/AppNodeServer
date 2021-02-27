@@ -318,10 +318,10 @@ module.exports = {
                     prod.color.map((color) => {
                         console.log(color)
                         models.Color.find({ _id: ObjectId(color) }, { primario: 1, segundario: 1, _id: 0 }, (err, dataColor) => {
-                            console.log(dataColor)
+                         
                             if (err) reject(err)
                             else {
-                                auxColor.push(dataColor[0])
+                                auxColor = dataColor
                             }
                         });
                     });
