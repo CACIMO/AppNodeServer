@@ -322,6 +322,7 @@ module.exports = {
                          
                             if (err) reject(err)
                             else {
+                                console.log(dataColor[0])
                                 return(dataColor[0])
                             }
                         });
