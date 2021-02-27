@@ -323,11 +323,11 @@ module.exports = {
                             if (err) reject(err)
                             else {
                                 auxColor.push(dataColor[0])
-                                console.log(auxColor)
                             }
                         });
-                        console.log('Seg auxColor')
+                        prod.color = auxColor;
                     });
+                    console.log(prod)
                 })
                 resolve(true);
             });
