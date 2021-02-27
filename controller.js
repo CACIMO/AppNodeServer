@@ -3,6 +3,7 @@ let con = require('./config')
 let jwt = require('jsonwebtoken')
 let fs = require('fs')
 const { ObjectID, ObjectId } = require('bson')
+const { model } = require('mongoose')
 module.exports = {
     nuevoUsuario: (req, res) => {
         let User = new models.Usuario()
@@ -310,6 +311,18 @@ module.exports = {
             ]
         }
         models.Producto.find(params, { img: 0 }).sort({ fecha: -1 }).exec((err, data) => {
+
+            data.forEach((prod)=>{
+                
+                prod.color=prod.color.map((color)=>{
+                    let colorData = model.Color.find({_id: ObjectId(color)},{primario:1,segundario:1});
+                    console.log(colorData);
+                    return colorData;
+                });
+            
+            
+            });
+
             if (err) res.status(400).json({
                 err: err,
                 data: data || null
