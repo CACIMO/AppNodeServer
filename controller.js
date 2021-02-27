@@ -322,11 +322,11 @@ module.exports = {
 
                             if (err) reject(err)
                             else {
-                                console.log(auxColor);
                                 auxColor.push(dataColor[0])
                                 console.log(auxColor)
                             }
                         });
+                        console.log('Seg auxColor')
                     });
                 })
                 resolve(true);
