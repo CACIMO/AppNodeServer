@@ -72,13 +72,6 @@ module.exports = {
         })
     },
     newProd: (req, res) => {
-        try {
-            console.log(req.body.categoria)
-            JSON.parse(req.body.categoria)
-        } catch (error) {
-            console.log(typeof(req.body.categoria))
-            console.log(error)            
-        }
         let Producto = new models.Producto()
         Producto.titulo = req.body.titulo
         Producto.valor = req.body.valor
@@ -86,9 +79,10 @@ module.exports = {
         Producto.descripcion = req.body.descripcion
         Producto.refVendedora = req.body.refVendedora
         Producto.refInterna = req.body.refInterna
-        Producto.color = req.body.color
-        Producto.categoria = req.body.categoria
-        Producto.tag = req.body.tag
+        Producto.color = JSON.parse(req.body.color)
+        Producto.categoria = JSON.parse(req.body.categoria)
+        Producto.tag = JSON.parse(req.body.tag)
+        Producto.talla = JSON.parse(req.body.talla)
         Producto.pesoImg = req.body.pesoImg
         Producto.img = req.file.buffer
 
@@ -136,6 +130,22 @@ module.exports = {
             })
         })
     },
+    newTalla: (req, res) => {
+        let Tag = new models.Talla()
+        Tag.titulo = req.body.titulo
+        Tag.active = req.body.active
+
+        Tag.save((err, data) => {
+            if (err) res.status(400).json({
+                err: err,
+                data: data || null
+            })
+            else res.status(200).json({
+                err: err,
+                data: data
+            })
+        })
+    },
     newColor: (req, res) => {
         let Color = new models.Color()
         Color.titulo = req.body.titulo
@@ -156,6 +166,18 @@ module.exports = {
     },
     getColor: (req, res) => {
         models.Color.find({}, (err, data) => {
+            if (err) res.status(400).json({
+                err: err,
+                data: data || null
+            })
+            else res.status(200).json({
+                err: err,
+                data: data
+            })
+        });
+    },
+    getTalla: (req, res) => {
+        models.Talla.find({}, (err, data) => {
             if (err) res.status(400).json({
                 err: err,
                 data: data || null
@@ -195,6 +217,20 @@ module.exports = {
         let titulo = req.body.titulo
         let active = req.body.active
         models.Tag.update({ titulo: titulo }, { active: active }, (err, data) => {
+            if (err) res.status(400).json({
+                err: err,
+                data: data || null
+            })
+            else res.status(200).json({
+                err: err,
+                data: data
+            })
+        });
+    },
+    updTalla: (req, res) => {
+        let titulo = req.body.titulo
+        let active = req.body.active
+        models.Talla.update({ titulo: titulo }, { active: active }, (err, data) => {
             if (err) res.status(400).json({
                 err: err,
                 data: data || null
@@ -251,13 +287,13 @@ module.exports = {
     },
     getProductList: (req, res) => {
         let id = req.params.prod_id
-        let params = id=='null' ? {} : {
+        let params = id == 'null' ? {} : {
             titulo: {
-                $regex:`^${id}`,
-                $options:'i'
+                $regex: `^${id}`,
+                $options: 'i'
             }
         }
-        models.Producto.find(params,{img:0}).sort({fecha:-1}).exec((err, data) => {
+        models.Producto.find(params, { img: 0 }).sort({ fecha: -1 }).exec((err, data) => {
             if (err) res.status(400).json({
                 err: err,
                 data: data || null

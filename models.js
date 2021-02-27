@@ -35,9 +35,9 @@ let ProductoSchema = mongoose.Schema({
         type: String,
         required: true
     },
-    fecha:{
+    fecha: {
         type: Date,
-        default: new Date().toLocaleString("en-US", {timeZone: "America/Bogota"}),
+        default: new Date().toLocaleString("en-US", { timeZone: "America/Bogota" }),
         //required: true
     },
     refVendedora: {
@@ -78,10 +78,24 @@ let ProductoSchema = mongoose.Schema({
     },
     categoria: {
         type: Array
+    },
+    talla: {
+        type: Array
     }
 
 });
 let TagSchema = mongoose.Schema({
+    titulo: {
+        type: String,
+        required: true
+    },
+
+    active: {
+        type: Boolean,
+        required: true
+    }
+});
+let TallaSchema = mongoose.Schema({
     titulo: {
         type: String,
         required: true
@@ -125,5 +139,6 @@ module.exports = {
     Producto: mongoose.model('producto', ProductoSchema),
     Tag: mongoose.model('tag', TagSchema),
     Color: mongoose.model('color', ColorSchema),
+    Talla: mongoose.model('talla', TallaSchema),
     Categoria: mongoose.model('categoria', CategoriaSchema)
 }
