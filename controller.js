@@ -322,13 +322,13 @@ module.exports = {
                             if (err) reject(err)
                             else {
                                 auxColor.push(dataColor[0])
-                                console.log(auxColor)
                             }
                         });
                     });
                     
-                    console.log(auxColor)
-                    //prod.color = auxColor
+                    
+                    prod.color = auxColor
+                    console.log( prod.color)
                 })
                 resolve(true);
             });
