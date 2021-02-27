@@ -312,16 +312,26 @@ module.exports = {
         }
         models.Producto.find(params, { img: 0 }).sort({ fecha: -1 }).exec((err, data) => {
 
-            data.forEach((prod)=>{
-                
-                prod.color=prod.color.map((color)=>{
-                    let colorData = models.Color.find({_id: ObjectId(color)},{primario:1,segundario:1});
-                    console.log(colorData);
-                    return colorData;
-                });
-            
-            
+            let promiseColor = new Promise((resolve, reject) => {
+                data.forEach((prod) => {
+                    let auxColor = [];
+                    prod.color.map((color) => {
+                        models.Color.find({ _id: ObjectId(color) }, { primario: 1, segundario: 1, _id: 0 }, (err, data) => {
+                            if (err) reject(err)
+                            else {
+                                auxColor.push(data[0])
+                            }
+                        });
+                    });
+                    prod.color = auxColor
+                    console.log( prod.color)
+                })
+                resolve(true);
             });
+
+            let promiseAll = Promise.all(
+                [promiseColor]
+            )
 
             if (err) res.status(400).json({
                 err: err,
