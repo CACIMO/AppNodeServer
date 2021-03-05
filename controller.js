@@ -342,10 +342,10 @@ module.exports = {
             { $project: { img: 0, color: 0, talla: 0, tag: 0, categoria: 0 } }
         ]
         
-        if (color.length) params[0].push({$match:{ color: { $in: color }}})
-        if (categoria.length)  params[0].push({$match:{ categoria: { $in: categoria }}})
-        if (talla.length)  params[0].push({$match:{ talla: { $in: talla }}})
-        if (tag.length)  params[0].push({$match:{ tag: { $in: tag }}}) 
+        if (color.length) params.push({$match:{ color: { $in: color }}})
+        if (categoria.length)  params.push({$match:{ categoria: { $in: categoria }}})
+        if (talla.length)  params.push({$match:{ talla: { $in: talla }}})
+        if (tag.length)  params.push({$match:{ tag: { $in: tag }}}) 
 
         models.Producto.aggregate(params).sort({ fecha: -1 }).exec((err, data) => {
             if (err) res.status(400).json({
