@@ -345,7 +345,7 @@ module.exports = {
             { $lookup: { from: 'talla', localField: 'talla', foreignField: '_id', as: 'tallaData' } },
             { $project: { img: 0, color: 0, talla: 0, tag: 0, categoria: 0 } }
         ]
-        params[0].$match.$or.push({color: { $in: color }})
+        params[0].$match.$or.push({color: { $in: [ObjectId('6037131413aa515070b02e4c')] }})
         
         console.log( params[0].$match.$or)
 
