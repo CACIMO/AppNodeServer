@@ -289,10 +289,23 @@ module.exports = {
     },
     getProductList: (req, res) => {
         let id = req.params.prod_id
-        let color = JSON.parse(req.body.color).map((id) => ObjectId(id))
-        let categoria = JSON.parse(req.body.categoria).map((id) => ObjectId(id))
-        let tag = JSON.parse(req.body.tag).map((id) => ObjectId(id))
-        let talla = JSON.parse(req.body.talla).map((id) => ObjectId(id))
+        let color = []
+        let categoria = []
+        let tag = []
+        let talla = []
+        try {
+
+            color = JSON.parse(req.body.color).map((id) => ObjectId(id))
+            categoria = JSON.parse(req.body.categoria).map((id) => ObjectId(id))
+            tag = JSON.parse(req.body.tag).map((id) => ObjectId(id))
+            talla = JSON.parse(req.body.talla).map((id) => ObjectId(id))
+        }
+        catch (err) {
+            color = []
+            categoria = []
+            tag = []
+            talla = []
+        }
 
         let orClausules = [
             {
@@ -315,10 +328,10 @@ module.exports = {
             }
         ]
 
-        if(color.length)orClausules.push({color:color})
-        if(categoria.length)orClausules.push({categoria:categoria})
-        if(talla.length)orClausules.push({talla:talla})
-        if(tag.length)orClausules.push({tag:tag})
+        if (color.length) orClausules.push({ color: color })
+        if (categoria.length) orClausules.push({ categoria: categoria })
+        if (talla.length) orClausules.push({ talla: talla })
+        if (tag.length) orClausules.push({ tag: tag })
         let params = [
             {
                 $match: {
@@ -329,7 +342,7 @@ module.exports = {
             { $lookup: { from: 'tag', localField: 'tag', foreignField: '_id', as: 'tagData' } },
             { $lookup: { from: 'categoria', localField: 'categoria', foreignField: '_id', as: 'categoriaData' } },
             { $lookup: { from: 'talla', localField: 'talla', foreignField: '_id', as: 'tallaData' } },
-            { $project: { img: 0 ,color:0,talla:0,tag:0,categoria:0} }
+            { $project: { img: 0, color: 0, talla: 0, tag: 0, categoria: 0 } }
         ]
 
         models.Producto.aggregate(params).sort({ fecha: -1 }).exec((err, data) => {
