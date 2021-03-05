@@ -309,10 +309,6 @@ module.exports = {
             talla = []
         }
         
-        if (color.length) params.push({$match:{ color: { $in: color }}})
-        if (categoria.length)  params.push({$match:{ categoria: { $in: categoria }}})
-        if (talla.length)  params.push({$match:{ talla: { $in: talla }}})
-        if (tag.length)  params.push({$match:{ tag: { $in: tag }}}) 
                 
         params = [
             {
@@ -346,6 +342,12 @@ module.exports = {
             { $lookup: { from: 'talla', localField: 'talla', foreignField: '_id', as: 'tallaData' } },
             { $project: { img: 0, color: 0, talla: 0, tag: 0, categoria: 0 } }
         ]
+        if (color.length) params.append({$match:{ color: { $in: color }}})
+        if (categoria.length)  params.append({$match:{ categoria: { $in: categoria }}})
+        if (talla.length)  params.append({$match:{ talla: { $in: talla }}})
+        if (tag.length)  params.append({$match:{ tag: { $in: tag }}}) 
+
+        console.log(params)
 
         models.Producto.aggregate(params).sort({ fecha: -1 }).exec((err, data) => {
             if (err) res.status(400).json({
