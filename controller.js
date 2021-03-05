@@ -347,7 +347,7 @@ module.exports = {
         ]
         params[0].$match.$or.push({color: { $in: color }})
         
-        console.log()
+        console.log( params[0].$match.$or)
 
         models.Producto.aggregate(params).sort({ fecha: -1 }).exec((err, data) => {
             if (err) res.status(400).json({
