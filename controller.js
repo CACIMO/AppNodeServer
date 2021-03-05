@@ -296,10 +296,7 @@ module.exports = {
 
         try {
 
-            color = JSON.parse(req.body.col).map((id) =>{
-                console.log(ObjectId(id))
-                return ObjectId(id)
-            } )
+            color = JSON.parse(req.body.col).map((id) => ObjectId(id))
             categoria = JSON.parse(req.body.cat).map((id) => ObjectId(id))
             tag = JSON.parse(req.body.tag).map((id) => ObjectId(id))
             talla = JSON.parse(req.body.tal).map((id) => ObjectId(id))
@@ -333,10 +330,10 @@ module.exports = {
             }
         ]
        
-        if (color.length) orClausules.push({ color: color })
-        if (categoria.length) orClausules.push({ categoria: categoria })
-        if (talla.length) orClausules.push({ talla: talla })
-        if (tag.length) orClausules.push({ tag: tag })
+        if (color.length) orClausules.push({ color:  {$in: color} })
+        if (categoria.length) orClausules.push({ categoria:  {$in: categoria} })
+        if (talla.length) orClausules.push({ talla: {$in: talla} })
+        if (tag.length) orClausules.push({ tag:  {$in: tag} })
         console.log(orClausules)
         let params = [
             {
