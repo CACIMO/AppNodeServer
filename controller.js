@@ -329,16 +329,36 @@ module.exports = {
                 }
             }
         ]
-       
-        if (color.length) orClausules.push({ color:  {$in: color} })
-        if (categoria.length) orClausules.push({ categoria:  {$in: categoria} })
-        if (talla.length) orClausules.push({ talla: {$in: talla} })
-        if (tag.length) orClausules.push({ tag:  {$in: tag} })
-        console.log(orClausules)
+
+        if (color.length) orClausules.push({ color: { $in: color } })
+        if (categoria.length) orClausules.push({ categoria: { $in: categoria } })
+        if (talla.length) orClausules.push({ talla: { $in: talla } })
+        if (tag.length) orClausules.push({ tag: { $in: tag } })
+        
         let params = [
             {
                 $match: {
-                    $or: orClausules
+                    $or: [
+                        {
+                            titulo: {
+                                $regex: `^${id != 'null' ? id : ''}`,
+                                $options: 'i'
+                            }
+                        },
+                        {
+                            refVendedora: {
+                                $regex: `^${id != 'null' ? id : ''}`,
+                                $options: 'i'
+                            }
+                        },
+                        {
+                            refInterna: {
+                                $regex: `^${id != 'null' ? id : ''}`,
+                                $options: 'i'
+                            }
+                        }
+
+                    ]
                 }
             },
             { $lookup: { from: 'color', localField: 'color', foreignField: '_id', as: 'colorData' } },
@@ -347,6 +367,8 @@ module.exports = {
             { $lookup: { from: 'talla', localField: 'talla', foreignField: '_id', as: 'tallaData' } },
             { $project: { img: 0, color: 0, talla: 0, tag: 0, categoria: 0 } }
         ]
+
+        console.log(params.$match.$or)
 
         models.Producto.aggregate(params).sort({ fecha: -1 }).exec((err, data) => {
             if (err) res.status(400).json({
