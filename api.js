@@ -6,7 +6,7 @@ var controller = require('./controller')
 // Contact routes
 router.route('/producto/:prod_id')
     .post(controller.newProd)
-    .get(controller.getProductList)
+    .put(controller.getProductList)
 router.route('/categoria')
     .post(controller.newCat)
     .get(controller.getCat)
