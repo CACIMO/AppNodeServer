@@ -310,10 +310,10 @@ module.exports = {
         }
 
 
-        if (color.length) params.append({$match:{ color: { $in: color }}})
-        if (categoria.length)  params.append({$match:{ categoria: { $in: categoria }}})
-        if (talla.length)  params.append({$match:{ talla: { $in: talla }}})
-        if (tag.length)  params.append({$match:{ tag: { $in: tag }}}) 
+        if (color.length) params.push({$match:{ color: { $in: color }}})
+        if (categoria.length)  params.push({$match:{ categoria: { $in: categoria }}})
+        if (talla.length)  params.push({$match:{ talla: { $in: talla }}})
+        if (tag.length)  params.push({$match:{ tag: { $in: tag }}}) 
                 
         params.concat([
             {
