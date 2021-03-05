@@ -307,7 +307,6 @@ module.exports = {
             tag = []
             talla = []
         }
-        console.log(req.body)
 
         let orClausules = [
             {
@@ -368,7 +367,7 @@ module.exports = {
             { $project: { img: 0, color: 0, talla: 0, tag: 0, categoria: 0 } }
         ]
 
-        console.log(params.$match.$or)
+        console.log(params[0].$match.$or)
 
         models.Producto.aggregate(params).sort({ fecha: -1 }).exec((err, data) => {
             if (err) res.status(400).json({
