@@ -347,6 +347,8 @@ module.exports = {
         if (talla.length)  params.push({$match:{ talla: { $in: talla }}})
         if (tag.length)  params.push({$match:{ tag: { $in: tag }}}) 
 
+        console.log(params);
+
         models.Producto.aggregate(params).sort({ fecha: -1 }).exec((err, data) => {
             if (err) res.status(400).json({
                 err: err,
