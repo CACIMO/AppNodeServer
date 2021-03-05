@@ -332,6 +332,7 @@ module.exports = {
         if (categoria.length) orClausules.push({ categoria: categoria })
         if (talla.length) orClausules.push({ talla: talla })
         if (tag.length) orClausules.push({ tag: tag })
+        console.log(orClausules)
         let params = [
             {
                 $match: {
