@@ -330,13 +330,12 @@ module.exports = {
                 }
             }
         ]
-        console.log(color.length)
+       
         if (color.length) orClausules.push({ color: color })
         if (categoria.length) orClausules.push({ categoria: categoria })
         if (talla.length) orClausules.push({ talla: talla })
         if (tag.length) orClausules.push({ tag: tag })
-        
-        console.log(req.body)
+        console.log(orClausules)
         let params = [
             {
                 $match: {
