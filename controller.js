@@ -2,8 +2,8 @@ let models = require('./models')
 let con = require('./config')
 let jwt = require('jsonwebtoken')
 let fs = require('fs')
-const { ObjectID, ObjectId } = require('bson')
 const { model } = require('mongoose')
+const { ObjectId } = require('bson')
 module.exports = {
     nuevoUsuario: (req, res) => {
         let User = new models.Usuario()
@@ -296,13 +296,15 @@ module.exports = {
 
         try {
 
-            color = JSON.parse(req.body.col).map((id) => ObjectId(id))
+            color = JSON.parse(req.body.col).map((id) =>{
+                console.log(ObjectId(id))
+                return ObjectId(id)
+            } )
             categoria = JSON.parse(req.body.cat).map((id) => ObjectId(id))
             tag = JSON.parse(req.body.tag).map((id) => ObjectId(id))
             talla = JSON.parse(req.body.tal).map((id) => ObjectId(id))
         }
         catch (err) {
-            console.log(err)
             color = []
             categoria = []
             tag = []
