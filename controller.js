@@ -315,7 +315,7 @@ module.exports = {
         if (talla.length)  params.push({$match:{ talla: { $in: talla }}})
         if (tag.length)  params.push({$match:{ tag: { $in: tag }}}) 
                 
-        params.concat([
+        params.push(
             {
                 $match: {
                     $or: [
@@ -340,13 +340,13 @@ module.exports = {
 
                     ]
                 }
-            },
-            { $lookup: { from: 'color', localField: 'color', foreignField: '_id', as: 'colorData' } },
-            { $lookup: { from: 'tag', localField: 'tag', foreignField: '_id', as: 'tagData' } },
-            { $lookup: { from: 'categoria', localField: 'categoria', foreignField: '_id', as: 'categoriaData' } },
-            { $lookup: { from: 'talla', localField: 'talla', foreignField: '_id', as: 'tallaData' } },
-            { $project: { img: 0, color: 0, talla: 0, tag: 0, categoria: 0 } }
-        ])
+            })
+            params.push({ $lookup: { from: 'color', localField: 'color', foreignField: '_id', as: 'colorData' } })
+            params.push({ $lookup: { from: 'tag', localField: 'tag', foreignField: '_id', as: 'tagData' } })
+            params.push({ $lookup: { from: 'categoria', localField: 'categoria', foreignField: '_id', as: 'categoriaData' } })
+            params.push({ $lookup: { from: 'talla', localField: 'talla', foreignField: '_id', as: 'tallaData' } })
+            params.push({ $project: { img: 0, color: 0, talla: 0, tag: 0, categoria: 0 } })
+        
         
 
         console.log(params)
