@@ -307,7 +307,7 @@ module.exports = {
             tag = []
             talla = []
         }
-        console.log(color)
+        console.log(req.body)
 
         let orClausules = [
             {
