@@ -289,29 +289,40 @@ module.exports = {
     },
     getProductList: (req, res) => {
         let id = req.params.prod_id
+        let color = JSON.parse(req.body.color).map((id) => ObjectId(id))
+        let categoria = JSON.parse(req.body.categoria).map((id) => ObjectId(id))
+        let tag = JSON.parse(req.body.tag).map((id) => ObjectId(id))
+        let talla = JSON.parse(req.body.talla).map((id) => ObjectId(id))
+
+        let orClausules = [
+            {
+                titulo: {
+                    $regex: `^${id != 'null' ? id : ''}`,
+                    $options: 'i'
+                }
+            },
+            {
+                refVendedora: {
+                    $regex: `^${id != 'null' ? id : ''}`,
+                    $options: 'i'
+                }
+            },
+            {
+                refInterna: {
+                    $regex: `^${id != 'null' ? id : ''}`,
+                    $options: 'i'
+                }
+            }
+        ]
+
+        if(color.length)orClausules.push({color:color})
+        if(categoria.length)orClausules.push({categoria:categoria})
+        if(talla.length)orClausules.push({talla:talla})
+        if(tag.length)orClausules.push({tag:tag})
         let params = [
             {
                 $match: {
-                    $or: [
-                        {
-                            titulo: {
-                                $regex: `^${id != 'null' ? id : ''}`,
-                                $options: 'i'
-                            }
-                        },
-                        {
-                            refVendedora: {
-                                $regex: `^${id != 'null' ? id : ''}`,
-                                $options: 'i'
-                            }
-                        },
-                        {
-                            refInterna: {
-                                $regex: `^${id != 'null' ? id : ''}`,
-                                $options: 'i'
-                            }
-                        }
-                    ]
+                    $or: orClausules
                 }
             },
             { $lookup: { from: 'color', localField: 'color', foreignField: '_id', as: 'colorData' } },
