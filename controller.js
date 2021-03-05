@@ -293,6 +293,7 @@ module.exports = {
         let categoria = []
         let tag = []
         let talla = []
+
         try {
 
             color = JSON.parse(req.body.col).map((id) => ObjectId(id))
@@ -306,6 +307,7 @@ module.exports = {
             tag = []
             talla = []
         }
+        console.log(color)
 
         let orClausules = [
             {
@@ -332,7 +334,6 @@ module.exports = {
         if (categoria.length) orClausules.push({ categoria: categoria })
         if (talla.length) orClausules.push({ talla: talla })
         if (tag.length) orClausules.push({ tag: tag })
-        console.log(orClausules)
         let params = [
             {
                 $match: {
