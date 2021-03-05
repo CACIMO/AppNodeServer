@@ -308,31 +308,10 @@ module.exports = {
             talla = []
         }
 
-        let orClausules = [
-            {
-                titulo: {
-                    $regex: `^${id != 'null' ? id : ''}`,
-                    $options: 'i'
-                }
-            },
-            {
-                refVendedora: {
-                    $regex: `^${id != 'null' ? id : ''}`,
-                    $options: 'i'
-                }
-            },
-            {
-                refInterna: {
-                    $regex: `^${id != 'null' ? id : ''}`,
-                    $options: 'i'
-                }
-            }
-        ]
-
-        if (color.length) orClausules.push({ color: { $in: color } })
+        /* if (color.length) orClausules.push()
         if (categoria.length) orClausules.push({ categoria: { $in: categoria } })
         if (talla.length) orClausules.push({ talla: { $in: talla } })
-        if (tag.length) orClausules.push({ tag: { $in: tag } })
+        if (tag.length) orClausules.push({ tag: { $in: tag } }) */
         
         let params = [
             {
@@ -366,8 +345,9 @@ module.exports = {
             { $lookup: { from: 'talla', localField: 'talla', foreignField: '_id', as: 'tallaData' } },
             { $project: { img: 0, color: 0, talla: 0, tag: 0, categoria: 0 } }
         ]
-
-        console.log(params[0].$match.$or)
+        params[0].$match.$or.push({color: { $in: color }})
+        
+        console.log()
 
         models.Producto.aggregate(params).sort({ fecha: -1 }).exec((err, data) => {
             if (err) res.status(400).json({
