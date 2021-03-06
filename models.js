@@ -139,7 +139,7 @@ let CategoriaSchema = mongoose.Schema({
     }
 });
 let CarritoSchema = mongoose.Schema({
-    formato:{
+    formato: {
         type: String,
         required: true
 
@@ -158,7 +158,7 @@ let CarritoItemSchema = mongoose.Schema({
         type: ObjectId,
         required: true
     },
-    valor:{
+    valor: {
         type: String,
         required: true
 
@@ -172,6 +172,16 @@ let CarritoItemSchema = mongoose.Schema({
         required: true
     }
 });
+let ConfigSchema = mongoose.Schema({
+    titulo:{
+        type: String,
+        require:true
+
+    },
+    csc: {
+        type: String
+    }
+})
 
 // Export Contact model
 module.exports = {
@@ -182,5 +192,6 @@ module.exports = {
     Talla: mongoose.model('talla', TallaSchema),
     Carrito: mongoose.model('carrito', CarritoSchema),
     CarritoItem: mongoose.model('carritoItem', CarritoItemSchema),
-    Categoria: mongoose.model('categoria', CategoriaSchema)
+    Categoria: mongoose.model('categoria', CategoriaSchema),
+    Config: mongoose.model('config', ConfigSchema)
 }
