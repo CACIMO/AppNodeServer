@@ -149,7 +149,7 @@ let CarritoSchema = mongoose.Schema({
         required: true
     },
     active: {
-        type: bool,
+        type: Boolean,
         required: true
     }
 });
