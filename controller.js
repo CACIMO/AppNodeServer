@@ -420,7 +420,7 @@ module.exports = {
                 data: data || null
             })
             else {
-                models.Config.update({ titulo: 'formato' }, { $push: { csc: consec } }, (err, data) => {
+                models.Config.updateOne({ titulo: 'formato' }, { csc: consec } , (err, data) => {
                     if (err) res.status(400).json({
                         err: err,
                         data: data || null
