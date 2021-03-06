@@ -365,14 +365,20 @@ module.exports = {
     },
 
     addCarrito: (req, res) => {
+
         let Item = new models.CarritoItem()
         Item.id = ObjectId(req.body.producto)
         Item.valor = req.body.precio
         Item.color = ObjectId(req.body.color)
         Item.talla = ObjectId(req.body.talla)
 
+        console.log(req.body)
         models.Carrito.find({ formato: req.body.formato, active: true }, (err, data) => {
+            
+        console.log(err)
             if (err) res.status(400).json({})
+            
+        console.log(!data.length)
             if (!data.length) {
 
                 let Carrito = new models.Carrito()
@@ -382,6 +388,7 @@ module.exports = {
             }
             else {
                 models.Carrito.update({ formato: req.body.formato, active: true }, { $push: { producto: Item } }, (err, data) => {
+                    console.log(err)
                     if (err) res.status(400).json({})
                     else res.status(200).json({})
                 })
