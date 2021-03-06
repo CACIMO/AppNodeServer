@@ -408,7 +408,7 @@ module.exports = {
     },
     getCsc: (req, res) => {
 
-        models.Config.find({ titulo: 'formato' }, { csc: 0 }, (errx, datax) => {
+        models.Config.find({ titulo: 'formato' }, { csc: 1 }, (errx, datax) => {
 
             console.log(datax)
             let numeroCsc = parseInt(datax[0].csc) + 1
