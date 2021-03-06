@@ -371,20 +371,27 @@ module.exports = {
         Item.valor = req.body.precio
         Item.color = ObjectId(req.body.color)
         Item.talla = ObjectId(req.body.talla)
-
-        console.log(req.body)
+        
         models.Carrito.find({ formato: req.body.formato, active: true }, (err, data) => {
-            
-        console.log(err)
             if (err) res.status(400).json({})
-            
-        console.log(!data.length)
+
             if (!data.length) {
 
                 let Carrito = new models.Carrito()
                 Carrito.formato = req.body.formato
                 Carrito.active = true
                 Carrito.producto = [Item]
+
+                Carrito.save((err, data) => {
+                    if (err) res.status(400).json({
+                        err: err,
+                        data: data || null
+                    })
+                    else res.status(200).json({
+                        err: err,
+                        data: data
+                    })
+                })
             }
             else {
                 models.Carrito.update({ formato: req.body.formato, active: true }, { $push: { producto: Item } }, (err, data) => {
