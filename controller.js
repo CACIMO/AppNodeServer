@@ -371,7 +371,7 @@ module.exports = {
         Item.valor = req.body.precio
         Item.color = ObjectId(req.body.color)
         Item.talla = ObjectId(req.body.talla)
-        
+
         models.Carrito.find({ formato: req.body.formato, active: true }, (err, data) => {
             if (err) res.status(400).json({})
 
@@ -395,13 +395,43 @@ module.exports = {
             }
             else {
                 models.Carrito.update({ formato: req.body.formato, active: true }, { $push: { producto: Item } }, (err, data) => {
-                    console.log(err)
-                    if (err) res.status(400).json({})
+                    if (err) res.status(400).json({
+                        err: err,
+                        data: data || null
+                    })
                     else res.status(200).json({})
                 })
             }
         })
 
+
+    },
+    getCsc: (req, res) => {
+
+        models.Config.find({ titulo: 'formato' }, { csc: 0 }, (errx, datax) => {
+
+            console.log(datax)
+            let consec = parseInt(datax[0].csc) + 1
+
+            if (errx) res.status(400).json({
+                err: errx,
+                data: data || null
+            })
+            else {
+                models.Config.update({ titulo: 'formato' }, { $push: { csc: consec } }, (err, data) => {
+                    if (err) res.status(400).json({
+                        err: err,
+                        data: data || null
+                    })
+                    else res.status(200).json({
+                        err: err,
+                        data: datax
+                    })
+                })
+            }
+
+
+        });
 
     }
 }
