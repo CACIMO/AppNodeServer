@@ -4,6 +4,7 @@ let jwt = require('jsonwebtoken')
 let fs = require('fs')
 const { model } = require('mongoose')
 const { ObjectId } = require('bson')
+const e = require('express')
 module.exports = {
     nuevoUsuario: (req, res) => {
         let User = new models.Usuario()
@@ -293,7 +294,7 @@ module.exports = {
         let categoria = []
         let tag = []
         let talla = []
-        let params =[]
+        let params = []
 
         try {
 
@@ -310,11 +311,11 @@ module.exports = {
         }
 
 
-        if (color.length) params.push({$match:{ color: { $in: color }}})
-        if (categoria.length)  params.push({$match:{ categoria: { $in: categoria }}})
-        if (talla.length)  params.push({$match:{ talla: { $in: talla }}})
-        if (tag.length)  params.push({$match:{ tag: { $in: tag }}}) 
-                
+        if (color.length) params.push({ $match: { color: { $in: color } } })
+        if (categoria.length) params.push({ $match: { categoria: { $in: categoria } } })
+        if (talla.length) params.push({ $match: { talla: { $in: talla } } })
+        if (tag.length) params.push({ $match: { tag: { $in: tag } } })
+
         params.push(
             {
                 $match: {
@@ -341,13 +342,13 @@ module.exports = {
                     ]
                 }
             })
-            params.push({ $lookup: { from: 'color', localField: 'color', foreignField: '_id', as: 'colorData' } })
-            params.push({ $lookup: { from: 'tag', localField: 'tag', foreignField: '_id', as: 'tagData' } })
-            params.push({ $lookup: { from: 'categoria', localField: 'categoria', foreignField: '_id', as: 'categoriaData' } })
-            params.push({ $lookup: { from: 'talla', localField: 'talla', foreignField: '_id', as: 'tallaData' } })
-            params.push({ $project: { img: 0, color: 0, talla: 0, tag: 0, categoria: 0 } })
-        
-        
+        params.push({ $lookup: { from: 'color', localField: 'color', foreignField: '_id', as: 'colorData' } })
+        params.push({ $lookup: { from: 'tag', localField: 'tag', foreignField: '_id', as: 'tagData' } })
+        params.push({ $lookup: { from: 'categoria', localField: 'categoria', foreignField: '_id', as: 'categoriaData' } })
+        params.push({ $lookup: { from: 'talla', localField: 'talla', foreignField: '_id', as: 'tallaData' } })
+        params.push({ $project: { img: 0, color: 0, talla: 0, tag: 0, categoria: 0 } })
+
+
 
         console.log(params)
 
@@ -361,5 +362,32 @@ module.exports = {
                 data: data
             })
         })
+    },
+
+    addCarrito: (req, res) => {
+        let Item = new models.CarritoItem()
+        Item.id = ObjectId(req.body.producto)
+        Item.valor = req.body.precio
+        Item.color = ObjectId(req.body.color)
+        Item.talla = ObjectId(req.body.talla)
+
+        models.Carrito.find({ formato: req.body.formato, active: true }, (err, data) => {
+            if (err) res.status(400).json({})
+            if (!data.length) {
+
+                let Carrito = new models.Carrito()
+                Carrito.formato = req.body.formato
+                Carrito.active = true
+                Carrito.producto = [Item]
+            }
+            else {
+                models.Carrito.update({ formato: req.body.formato, active: true }, { $push: { producto: Item } }, (err, data) => {
+                    if (err) res.status(400).json({})
+                    else res.status(200).json({})
+                })
+            }
+        })
+
+
     }
 }

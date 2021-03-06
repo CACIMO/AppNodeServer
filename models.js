@@ -1,3 +1,4 @@
+const { ObjectId, ObjectID } = require('bson');
 let mongoose = require('mongoose');
 mongoose.pluralize(null);
 let usuarioSchema = mongoose.Schema({
@@ -137,6 +138,41 @@ let CategoriaSchema = mongoose.Schema({
         required: true
     }
 });
+let CarritoSchema = mongoose.Schema({
+    formato:{
+        type: String,
+        required: true
+
+    },
+    producto: {
+        type: Array,
+        required: true
+    },
+    active: {
+        type: bool,
+        required: true
+    }
+});
+let CarritoItemSchema = mongoose.Schema({
+    id: {
+        type: ObjectId,
+        required: true
+    },
+    valor:{
+        type: String,
+        required: true
+
+    },
+    color: {
+        type: ObjectId,
+        required: true
+    },
+    talla: {
+        type: ObjectId,
+        required: true
+    }
+});
+
 // Export Contact model
 module.exports = {
     Usuario: mongoose.model('usuario', usuarioSchema),
@@ -144,5 +180,7 @@ module.exports = {
     Tag: mongoose.model('tag', TagSchema),
     Color: mongoose.model('color', ColorSchema),
     Talla: mongoose.model('talla', TallaSchema),
+    Carrito: mongoose.model('carrito', CarritoSchema),
+    CarritoItem: mongoose.model('carritoItem', CarritoItemSchema),
     Categoria: mongoose.model('categoria', CategoriaSchema)
 }
