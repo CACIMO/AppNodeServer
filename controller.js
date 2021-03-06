@@ -411,7 +411,9 @@ module.exports = {
         models.Config.find({ titulo: 'formato' }, { csc: 0 }, (errx, datax) => {
 
             console.log(datax)
-            let consec = parseInt(datax[0].csc) + 1
+            let numeroCsc = parseInt(datax[0].csc) + 1
+            let consec =numeroCsc.toString().padStart(5,'0')            
+            console.log(consec)
 
             if (errx) res.status(400).json({
                 err: errx,
