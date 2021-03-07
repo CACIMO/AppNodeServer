@@ -481,7 +481,7 @@ module.exports = {
 
             data[0]['producto'].forEach(prod => {
                 console.log(prod['cantidad']+ prod['valor'])
-                console.log(parseInt(prod['cantidad'])*parseInt(prod['valor'])
+                console.log(parseInt(prod['cantidad'])*parseInt(prod['valor']))
                 pago+=parseInt(prod['cantidad'])*parseInt(prod['valor'])
             });
 
