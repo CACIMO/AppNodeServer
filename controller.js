@@ -370,6 +370,8 @@ module.exports = {
         Item.talla = ObjectId(req.body.talla)
         Item.cantidad = ObjectId(req.body.cantidad)
 
+        console.log(token,req.body)
+
         models.Carrito.find({ formato: req.body.formato, active: true }, (err, data) => {
             if (err) res.status(400).json({})
 
@@ -392,7 +394,7 @@ module.exports = {
                 })
             }
             else {
-                models.Carrito.update({ formato: req.body.formato, active: true }, { $push: { producto: Item } }, (err, data) => {
+                models.Carrito.update({ formato: token, active: true }, { $push: { producto: Item } }, (err, data) => {
                     if (err) res.status(400).json({
                         err: err,
                         data: data || null
