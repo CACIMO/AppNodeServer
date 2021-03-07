@@ -348,10 +348,6 @@ module.exports = {
         params.push({ $lookup: { from: 'talla', localField: 'talla', foreignField: '_id', as: 'tallaData' } })
         params.push({ $project: { img: 0, color: 0, talla: 0, tag: 0, categoria: 0 } })
 
-
-
-        console.log(params)
-
         models.Producto.aggregate(params).sort({ fecha: -1 }).exec((err, data) => {
             if (err) res.status(400).json({
                 err: err,
@@ -412,7 +408,7 @@ module.exports = {
 
             console.log(datax)
             let numeroCsc = parseInt(datax[0].csc) + 1
-            let consec =numeroCsc.toString().padStart(5,'0')            
+            let consec = numeroCsc.toString().padStart(5, '0')
             console.log(consec)
 
             if (errx) res.status(400).json({
@@ -420,7 +416,7 @@ module.exports = {
                 data: data || null
             })
             else {
-                models.Config.updateOne({ titulo: 'formato' }, { csc: consec } , (err, data) => {
+                models.Config.updateOne({ titulo: 'formato' }, { csc: consec }, (err, data) => {
                     if (err) res.status(400).json({
                         err: err,
                         data: data || null
@@ -433,5 +429,39 @@ module.exports = {
             }
         });
 
+    },
+    getListCarrito: (req, res) => {
+
+        models.Carrito.aggregate(
+            { $match: { active: true } },
+            { $lookup: { from: 'producto', localField: 'producto.id', foreignField: '_id', as: 'Productos' } },
+            { $lookup: { from: 'color', localField: 'producto.color', foreignField: '_id', as: 'Colores' } },
+            { $lookup: { from: 'talla', localField: 'producto.talla', foreignField: '_id', as: 'Tallas' } },
+            {
+                $project: {
+                    'Productos.img': 0,
+                    'Productos.talla': 0,
+                    'Productos.categoria': 0,
+                    'Productos.tag': 0,
+                    'Productos.color': 0,
+                    'Productos.fecha': 0,
+                    'Productos.fileName': 0,
+                    'Productos.refVendedora': 0,
+                    'Productos.refInterna': 0,
+                    'Productos.stock': 0,
+                    'Productos.pesoImg': 0,
+                    active: 0
+                }
+            }
+        ).exec((err, data) => {
+            if (err) res.status(400).json({
+                err: err,
+                data: data || null
+            })
+            else res.status(200).json({
+                err: err,
+                data: datax
+            })
+        })
     }
 }
