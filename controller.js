@@ -462,7 +462,7 @@ module.exports = {
             })
             else res.status(200).json({
                 err: err,
-                data: datax
+                data: data
             })
         })
     }
