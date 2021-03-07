@@ -372,7 +372,7 @@ module.exports = {
         Item.cantidad = req.body.cantidad
 
 
-        models.Carrito.find({ formato: req.body.formato, active: true }, (err, data) => {
+        models.Carrito.find({ formato: token, active: true }, (err, data) => {
             if (err) res.status(400).json({})
 
             if (!data.length) {
