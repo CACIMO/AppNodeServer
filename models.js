@@ -170,6 +170,10 @@ let CarritoItemSchema = mongoose.Schema({
     talla: {
         type: ObjectId,
         required: true
+    },
+    cantidad: {
+        type: Number,
+        required: true
     }
 });
 let ConfigSchema = mongoose.Schema({

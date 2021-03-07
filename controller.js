@@ -367,6 +367,7 @@ module.exports = {
         Item.valor = req.body.precio
         Item.color = ObjectId(req.body.color)
         Item.talla = ObjectId(req.body.talla)
+        Item.cantidad = ObjectId(req.body.cantidad)
 
         models.Carrito.find({ formato: req.body.formato, active: true }, (err, data) => {
             if (err) res.status(400).json({})
