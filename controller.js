@@ -412,7 +412,6 @@ module.exports = {
 
             let numeroCsc = parseInt(datax[0].csc) + 1
             let consec = numeroCsc.toString().padStart(5, '0')
-            console.log(consec)
 
             if (errx) res.status(400).json({
                 err: errx,
@@ -477,10 +476,11 @@ module.exports = {
 
         let token = req.headers['access-token']
         models.Carrito.find({ active: true , formato: token }, { producto: 1 }, (err, data) => {
-            /*
+            
             let pago= 0;
 
             data[0]['producto'].forEach(prod => {
+                console.log(parseInt(prod['cantidiad'])*parseInt(prod['valor']))
                 pago+=parseInt(prod['cantidiad'])*parseInt(prod['valor'])
             });
 
@@ -496,10 +496,7 @@ module.exports = {
             Formato.pago = pago
             Formato.Prodcutos = data[0]['producto']
 
-            console.log(req.body)
-            console.log(Formato)*/
-            console.log(data)
-            console.log(req.body)
+        
             res.status(200).json({})
             /*
             if (err) res.status(400).json({
