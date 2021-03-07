@@ -477,11 +477,13 @@ module.exports = {
 
         let token = req.headers['access-token']
         models.Carrito.find({ active: true , formato: token }, { producto: 1 }, (err, data) => {
+            /*
             let pago= 0;
 
             data[0]['producto'].forEach(prod => {
                 pago+=parseInt(prod['cantidiad'])*parseInt(prod['valor'])
             });
+
             let Formato = new models.Formato()
             Formato.formato = req.body.formato
             Formato.documento = req.body.documento
@@ -495,7 +497,9 @@ module.exports = {
             Formato.Prodcutos = data[0]['producto']
 
             console.log(req.body)
-            console.log(Formato)
+            console.log(Formato)*/
+            console.log(data)
+            console.log(req.body)
             res.status(200).json({})
             /*
             if (err) res.status(400).json({
