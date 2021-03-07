@@ -495,6 +495,7 @@ module.exports = {
             Formato.Prodcutos = data[0]['producto']
 
             console.log(req.body)
+            console.log(Formato)
             res.status(200).json({})
             /*
             if (err) res.status(400).json({
