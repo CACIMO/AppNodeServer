@@ -480,7 +480,7 @@ module.exports = {
             let pago= 0;
 
             data[0]['producto'].forEach(prod => {
-                console.log(parseInt(prod['cantidiad'])*parseInt(prod['valor']))
+                console.log(prod)
                 pago+=parseInt(prod['cantidiad'])*parseInt(prod['valor'])
             });
 
