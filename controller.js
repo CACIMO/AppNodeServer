@@ -433,26 +433,28 @@ module.exports = {
     getListCarrito: (req, res) => {
 
         models.Carrito.aggregate(
-            { $match: { active: true } },
-            { $lookup: { from: 'producto', localField: 'producto.id', foreignField: '_id', as: 'Productos' } },
-            { $lookup: { from: 'color', localField: 'producto.color', foreignField: '_id', as: 'Colores' } },
-            { $lookup: { from: 'talla', localField: 'producto.talla', foreignField: '_id', as: 'Tallas' } },
-            {
-                $project: {
-                    'Productos.img': 0,
-                    'Productos.talla': 0,
-                    'Productos.categoria': 0,
-                    'Productos.tag': 0,
-                    'Productos.color': 0,
-                    'Productos.fecha': 0,
-                    'Productos.fileName': 0,
-                    'Productos.refVendedora': 0,
-                    'Productos.refInterna': 0,
-                    'Productos.stock': 0,
-                    'Productos.pesoImg': 0,
-                    active: 0
+            [
+                { $match: { active: true } },
+                { $lookup: { from: 'producto', localField: 'producto.id', foreignField: '_id', as: 'Productos' }},
+                { $lookup: { from: 'color', localField: 'producto.color', foreignField: '_id', as: 'Colores' }},
+                { $lookup: { from: 'talla', localField: 'producto.talla', foreignField: '_id', as: 'Tallas' }},
+                {
+                    $project: {
+                        'Productos.img': 0,
+                        'Productos.talla': 0,
+                        'Productos.categoria': 0,
+                        'Productos.tag': 0,
+                        'Productos.color': 0,
+                        'Productos.fecha': 0,
+                        'Productos.fileName': 0,
+                        'Productos.refVendedora': 0,
+                        'Productos.refInterna': 0,
+                        'Productos.stock': 0,
+                        'Productos.pesoImg': 0,
+                        active: 0
+                    }
                 }
-            }
+            ]
         ).exec((err, data) => {
             if (err) res.status(400).json({
                 err: err,
