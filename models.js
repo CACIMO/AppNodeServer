@@ -159,7 +159,7 @@ let CarritoItemSchema = mongoose.Schema({
         required: true
     },
     valor: {
-        type: String,
+        type: Number,
         required: true
 
     },
