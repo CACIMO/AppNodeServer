@@ -361,7 +361,8 @@ module.exports = {
     },
 
     addCarrito: (req, res) => {
-
+        
+        let token = req.headers['access-token']
         let Item = new models.CarritoItem()
         Item.id = ObjectId(req.body.producto)
         Item.valor = req.body.precio
@@ -375,7 +376,7 @@ module.exports = {
             if (!data.length) {
 
                 let Carrito = new models.Carrito()
-                Carrito.formato = req.body.formato
+                Carrito.formato = token
                 Carrito.active = true
                 Carrito.producto = [Item]
 
@@ -433,9 +434,10 @@ module.exports = {
     },
     getListCarrito: (req, res) => {
 
+        let token = req.headers['access-token']
         models.Carrito.aggregate(
             [
-                { $match: { active: true } },
+                { $match: { active: true ,formato:token} },
                 { $lookup: { from: 'producto', localField: 'producto.id', foreignField: '_id', as: 'Productos' }},
                 { $lookup: { from: 'color', localField: 'producto.color', foreignField: '_id', as: 'Colores' }},
                 { $lookup: { from: 'talla', localField: 'producto.talla', foreignField: '_id', as: 'Tallas' }},
@@ -452,6 +454,9 @@ module.exports = {
                         'Productos.refInterna': 0,
                         'Productos.stock': 0,
                         'Productos.pesoImg': 0,
+                        'Productos.valor': 0,
+                        'Productos.descripcion': 0,
+                        'Productos.__v': 0,
                         active: 0
                     }
                 }
