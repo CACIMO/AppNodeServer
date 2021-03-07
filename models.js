@@ -185,6 +185,61 @@ let ConfigSchema = mongoose.Schema({
     csc: {
         type: String
     }
+});
+let FormatoSchema = mongoose.Schema({
+    formato:{
+        type: String,
+        require:true
+
+    },
+    documento:{
+        type: Number,
+        require:true
+
+    },
+    nombre:{
+        type: Number,
+        require:true
+
+    },
+    barrio:{
+        type: String,
+        require:true
+
+    },
+    ciudad:{
+        type: String,
+        require:true
+
+    },
+    vendedor:{
+        type: String,
+        require:true
+
+    },
+    total:{
+        type: String,
+        require:true
+
+    },
+    direccion:{
+        type: String,
+        require:true
+
+    },
+    telefono:{
+        type: Number,
+        require:true
+
+    },
+    pago:{
+        type: String,
+        require:true
+
+    },
+    Prodcutos: {
+        type: Array
+    }
 })
 
 // Export Contact model
@@ -197,5 +252,6 @@ module.exports = {
     Carrito: mongoose.model('carrito', CarritoSchema),
     CarritoItem: mongoose.model('carritoItem', CarritoItemSchema),
     Categoria: mongoose.model('categoria', CategoriaSchema),
-    Config: mongoose.model('config', ConfigSchema)
+    Config: mongoose.model('config', ConfigSchema),
+    Formato: mongoose.model('formato', FormatoSchema)
 }
