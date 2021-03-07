@@ -36,6 +36,11 @@ router.route('/carrito')
     .get(controller.getListCarrito)
 router.route('/csc')
     .get(controller.getCsc)
+router.route('/formato')
+    .post(controller.saveFormato)
+
+
+
 /* router.route('/contacts/:contact_id')
     .get(contactController.view)
     .patch(contactController.update)

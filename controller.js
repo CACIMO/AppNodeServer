@@ -361,9 +361,9 @@ module.exports = {
     },
 
     addCarrito: (req, res) => {
-        
+
         let token = req.headers['access-token']
-        
+
         let Item = new models.CarritoItem()
         Item.id = ObjectId(req.body.producto)
         Item.valor = req.body.precio
@@ -410,7 +410,6 @@ module.exports = {
 
         models.Config.find({ titulo: 'formato' }, { csc: 1 }, (errx, datax) => {
 
-            console.log(datax)
             let numeroCsc = parseInt(datax[0].csc) + 1
             let consec = numeroCsc.toString().padStart(5, '0')
             console.log(consec)
@@ -439,10 +438,10 @@ module.exports = {
         let token = req.headers['access-token']
         models.Carrito.aggregate(
             [
-                { $match: { active: true ,formato:token} },
-                { $lookup: { from: 'producto', localField: 'producto.id', foreignField: '_id', as: 'Productos' }},
-                { $lookup: { from: 'color', localField: 'producto.color', foreignField: '_id', as: 'Colores' }},
-                { $lookup: { from: 'talla', localField: 'producto.talla', foreignField: '_id', as: 'Tallas' }},
+                { $match: { active: true, formato: token } },
+                { $lookup: { from: 'producto', localField: 'producto.id', foreignField: '_id', as: 'Productos' } },
+                { $lookup: { from: 'color', localField: 'producto.color', foreignField: '_id', as: 'Colores' } },
+                { $lookup: { from: 'talla', localField: 'producto.talla', foreignField: '_id', as: 'Tallas' } },
                 {
                     $project: {
                         'Productos.img': 0,
@@ -473,5 +472,42 @@ module.exports = {
                 data: data
             })
         })
+    },
+    saveFormato: (req, res) => {
+
+        let token = req.headers['access-token']
+        models.Carrito.find({ active: true , formato: token }, { producto: 1 }, (err, data) => {
+            let pago= 0;
+
+            data[0]['producto'].forEach(prod => {
+                pago+=parseInt(prod['cantidiad'])*parseInt(prod['valor'])
+            });
+            let Formato = new models.Formato()
+            Formato.formato = req.body.formato
+            Formato.documento = req.body.documento
+            Formato.barrio = req.body.barrio
+            Formato.ciudad = req.body.ciudad
+            Formato.vendedor = req.body.vendedor
+            Formato.total = req.body.total
+            Formato.direccion = req.body.direccion
+            Formato.telefono = req.body.telefono
+            Formato.pago = pago
+            Formato.Prodcutos = data[0]['producto']
+
+            console.log(req.body)
+            res.status(200).json({})
+            /*
+            if (err) res.status(400).json({
+                err: err,
+                data: data || null
+            })
+            else res.status(200).json({
+                err: err,
+                data: data
+            })
+            */
+
+        })
+
     }
 }
