@@ -364,13 +364,12 @@ module.exports = {
         
         let token = req.headers['access-token']
         
-        console.log(token,req.body)
         let Item = new models.CarritoItem()
         Item.id = ObjectId(req.body.producto)
         Item.valor = req.body.precio
         Item.color = ObjectId(req.body.color)
         Item.talla = ObjectId(req.body.talla)
-        Item.cantidad = ObjectId(req.body.cantidad)
+        Item.cantidad = req.body.cantidad
 
 
         models.Carrito.find({ formato: req.body.formato, active: true }, (err, data) => {
