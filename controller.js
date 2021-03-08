@@ -475,40 +475,50 @@ module.exports = {
     saveFormato: (req, res) => {
 
         let token = req.headers['access-token']
-        models.Carrito.find({ active: true , formato: token }, { producto: 1 }, (err, data) => {
-            
-            let pago= 0;
-
-            data[0]['producto'].forEach(prod => {
-                console.log(prod['cantidad']+ prod['valor'])
-                console.log(parseInt(prod['cantidad'])*parseInt(prod['valor']))
-                pago+=parseInt(prod['cantidad'])*parseInt(prod['valor'])
-            });
-
-            let Formato = new models.Formato()
-            Formato.formato = req.body.formato
-            Formato.documento = req.body.documento
-            Formato.barrio = req.body.barrio
-            Formato.ciudad = req.body.ciudad
-            Formato.vendedor = req.body.vendedor
-            Formato.total = req.body.total
-            Formato.direccion = req.body.direccion
-            Formato.telefono = req.body.telefono
-            Formato.pago = pago
-            Formato.Prodcutos = data[0]['producto']
-
-        
-            res.status(200).json({})
-            /*
+        models.Carrito.find({ active: true, formato: token }, { producto: 1 }, (err, data) => {
             if (err) res.status(400).json({
                 err: err,
                 data: data || null
             })
-            else res.status(200).json({
-                err: err,
-                data: data
-            })
-            */
+            else {
+                let pago = 0;
+
+                data[0]['producto'].forEach(prod => {
+                    pago += parseInt(prod['cantidad']) * parseInt(prod['valor'])
+                });
+
+                let Formato = new models.Formato()
+                Formato.formato = req.body.formato
+                Formato.documento = req.body.documento
+                Formato.barrio = req.body.barrio
+                Formato.ciudad = req.body.ciudad
+                Formato.vendedor = req.body.vendedor
+                Formato.total = req.body.total
+                Formato.direccion = req.body.direccion
+                Formato.telefono = req.body.telefono
+                Formato.pago = pago
+                Formato.Prodcutos = data[0]['producto']
+
+                models.Carrito.updateOne(
+                    { active: true, formato: token },
+                    { active: false, formato: req.body.formato },
+                    (err, data) => {
+                        if (err) res.status(400).json({
+                            err: err,
+                            data: data || null
+                        })
+                        else Formato.save((err, data) => {
+                            if (err) res.status(400).json({
+                                err: err,
+                                data: data || null
+                            })
+                            else res.status(200).json({
+                                err: err,
+                                data: { msg: req.body.formato }
+                            })
+                        })
+                    })
+            }
 
         })
 
