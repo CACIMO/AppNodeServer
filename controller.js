@@ -476,11 +476,14 @@ module.exports = {
 
         let token = req.headers['access-token']
         models.Carrito.find({ active: true, formato: token }, { producto: 1 }, (err, data) => {
+            console.log(data)
+
             if (err) res.status(400).json({
                 err: err,
                 data: data || null
             })
             else {
+                console.log(data)
                 let pago = 0;
 
                 data[0]['producto'].forEach(prod => {
