@@ -72,7 +72,10 @@ module.exports = {
                                 })
                                 else res.status(200).json({
                                     err: err,
-                                    data: tk
+                                    data: {
+                                        token: tk,
+                                        usuario: data
+                                    }
                                 })
                             })
                 })
@@ -214,7 +217,6 @@ module.exports = {
             })
         });
     },
-
     getTag: (req, res) => {
         models.Tag.find({ active: true }, (err, data) => {
             if (err) res.status(400).json({
