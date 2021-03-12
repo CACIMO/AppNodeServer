@@ -37,6 +37,7 @@ router.route('/carrito')
 router.route('/csc')
     .get(controller.getCsc)
 router.route('/formato')
+    .put(controller.getFormato)
     .post(controller.saveFormato)
 
 

@@ -63,7 +63,7 @@ module.exports = {
                     })
                     else
                         models.Usuario.updateOne(
-                            { usuario: usu, password:pass },
+                            { usuario: usu, password: pass },
                             { token: tk },
                             (err, datax) => {
                                 if (err) res.status(400).json({
@@ -179,7 +179,7 @@ module.exports = {
         })
     },
     getColor: (req, res) => {
-        models.Color.find({}, (err, data) => {
+        models.Color.find({ active: true }, (err, data) => {
             if (err) res.status(400).json({
                 err: err,
                 data: data || null
@@ -191,7 +191,7 @@ module.exports = {
         });
     },
     getTalla: (req, res) => {
-        models.Talla.find({}, (err, data) => {
+        models.Talla.find({ active: true }, (err, data) => {
             if (err) res.status(400).json({
                 err: err,
                 data: data || null
@@ -203,7 +203,7 @@ module.exports = {
         });
     },
     getCat: (req, res) => {
-        models.Categoria.find({}, (err, data) => {
+        models.Categoria.find({ active: true }, (err, data) => {
             if (err) res.status(400).json({
                 err: err,
                 data: data || null
@@ -216,7 +216,7 @@ module.exports = {
     },
 
     getTag: (req, res) => {
-        models.Tag.find({}, (err, data) => {
+        models.Tag.find({ active: true }, (err, data) => {
             if (err) res.status(400).json({
                 err: err,
                 data: data || null
@@ -370,7 +370,6 @@ module.exports = {
             })
         })
     },
-
     addCarrito: (req, res) => {
 
         let token = req.headers['access-token']
@@ -485,29 +484,28 @@ module.exports = {
     },
     getFormato: (req, res) => {
 
-        let token = req.headers['access-token']
-        models.Carrito.aggregate(
+        models.Formato.aggregate(
             [
-                { $match: { active: true, formato: token } },
-                { $lookup: { from: 'producto', localField: 'producto.id', foreignField: '_id', as: 'Productos' } },
-                { $lookup: { from: 'color', localField: 'producto.color', foreignField: '_id', as: 'Colores' } },
-                { $lookup: { from: 'talla', localField: 'producto.talla', foreignField: '_id', as: 'Tallas' } },
+                { $match: { vendedor: ObjectId(req.body.vendedor) } },
+                { $lookup: { from: 'producto', localField: 'Prodcutos.id', foreignField: '_id', as: 'Prods' } },
+                { $lookup: { from: 'color', localField: 'Prodcutos.color', foreignField: '_id', as: 'Colores' } },
+                { $lookup: { from: 'talla', localField: 'Prodcutos.talla', foreignField: '_id', as: 'Tallas' } },
                 {
                     $project: {
-                        'Productos.img': 0,
-                        'Productos.talla': 0,
-                        'Productos.categoria': 0,
-                        'Productos.tag': 0,
-                        'Productos.color': 0,
-                        'Productos.fecha': 0,
-                        'Productos.fileName': 0,
-                        'Productos.refVendedora': 0,
-                        'Productos.refInterna': 0,
-                        'Productos.stock': 0,
-                        'Productos.pesoImg': 0,
-                        'Productos.valor': 0,
-                        'Productos.descripcion': 0,
-                        'Productos.__v': 0,
+                        'Prods.img': 0,
+                        'Prods.talla': 0,
+                        'Prods.categoria': 0,
+                        'Prods.tag': 0,
+                        'Prods.color': 0,
+                        'Prods.fecha': 0,
+                        'Prods.fileName': 0,
+                        'Prods.refVendedora': 0,
+                        'Prods.refInterna': 0,
+                        'Prods.stock': 0,
+                        'Prods.pesoImg': 0,
+                        'Prods.valor': 0,
+                        'Prods.descripcion': 0,
+                        'Prods.__v': 0,
                         active: 0
                     }
                 }
