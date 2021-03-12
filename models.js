@@ -29,6 +29,9 @@ let usuarioSchema = mongoose.Schema({
     password: {
         type: String,
         required: true
+    },
+    token: {
+        type: String
     }
 });
 let ProductoSchema = mongoose.Schema({
@@ -217,7 +220,7 @@ let FormatoSchema = mongoose.Schema({
 
     },
     vendedor: {
-        type: String,
+        type: ObjectId,
         require: true
 
     },

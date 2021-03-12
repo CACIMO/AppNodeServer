@@ -53,6 +53,7 @@ module.exports = {
                 err: err,
                 data: data || null
             })
+
             else {
 
                 if (data) jwt.sign({ expiresIn: "30d" }, con.conf.key, (err, tk) => {
@@ -60,17 +61,27 @@ module.exports = {
                         err: err,
                         data: data || null
                     })
-                    else res.status(200).json({
-                        err: err,
-                        data: tk
-                    })
+                    else
+                        models.Usuario.updateOne(
+                            { usuario: usu, password:pass },
+                            { token: tk },
+                            (err, datax) => {
+                                if (err) res.status(400).json({
+                                    err: err,
+                                    data: datax || null
+                                })
+                                else res.status(200).json({
+                                    err: err,
+                                    data: tk
+                                })
+                            })
                 })
                 else res.status(401).json({
                     err: { msg: 'Clave o usario incorrectos' },
                     data: data || null
                 })
-
             }
+
         })
     },
     newProd: (req, res) => {
@@ -472,11 +483,50 @@ module.exports = {
             })
         })
     },
+    getFormato: (req, res) => {
+
+        let token = req.headers['access-token']
+        models.Carrito.aggregate(
+            [
+                { $match: { active: true, formato: token } },
+                { $lookup: { from: 'producto', localField: 'producto.id', foreignField: '_id', as: 'Productos' } },
+                { $lookup: { from: 'color', localField: 'producto.color', foreignField: '_id', as: 'Colores' } },
+                { $lookup: { from: 'talla', localField: 'producto.talla', foreignField: '_id', as: 'Tallas' } },
+                {
+                    $project: {
+                        'Productos.img': 0,
+                        'Productos.talla': 0,
+                        'Productos.categoria': 0,
+                        'Productos.tag': 0,
+                        'Productos.color': 0,
+                        'Productos.fecha': 0,
+                        'Productos.fileName': 0,
+                        'Productos.refVendedora': 0,
+                        'Productos.refInterna': 0,
+                        'Productos.stock': 0,
+                        'Productos.pesoImg': 0,
+                        'Productos.valor': 0,
+                        'Productos.descripcion': 0,
+                        'Productos.__v': 0,
+                        active: 0
+                    }
+                }
+            ]
+        ).exec((err, data) => {
+            if (err) res.status(400).json({
+                err: err,
+                data: data || null
+            })
+            else res.status(200).json({
+                err: err,
+                data: data
+            })
+        })
+    },
     saveFormato: (req, res) => {
 
         let token = req.headers['access-token']
         models.Carrito.find({ active: true, formato: token }, { producto: 1 }, (err, data) => {
-            console.log(data)
 
             if (err) res.status(400).json({
                 err: err,
@@ -495,7 +545,7 @@ module.exports = {
                 Formato.documento = req.body.documento
                 Formato.barrio = req.body.barrio
                 Formato.ciudad = req.body.ciudad
-                Formato.vendedor = req.body.vendedor
+                Formato.vendedor = ObjectId(req.body.vendedor)
                 Formato.total = req.body.total
                 Formato.direccion = req.body.direccion
                 Formato.telefono = req.body.telefono
