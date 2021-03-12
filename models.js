@@ -38,7 +38,7 @@ let ProductoSchema = mongoose.Schema({
     },
     fecha: {
         type: Date,
-        default: new Date().toLocaleString("en-US", { timeZone: "America/Bogota" }),
+        default: new Date(new Date() - 3600000 * 5),
         //required: true
     },
     refVendedora: {
@@ -177,9 +177,9 @@ let CarritoItemSchema = mongoose.Schema({
     }
 });
 let ConfigSchema = mongoose.Schema({
-    titulo:{
+    titulo: {
         type: String,
-        require:true
+        require: true
 
     },
     csc: {
@@ -187,54 +187,58 @@ let ConfigSchema = mongoose.Schema({
     }
 });
 let FormatoSchema = mongoose.Schema({
-    formato:{
+    fecha: {
+        type: Date,
+        default: new Date(new Date() - 3600000 * 5)
+    },
+    formato: {
         type: String,
-        require:true
+        require: true
 
     },
-    documento:{
+    documento: {
         type: Number,
-        require:true
+        require: true
 
     },
-    nombre:{
+    nombre: {
         type: Number,
-        require:true
+        require: true
 
     },
-    barrio:{
+    barrio: {
         type: String,
-        require:true
+        require: true
 
     },
-    ciudad:{
+    ciudad: {
         type: String,
-        require:true
+        require: true
 
     },
-    vendedor:{
+    vendedor: {
         type: String,
-        require:true
+        require: true
 
     },
-    total:{
+    total: {
         type: String,
-        require:true
+        require: true
 
     },
-    direccion:{
+    direccion: {
         type: String,
-        require:true
+        require: true
 
     },
-    telefono:{
+    telefono: {
         type: Number,
-        require:true
+        require: true
 
     },
-    pago:{
+    pago: {
         type: String,
-        require:true
+        require: true
 
     },
     Prodcutos: {
