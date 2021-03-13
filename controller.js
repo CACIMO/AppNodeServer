@@ -560,10 +560,10 @@ module.exports = {
                 Formato.barrio = req.body.barrio
                 Formato.ciudad = req.body.ciudad
                 Formato.vendedor = ObjectId(req.body.vendedor)
-                Formato.total = req.body.total
+                Formato.total = pago
                 Formato.direccion = req.body.direccion
                 Formato.telefono = req.body.telefono
-                Formato.pago = pago
+                Formato.pago = req.body.pago
                 Formato.Prodcutos = data[0]['producto']
 
                 models.Carrito.updateOne(
