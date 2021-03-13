@@ -225,7 +225,7 @@ let FormatoSchema = mongoose.Schema({
 
     },
     total: {
-        type: String,
+        type: Number,
         require: true
 
     },
@@ -243,6 +243,10 @@ let FormatoSchema = mongoose.Schema({
         type: String,
         require: true
 
+    },
+    etapa: {
+        type: ObjectId,
+        default: ObjectId("604b87f49ed8c060cc0e11db")
     },
     Prodcutos: {
         type: Array
