@@ -531,7 +531,7 @@ module.exports = {
             [
                 { $match: { vendedor: ObjectId(req.body.vendedor) } },
                 { $lookup: { from: 'etapa', localField: 'etapa', foreignField: '_id', as: 'Etapa'}},
-                { $lookup: { from: 'pago', localField: 'pago', foreignField: '_id', as: 'FPago'}},
+                { $lookup: { from: 'pago', localField: 'pago', foreignField: 'short', as: 'FPago'}},
                 {
                     $project: {
                         Prodcutos: 0,
