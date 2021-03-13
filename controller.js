@@ -530,11 +530,14 @@ module.exports = {
         models.Formato.aggregate(
             [
                 { $match: { vendedor: ObjectId(req.body.vendedor) } },
-                { $lookup: { from: 'etapa', localField: 'etapa', foreignField: '_id', as: 'Etapa' } },
+                { $lookup: { from: 'etapa', localField: 'etapa', foreignField: '_id', as: 'Etapa'}},
+                { $lookup: { from: 'pago', localField: 'pago', foreignField: '_id', as: 'FPago'}},
                 {
                     $project: {
                         Prodcutos: 0,
-                        active: 0
+                        active: 0,
+                        'FPago._id:':0,                    
+                        'Etapa._id:':0
                     }
                 }
             ]
