@@ -528,7 +528,7 @@ module.exports = {
     getFormato: (req, res) => {
         
         console.log(req.body.vendedor)
-        models.Formato.findOne( {vendedor: ObjectId(req.body.vendedor)}).exec((err, data) => {
+        models.Formato.findOne( {vendedor: ObjectId(req.body.vendedor)},{Prodcutos:0}).exec((err, data) => {
             if (err) res.status(400).json({
                 err: err,
                 data: data || null
