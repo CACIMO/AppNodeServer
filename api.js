@@ -42,14 +42,5 @@ router.route('/formato')
 router.route('/getForm/:idClient')
     .post(controller.getFormato)
 
-
-
-/* router.route('/contacts/:contact_id')
-    .get(contactController.view)
-    .patch(contactController.update)
-    .put(contactController.update)
-    .delete(contactController.delete);
-
- */
 // Export API routes
 module.exports = router;

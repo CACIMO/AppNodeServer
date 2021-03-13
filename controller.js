@@ -526,10 +526,9 @@ module.exports = {
         })
     },
     getFormato: (req, res) => {
-
-        models.Formato.aggregate(
-            [{ $match: { vendedor: ObjectId(req.body.vendedor) } }]
-        ).exec((err, data) => {
+        
+        console.log(req.body.vendedor)
+        models.Formato.findOne( {vendedor: ObjectId(req.body.vendedor)}).exec((err, data) => {
             if (err) res.status(400).json({
                 err: err,
                 data: data || null
@@ -550,7 +549,6 @@ module.exports = {
                 data: data || null
             })
             else {
-                console.log(data)
                 let pago = 0;
 
                 data[0]['producto'].forEach(prod => {
