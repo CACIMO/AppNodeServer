@@ -526,8 +526,19 @@ module.exports = {
         })
     },
     getFormato: (req, res) => {
-        
-        models.Formato.find( {vendedor: ObjectId(req.body.vendedor)},{Prodcutos:0}).exec((err, data) => {
+
+        models.Formato.aggregate(
+            [
+                { $match: { vendedor: ObjectId(req.body.vendedor) } },
+                { $lookup: { from: 'etapa', localField: 'etapa', foreignField: '_id', as: 'Etapa' } },
+                {
+                    $project: {
+                        Prodcutos: 0,
+                        active: 0
+                    }
+                }
+            ]
+        ).exec((err, data) => {
             if (err) res.status(400).json({
                 err: err,
                 data: data || null
