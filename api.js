@@ -37,8 +37,10 @@ router.route('/carrito')
 router.route('/csc')
     .get(controller.getCsc)
 router.route('/formato')
-    .put(controller.getFormato)
+    .put(controller.getFormatoDet)
     .post(controller.saveFormato)
+router.route('/getForm/:idClient')
+    .post(controller.getFormato)
 
 
 

@@ -484,7 +484,7 @@ module.exports = {
             })
         })
     },
-    getFormato: (req, res) => {
+    getFormatoDet: (req, res) => {
 
         models.Formato.aggregate(
             [
@@ -514,6 +514,21 @@ module.exports = {
                     }
                 }
             ]
+        ).exec((err, data) => {
+            if (err) res.status(400).json({
+                err: err,
+                data: data || null
+            })
+            else res.status(200).json({
+                err: err,
+                data: data
+            })
+        })
+    },
+    getFormato: (req, res) => {
+
+        models.Formato.aggregate(
+            [{ $match: { vendedor: ObjectId(req.body.vendedor) } }]
         ).exec((err, data) => {
             if (err) res.status(400).json({
                 err: err,
