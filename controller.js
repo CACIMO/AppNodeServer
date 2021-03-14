@@ -567,7 +567,7 @@ module.exports = {
                 data[0]['producto'].forEach(prod => {
                     pago += parseInt(prod['cantidad']) * parseInt(prod['valor'])
                 });
-
+                console.log( req.body)
                 let Formato = new models.Formato()
                 Formato.formato = req.body.formato
                 Formato.documento = req.body.documento
