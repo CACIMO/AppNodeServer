@@ -569,6 +569,7 @@ module.exports = {
                 });
                 flag = true
                 try {
+                    console.log( data[0]['producto'])
                     let Formato = new models.Formato()
                     Formato.formato = req.body.formato
                     Formato.documento = req.body.documento
@@ -583,6 +584,7 @@ module.exports = {
                     Formato.Prodcutos = data[0]['producto']
                 }
                 catch (error) {
+                    console.log(error)
                     flag = false
                     res.status(400).json({
                         err: err,
