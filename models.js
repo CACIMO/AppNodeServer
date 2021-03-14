@@ -205,7 +205,7 @@ let FormatoSchema = mongoose.Schema({
 
     },
     nombre: {
-        type: Number,
+        type: String,
         require: true
 
     },
