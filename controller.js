@@ -488,7 +488,7 @@ module.exports = {
 
         models.Formato.aggregate(
             [
-                { $match: { vendedor: ObjectId(req.body.vendedor) } },
+                { $match: { vendedor: ObjectId(req.body.vendedor), _id:ObjectId(req.body.formato) } },
                 { $lookup: { from: 'producto', localField: 'Prodcutos.id', foreignField: '_id', as: 'Prods' } },
                 { $lookup: { from: 'color', localField: 'Prodcutos.color', foreignField: '_id', as: 'Colores' } },
                 { $lookup: { from: 'talla', localField: 'Prodcutos.talla', foreignField: '_id', as: 'Tallas' } },
