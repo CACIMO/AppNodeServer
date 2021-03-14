@@ -530,14 +530,14 @@ module.exports = {
         models.Formato.aggregate(
             [
                 { $match: { vendedor: ObjectId(req.body.vendedor) } },
-                { $lookup: { from: 'etapa', localField: 'etapa', foreignField: '_id', as: 'Etapa'}},
-                { $lookup: { from: 'pago', localField: 'pago', foreignField: 'short', as: 'FPago'}},
+                { $lookup: { from: 'etapa', localField: 'etapa', foreignField: '_id', as: 'Etapa' } },
+                { $lookup: { from: 'pago', localField: 'pago', foreignField: 'short', as: 'FPago' } },
                 {
                     $project: {
                         Prodcutos: 0,
                         active: 0,
-                        'FPago._id:':0,                    
-                        'Etapa._id:':0
+                        'FPago._id:': 0,
+                        'Etapa._id:': 0
                     }
                 }
             ]
@@ -567,21 +567,30 @@ module.exports = {
                 data[0]['producto'].forEach(prod => {
                     pago += parseInt(prod['cantidad']) * parseInt(prod['valor'])
                 });
-                console.log( req.body)
-                let Formato = new models.Formato()
-                Formato.formato = req.body.formato
-                Formato.documento = req.body.documento
-                Formato.barrio = req.body.barrio
-                Formato.ciudad = req.body.ciudad
-                Formato.vendedor = ObjectId(req.body.vendedor)
-                Formato.total = pago
-                Formato.direccion = req.body.direccion
-                Formato.nombre = req.body.nombre
-                Formato.telefono = req.body.telefono
-                Formato.pago = req.body.pago
-                Formato.Prodcutos = data[0]['producto']
+                flag = true
+                try {
+                    let Formato = new models.Formato()
+                    Formato.formato = req.body.formato
+                    Formato.documento = req.body.documento
+                    Formato.barrio = req.body.barrio
+                    Formato.ciudad = req.body.ciudad
+                    Formato.vendedor = ObjectId(req.body.vendedor)
+                    Formato.total = pago
+                    Formato.direccion = req.body.direccion
+                    Formato.nombre = req.body.nombre
+                    Formato.telefono = req.body.telefono
+                    Formato.pago = req.body.pago
+                    Formato.Prodcutos = data[0]['producto']
+                }
+                catch (error) {
+                    flag = false
+                    res.status(400).json({
+                        err: err,
+                        data: data || null
+                    })
+                }
 
-                models.Carrito.updateOne(
+                if(flag)models.Carrito.updateOne(
                     { active: true, formato: token },
                     { active: false, formato: req.body.formato },
                     (err, data) => {
