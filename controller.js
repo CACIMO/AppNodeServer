@@ -492,8 +492,8 @@ module.exports = {
                 { $lookup: { from: 'producto', localField: 'Prodcutos.id', foreignField: '_id', as: 'Prods' } },
                 { $lookup: { from: 'color', localField: 'Prodcutos.color', foreignField: '_id', as: 'Colores' } },
                 { $lookup: { from: 'talla', localField: 'Prodcutos.talla', foreignField: '_id', as: 'Tallas' } },
-                { $lookup: { from: 'usuario', localField: 'Prodcutos.vendedor', foreignField: '_id', as: 'Vendedor' } },
-                { $lookup: { from: 'etapa', localField: 'Prodcutos.etapa', foreignField: '_id', as: 'Etapa' } },
+                { $lookup: { from: 'usuario', localField: 'vendedor', foreignField: '_id', as: 'Vendedor' } },
+                { $lookup: { from: 'etapa', localField: 'etapa', foreignField: '_id', as: 'Etapa' } },
                 {
                     $project: {
                         'Prods.img': 0,
