@@ -576,6 +576,7 @@ module.exports = {
                 Formato.vendedor = ObjectId(req.body.vendedor)
                 Formato.total = pago
                 Formato.direccion = req.body.direccion
+                Formato.nombre = req.body.nombre
                 Formato.telefono = req.body.telefono
                 Formato.pago = req.body.pago
                 Formato.Prodcutos = data[0]['producto']
