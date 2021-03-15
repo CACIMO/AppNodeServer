@@ -635,6 +635,7 @@ module.exports = {
                 {
                     $project: {
                         password: 0,
+                        'Permisos.menuOpcions':0
                     }
                 }
 
