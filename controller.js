@@ -631,17 +631,15 @@ module.exports = {
     getUser: (req, res) => {
         models.Usuario.aggregate(
             [
-                { $match: { vendedor: ObjectId(req.body.vendedor) } },
-                { $lookup: { from: 'etapa', localField: 'etapa', foreignField: '_id', as: 'Etapa' } },
-                { $lookup: { from: 'pago', localField: 'pago', foreignField: 'short', as: 'FPago' } },
+                { $lookup: { from: 'permiso', localField: 'permiso', foreignField: '_id', as: 'Permisos' } },
+                { $lookup: { from: 'menu', localField: 'Permisos.menuOpcions', foreignField: '_id', as: 'MenuData' } },
+                { $match: { 'MenuData.active': true } },
                 {
                     $project: {
-                        Prodcutos: 0,
-                        active: 0,
-                        'FPago._id:': 0,
-                        'Etapa._id:': 0
+                        Permisos: 0,
                     }
                 }
+
             ]
         ).exec((err, data) => {
             if (err) res.status(400).json({
@@ -672,6 +670,40 @@ module.exports = {
                 }
 
             ]
+        ).exec((err, data) => {
+            if (err) res.status(400).json({
+                err: err,
+                data: data || null
+            })
+            else res.status(200).json({
+                err: err,
+                data: data
+            })
+        })
+    },
+    updateUser: (req, res) => {
+
+        let jsonAux = {}
+        switch (req.body.type) {
+            case 'N':
+                jsonAux = { $set: { nombre: req.body.data } }
+                break;
+            case 'U':
+                jsonAux = { $set: { usuario: req.body.data } }
+                break;
+            case 'C':
+                jsonAux = { $set: { correo: req.body.data } }
+                break;
+            case 'T':
+                jsonAux = { $set: { telefono: req.body.data } }
+                break;
+            case 'P':
+                jsonAux = { $set: { Permiso: ObjectId(req.body.data) } }
+                break;
+        }
+        models.Usuario.updateOne(
+            { _id: ObjectId(req.body.userId) },
+            jsonAux
         ).exec((err, data) => {
             if (err) res.status(400).json({
                 err: err,
