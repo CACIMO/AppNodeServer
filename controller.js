@@ -48,7 +48,20 @@ module.exports = {
         let usu = req.body.usuario
         let pass = req.body.password
 
-        models.Usuario.findOne({ usuario: usu, password: pass }, (err, data) => {
+        models.Usuario.aggregate(
+            [
+                { $match: { usuario: usu, password: pass } },
+                { $lookup: { from: 'permiso', localField: 'permiso', foreignField: '_id', as: 'Permisos' } },
+                { $lookup: { from: 'menu', localField: 'Permisos.menuOpcions', foreignField: '_id', as: 'MenuData' } },
+                { $match: { 'MenuData.active': true } },
+                {
+                    $project: {
+                        Permisos: 0,
+                    }
+                }
+
+            ]
+        ).exec((err, data) => {
             if (err) res.status(400).json({
                 err: err,
                 data: data || null
@@ -488,7 +501,7 @@ module.exports = {
 
         models.Formato.aggregate(
             [
-                { $match: { vendedor: ObjectId(req.body.vendedor), _id:ObjectId(req.body.formato) } },
+                { $match: { vendedor: ObjectId(req.body.vendedor), _id: ObjectId(req.body.formato) } },
                 { $lookup: { from: 'producto', localField: 'Prodcutos.id', foreignField: '_id', as: 'Prods' } },
                 { $lookup: { from: 'color', localField: 'Prodcutos.color', foreignField: '_id', as: 'Colores' } },
                 { $lookup: { from: 'talla', localField: 'Prodcutos.talla', foreignField: '_id', as: 'Tallas' } },
@@ -591,7 +604,7 @@ module.exports = {
                     })
                 }
 
-                if(flag)models.Carrito.updateOne(
+                if (flag) models.Carrito.updateOne(
                     { active: true, formato: token },
                     { active: false, formato: req.body.formato },
                     (err, data) => {
@@ -612,6 +625,33 @@ module.exports = {
                     })
             }
 
+        })
+
+    },
+    getUser: (req, res) => {
+        models.Usuario.aggregate(
+            [
+                { $match: { vendedor: ObjectId(req.body.vendedor) } },
+                { $lookup: { from: 'etapa', localField: 'etapa', foreignField: '_id', as: 'Etapa' } },
+                { $lookup: { from: 'pago', localField: 'pago', foreignField: 'short', as: 'FPago' } },
+                {
+                    $project: {
+                        Prodcutos: 0,
+                        active: 0,
+                        'FPago._id:': 0,
+                        'Etapa._id:': 0
+                    }
+                }
+            ]
+        ).exec((err, data) => {
+            if (err) res.status(400).json({
+                err: err,
+                data: data || null
+            })
+            else res.status(200).json({
+                err: err,
+                data: data
+            })
         })
 
     }

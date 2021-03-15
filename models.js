@@ -32,6 +32,9 @@ let usuarioSchema = mongoose.Schema({
     },
     token: {
         type: String
+    },
+    Permiso: {
+        type: ObjectId
     }
 });
 let ProductoSchema = mongoose.Schema({
