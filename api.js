@@ -27,7 +27,7 @@ router.route('/login')
     .post(controller.logIn)
 router.route('/auth')
     .get(controller.auth)
-router.route('/usuario/:id')
+router.route('/usuario')
     .get(controller.nuevoUsuario)
     .post(controller.nuevoUsuario)
 router.route('/getImg/:prod_id')
@@ -42,6 +42,9 @@ router.route('/formato')
     .post(controller.saveFormato)
 router.route('/getForm/:idClient')
     .post(controller.getFormato)
+router.route('/menuTk')
+    .get(controller.getUSerTk)
+
 
 // Export API routes
 module.exports = router;
