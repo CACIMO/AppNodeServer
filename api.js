@@ -44,7 +44,8 @@ router.route('/formato')
 router.route('/getForm/:idClient')
     .post(controller.getFormato)
 router.route('/menuTk')
-    .get(controller.getUSerTk)
+.get(controller.getUSerTk)
+.post(controller.getUserId)
 
 
 // Export API routes

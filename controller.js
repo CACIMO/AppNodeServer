@@ -713,5 +713,33 @@ module.exports = {
                 data: data
             })
         })
-    }
+    },
+    getUserId: (req, res) => {
+
+        let userId = req.body.userId
+
+        models.Usuario.aggregate(
+            [
+                { $match: { _id: userId } },
+                { $lookup: { from: 'permiso', localField: 'permiso', foreignField: '_id', as: 'Permisos' } },
+                { $lookup: { from: 'menu', localField: 'Permisos.menuOpcions', foreignField: '_id', as: 'MenuData' } },
+                { $match: { 'MenuData.active': true } },
+                {
+                    $project: {
+                        Permisos: 0,
+                    }
+                }
+
+            ]
+        ).exec((err, data) => {
+            if (err) res.status(400).json({
+                err: err,
+                data: data || null
+            })
+            else res.status(200).json({
+                err: err,
+                data: data
+            })
+        })
+    },
 }
