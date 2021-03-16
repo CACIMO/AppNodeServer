@@ -34,7 +34,8 @@ let usuarioSchema = mongoose.Schema({
         type: String
     },
     Permiso: {
-        type: ObjectId
+        type: ObjectId,
+        default:ObjectId('6050ae3e96f425bd7bf19d3b')
     }
 });
 let ProductoSchema = mongoose.Schema({
