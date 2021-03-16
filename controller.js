@@ -720,7 +720,7 @@ module.exports = {
 
         models.Usuario.aggregate(
             [
-                { $match: { _id: userId } },
+                { $match: { _id: ObjectId(userId) } },
                 { $lookup: { from: 'permiso', localField: 'permiso', foreignField: '_id', as: 'Permisos' } },
                 { $lookup: { from: 'menu', localField: 'Permisos.menuOpcions', foreignField: '_id', as: 'MenuData' } },
                 { $match: { 'MenuData.active': true } },
