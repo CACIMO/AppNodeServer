@@ -631,7 +631,7 @@ module.exports = {
     getUser: (req, res) => {
         models.Usuario.aggregate(
             [
-                { $lookup: { from: 'permiso', localField: 'permiso', foreignField: '_id', as: 'Permisos' } },
+                { $lookup: { from: 'permiso', localField: 'Permiso', foreignField: '_id', as: 'Permisos' } },
                 {
                     $project: {
                         password: 0,
@@ -721,7 +721,7 @@ module.exports = {
         models.Usuario.aggregate(
             [
                 { $match: { _id: ObjectId(userId) } },
-                { $lookup: { from: 'permiso', localField: 'permiso', foreignField: '_id', as: 'Permisos' } },
+                { $lookup: { from: 'permiso', localField: 'Permiso', foreignField: '_id', as: 'Permisos' } },
                 {
                     $project: {
                         password: 0,
