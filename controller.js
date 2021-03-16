@@ -741,4 +741,30 @@ module.exports = {
             })
         })
     },
+    getFormatoAll: (req, res) => {
+
+        models.Formato.aggregate(
+            [    
+                { $lookup: { from: 'etapa', localField: 'etapa', foreignField: '_id', as: 'Etapa' } },
+                { $lookup: { from: 'pago', localField: 'pago', foreignField: 'short', as: 'FPago' } },
+                {
+                    $project: {
+                        Prodcutos: 0,
+                        active: 0,
+                        'FPago._id:': 0,
+                        'Etapa._id:': 0
+                    }
+                }
+            ]
+        ).exec((err, data) => {
+            if (err) res.status(400).json({
+                err: err,
+                data: data || null
+            })
+            else res.status(200).json({
+                err: err,
+                data: data
+            })
+        })
+    },
 }
