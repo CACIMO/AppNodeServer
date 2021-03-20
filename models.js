@@ -256,7 +256,7 @@ let FormatoSchema = mongoose.Schema({
         type: Array
     }
 })
-let errorLog = mongoose.Schema({
+let ErrorLogSchema = mongoose.Schema({
     error: {
         type: Object
     }, 
@@ -278,5 +278,5 @@ module.exports = {
     CarritoItem: mongoose.model('carritoItem', CarritoItemSchema),
     Categoria: mongoose.model('categoria', CategoriaSchema),
     Config: mongoose.model('config', ConfigSchema),
-    ErrorLog: mongoose.model('log', FormatoSchema),
+    ErrorLog: mongoose.model('log', ErrorLogSchema),
 }

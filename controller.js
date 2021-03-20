@@ -6,6 +6,7 @@ const { model } = require('mongoose')
 const { ObjectId } = require('bson')
 const e = require('express')
 module.exports = {
+
     nuevoUsuario: (req, res) => {
         let User = new models.Usuario()
         User.usuario = req.body.usuario
@@ -33,8 +34,10 @@ module.exports = {
         if (token) jwt.verify(token, con.conf.key, (err, decoded) => {
 
             if (err) {
+
                 let Error = new models.ErrorLog()
                 Error.error = err
+
                 Error.save((errx, res) => {
 
                     if (errx) res.status(400).json({
@@ -45,7 +48,6 @@ module.exports = {
                         err: err,
                         data: null
                     })
-
                 })
 
             }
