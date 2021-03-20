@@ -31,17 +31,29 @@ module.exports = {
         let token = req.headers['access-token']
 
         if (token) jwt.verify(token, con.conf.key, (err, decoded) => {
-            if (err) res.status(400).json({
-                err: err,
-                data: decoded || null
-            })
+
+            if (err) {
+                let Error = new models.ErrorLog()
+                Error.error = err
+                Error.save((errx, res) => {
+
+                    if (errx) res.status(400).json({
+                        err: errx,
+                        data: null
+                    })
+                    else res.status(400).json({
+                        err: err,
+                        data: null
+                    })
+
+                })
+
+            }
             else res.status(200).json({
                 err: err,
                 data: decoded
             })
         });
-
-
     },
     logIn: (req, res) => {
 
@@ -635,7 +647,7 @@ module.exports = {
                 {
                     $project: {
                         password: 0,
-                        'Permisos.menuOpcions':0
+                        'Permisos.menuOpcions': 0
                     }
                 }
 
@@ -725,7 +737,7 @@ module.exports = {
                 {
                     $project: {
                         password: 0,
-                        'Permisos.menuOpcions':0
+                        'Permisos.menuOpcions': 0
                     }
                 }
 
@@ -744,7 +756,7 @@ module.exports = {
     getFormatoAll: (req, res) => {
 
         models.Formato.aggregate(
-            [    
+            [
                 { $lookup: { from: 'etapa', localField: 'etapa', foreignField: '_id', as: 'Etapa' } },
                 { $lookup: { from: 'pago', localField: 'pago', foreignField: 'short', as: 'FPago' } },
                 {

@@ -35,7 +35,7 @@ let usuarioSchema = mongoose.Schema({
     },
     Permiso: {
         type: ObjectId,
-        default:ObjectId('6050ae3e96f425bd7bf19d3b')
+        default: ObjectId('6050ae3e96f425bd7bf19d3b')
     }
 });
 let ProductoSchema = mongoose.Schema({
@@ -256,6 +256,16 @@ let FormatoSchema = mongoose.Schema({
         type: Array
     }
 })
+let errorLog = mongoose.Schema({
+    error: {
+        type: Object
+    }, 
+    fecha: {
+        type: Date,
+        default: new Date(new Date() - 3600000 * 5),
+        //required: true
+    }
+})
 
 // Export Contact model
 module.exports = {
@@ -268,5 +278,5 @@ module.exports = {
     CarritoItem: mongoose.model('carritoItem', CarritoItemSchema),
     Categoria: mongoose.model('categoria', CategoriaSchema),
     Config: mongoose.model('config', ConfigSchema),
-    Formato: mongoose.model('formato', FormatoSchema)
+    ErrorLog: mongoose.model('log', FormatoSchema),
 }

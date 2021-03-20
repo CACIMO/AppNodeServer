@@ -1,9 +1,6 @@
 let router = require('express').Router()
 var controller = require('./controller')
-// Set default API response
 
-// Import contact controller
-// Contact routes
 router.route('/producto/:prod_id')
     .post(controller.newProd)
     .put(controller.getProductList)
