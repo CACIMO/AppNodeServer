@@ -38,7 +38,7 @@ module.exports = {
                 let Error = new models.ErrorLog()
                 Error.error = err
 
-                Error.save((errx, res) => {
+                Error.save((errx, resp) => {
 
                     if (errx) res.status(400).json({
                         err: errx,
