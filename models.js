@@ -279,4 +279,5 @@ module.exports = {
     Categoria: mongoose.model('categoria', CategoriaSchema),
     Config: mongoose.model('config', ConfigSchema),
     ErrorLog: mongoose.model('log', ErrorLogSchema),
+    Formato: mongoose.model('formato', FormatoSchema),
 }

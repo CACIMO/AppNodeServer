@@ -422,29 +422,37 @@ module.exports = {
                 Carrito.producto = [Item]
 
                 Carrito.save((err, data) => {
-                    if (err) res.status(400).json({
-                        err: err,
-                        data: data || null
-                    })
-                    else res.status(200).json({
-                        err: err,
-                        data: data
+
+                    models.Producto.updateOne({ _id: ObjectId(req.body.producto) }, { $inc: { stock: (-req.body.cantidad) } }, (err, datax) => {
+                        if (err) res.status(400).json({
+                            err: err,
+                            data: data || null
+                        })
+                        else res.status(200).json({
+                            err: err,
+                            data: data
+                        })
                     })
                 })
             }
             else {
                 models.Carrito.update({ formato: token, active: true }, { $push: { producto: Item } }, (err, data) => {
-                    if (err) res.status(400).json({
-                        err: err,
-                        data: data || null
+
+                    models.Producto.updateOne({ _id: ObjectId(req.body.producto) }, { $inc: { stock: (-req.body.cantidad) } }, (err, datax) => {
+                        if (err) res.status(400).json({
+                            err: err,
+                            data: datax || null
+                        })
+                        else res.status(200).json({})
+
                     })
-                    else res.status(200).json({})
                 })
             }
         })
 
 
     },
+
     getCsc: (req, res) => {
 
         models.Config.find({ titulo: 'formato' }, { csc: 1 }, (errx, datax) => {
