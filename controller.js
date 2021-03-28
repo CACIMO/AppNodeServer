@@ -115,6 +115,7 @@ module.exports = {
         })
     },
     newProd: (req, res) => {
+        console.log('entro');
         let Producto = new models.Producto()
         Producto.titulo = req.body.titulo
         Producto.valor = req.body.valor
@@ -462,7 +463,6 @@ module.exports = {
 
 
     },
-
     getCsc: (req, res) => {
 
         models.Config.find({ titulo: 'formato' }, { csc: 1 }, (errx, datax) => {
