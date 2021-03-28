@@ -115,7 +115,6 @@ module.exports = {
         })
     },
     newProd: (req, res) => {
-        console.log(req.file);
         let Producto = new models.Producto()
         Producto.titulo = req.body.titulo
         Producto.valor = req.body.valor
@@ -129,7 +128,7 @@ module.exports = {
         Producto.tag = JSON.parse(req.body.tag).map((id) => ObjectId(id))
         Producto.talla = JSON.parse(req.body.talla).map((id) => ObjectId(id))
         Producto.pesoImg = req.body.pesoImg
-        Producto.img = req.file.buffer
+        if(req.file)Producto.img = req.file.buffer
 
         Producto.save((err, data) => {
             if (err) res.status(400).json({
