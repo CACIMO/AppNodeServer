@@ -423,10 +423,14 @@ module.exports = {
 
                 Carrito.save((err, data) => {
 
-                    models.Producto.updateOne({ _id: ObjectId(req.body.producto) }, { $inc: { stock: (-req.body.cantidad) } }, (err, datax) => {
+                    if (err) res.status(400).json({
+                        err: err,
+                        data: data || null
+                    })
+                    else models.Producto.updateOne({ _id: ObjectId(req.body.producto) }, { $inc: { stock: (-req.body.cantidad) } }, (err, datax) => {
                         if (err) res.status(400).json({
                             err: err,
-                            data: data || null
+                            data: datax || null
                         })
                         else res.status(200).json({
                             err: err,
@@ -438,13 +442,19 @@ module.exports = {
             else {
                 models.Carrito.update({ formato: token, active: true }, { $push: { producto: Item } }, (err, data) => {
 
-                    models.Producto.updateOne({ _id: ObjectId(req.body.producto) }, { $inc: { stock: (-req.body.cantidad) } }, (err, datax) => {
+                    if (err) res.status(400).json({
+                        err: err,
+                        data: data || null
+                    })
+                    else models.Producto.updateOne({ _id: ObjectId(req.body.producto) }, { $inc: { stock: (-req.body.cantidad) } }, (err, datax) => {
                         if (err) res.status(400).json({
                             err: err,
                             data: datax || null
                         })
-                        else res.status(200).json({})
-
+                        else res.status(200).json({
+                            err: err,
+                            data: data
+                        })
                     })
                 })
             }
