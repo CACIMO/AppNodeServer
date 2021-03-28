@@ -829,8 +829,18 @@ module.exports = {
         })
     },
     deleteProd: (req, res) => {
-        models.Producto.findOneAndRemove(
-            { _id: ObjectId(req.params.prod_id) }
+        
+        models.Formato.find({ 'Prodcutos._id': { $in: [ObjectId(req.params.prod_id)] } }).exec((err, data) => {
+            res.status(200).json({
+                err: err,
+                data: data
+            })
+        })
+
+
+
+        /* models.Producto.remove(
+            { _id: ObjectId() }
         ).exec((err, data) => {
             if (err) res.status(400).json({
                 err: err,
@@ -840,6 +850,6 @@ module.exports = {
                 err: err,
                 data: data
             })
-        })
+        }) */
     },
 }
