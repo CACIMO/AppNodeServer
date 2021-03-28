@@ -143,13 +143,13 @@ module.exports = {
             tag: JSON.parse(req.body.tag).map((id) => ObjectId(id)),
             talla: JSON.parse(req.body.talla).map((id) => ObjectId(id))
         }
-        if (req.file){
-            params.pesoImg =req.body.pesoImg
-            params.img =req.file.buffer
+        if (req.file) {
+            params.pesoImg = req.body.pesoImg
+            params.img = req.file.buffer
         }
 
 
-        if (req.body.id) models.Producto.updateOne({ _id: ObjectId(req.body.id) },params).exec((err, data) => {
+        if (req.body.id) models.Producto.updateOne({ _id: ObjectId(req.body.id) }, params).exec((err, data) => {
             if (err) res.status(400).json({
                 err: err,
                 data: data || null
@@ -817,6 +817,20 @@ module.exports = {
                     }
                 }
             ]
+        ).exec((err, data) => {
+            if (err) res.status(400).json({
+                err: err,
+                data: data || null
+            })
+            else res.status(200).json({
+                err: err,
+                data: data
+            })
+        })
+    },
+    deleteProd: (req, res) => {
+        models.Producto.findOneAndRemove(
+            { _id: ObjectId(req.params.prod_id) }
         ).exec((err, data) => {
             if (err) res.status(400).json({
                 err: err,
