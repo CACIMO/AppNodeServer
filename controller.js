@@ -128,10 +128,33 @@ module.exports = {
         Producto.tag = JSON.parse(req.body.tag).map((id) => ObjectId(id))
         Producto.talla = JSON.parse(req.body.talla).map((id) => ObjectId(id))
         Producto.pesoImg = req.body.pesoImg
-        if(req.file)Producto.img = req.file.buffer
+        if (req.file) Producto.img = req.file.buffer
 
-        Producto.save((err, data) => {
-            console.log(err)
+
+        if (req.body.id) models.Producto.updateOne({ _id: ObjectId(req.body.id) }, {
+            titulo: req.body.titulo,
+            valor: req.body.valor,
+            fileName: req.body.nombre,
+            descripcion: req.body.descripcion,
+            refVendedora: req.body.refVendedora,
+            refInterna: req.body.refInterna,
+            stock: req.body.stock,
+            color: JSON.parse(req.body.color).map((id) => ObjectId(id)),
+            categoria: JSON.parse(req.body.categoria).map((id) => ObjectId(id)),
+            tag: JSON.parse(req.body.tag).map((id) => ObjectId(id)),
+            talla: JSON.parse(req.body.talla).map((id) => ObjectId(id))
+        }).exec((err, data) => {
+            if (err) res.status(400).json({
+                err: err,
+                data: data || null
+            })
+            else res.status(200).json({
+                err: err,
+                data: 'Producto Creado Correctamente.'
+            })
+
+        });
+        else Producto.save((err, data) => {
             if (err) res.status(400).json({
                 err: err,
                 data: data || null
