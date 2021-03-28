@@ -127,11 +127,11 @@ module.exports = {
         Producto.categoria = JSON.parse(req.body.categoria).map((id) => ObjectId(id))
         Producto.tag = JSON.parse(req.body.tag).map((id) => ObjectId(id))
         Producto.talla = JSON.parse(req.body.talla).map((id) => ObjectId(id))
-        console.log(req.body.pesoImg)
         Producto.pesoImg = req.body.pesoImg
         if(req.file)Producto.img = req.file.buffer
 
         Producto.save((err, data) => {
+            console.log(err)
             if (err) res.status(400).json({
                 err: err,
                 data: data || null
