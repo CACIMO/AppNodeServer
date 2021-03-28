@@ -130,8 +130,7 @@ module.exports = {
         Producto.pesoImg = req.body.pesoImg
         if (req.file) Producto.img = req.file.buffer
 
-
-        if (req.body.id) models.Producto.updateOne({ _id: ObjectId(req.body.id) }, {
+        var params = {
             titulo: req.body.titulo,
             valor: req.body.valor,
             fileName: req.body.nombre,
@@ -143,7 +142,14 @@ module.exports = {
             categoria: JSON.parse(req.body.categoria).map((id) => ObjectId(id)),
             tag: JSON.parse(req.body.tag).map((id) => ObjectId(id)),
             talla: JSON.parse(req.body.talla).map((id) => ObjectId(id))
-        }).exec((err, data) => {
+        }
+        if (req.file){
+            params.pesoImg =req.body.pesoImg
+            params.img =req.file.buffer
+        }
+
+
+        if (req.body.id) models.Producto.updateOne({ _id: ObjectId(req.body.id) },params).exec((err, data) => {
             if (err) res.status(400).json({
                 err: err,
                 data: data || null
