@@ -115,7 +115,7 @@ module.exports = {
         })
     },
     newProd: (req, res) => {
-        console.log('entro');
+        console.log(req.file);
         let Producto = new models.Producto()
         Producto.titulo = req.body.titulo
         Producto.valor = req.body.valor
