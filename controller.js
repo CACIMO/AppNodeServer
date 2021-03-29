@@ -661,7 +661,7 @@ module.exports = {
                 data[0]['producto'].forEach(prod => {
                     pago += parseInt(prod['cantidad']) * parseInt(prod['valor'])
                 });
-                pago+=parseInt(data[0]['envio']) 
+                pago+=parseInt(req.body.envio) 
                 flag = true
                 let Formato = new models.Formato()
                 try {
@@ -676,7 +676,7 @@ module.exports = {
                     Formato.telefono = req.body.telefono
                     Formato.pago = req.body.pago
                     Formato.Productos = data[0]['producto']
-                    Formato.envio = data[0]['envio']
+                    Formato.envio = req.body.envio
                 }
                 catch (error) {
                     console.log(error)

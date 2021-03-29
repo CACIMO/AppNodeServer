@@ -158,10 +158,6 @@ let CarritoSchema = mongoose.Schema({
     active: {
         type: Boolean,
         required: true
-    },
-    envio:{
-        type: Number,
-        required: true
     }
 });
 let CarritoItemSchema = mongoose.Schema({
