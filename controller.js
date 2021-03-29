@@ -885,7 +885,7 @@ module.exports = {
     subirFactura: (req, res) => {
 
         if (req.file) models.Formato.updateOne(
-            { _id: ObjectId(req.params.formato) },
+            { _id: ObjectId(req.params.prod_id) },
             { fac: req.file.buffer },
             (err, data) => {
                 if (err) res.status(400).json({
