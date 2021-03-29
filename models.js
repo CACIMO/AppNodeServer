@@ -256,7 +256,8 @@ let FormatoSchema = mongoose.Schema({
         type: Array
     },
     fac: {
-        type: Buffer
+        type: Buffer,
+        default:null
     },
 })
 let ErrorLogSchema = mongoose.Schema({
