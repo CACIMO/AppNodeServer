@@ -45,6 +45,8 @@ router.route('/getForm/:idClient')
 router.route('/menuTk')
     .get(controller.getUSerTk)
     .post(controller.getUserId)
+router.route('/etapa/:formato')
+    .post(controller.cambiarEtapa)
 
 
 // Export API routes

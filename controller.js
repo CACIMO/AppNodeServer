@@ -851,4 +851,19 @@ module.exports = {
             })
         })
     },
+    cambiarEtapa: (req, res) => {
+        models.Formato.updateOne(
+            { _id: ObjectId(req.params.formato) },
+            { etapa: ObjectId(req.body.etapaId) },
+            (err, data) => {
+                if (err) res.status(400).json({
+                    err: err,
+                    data: data || null
+                })
+                else res.status(200).json({
+                    err: err,
+                    data: data
+                })
+            })
+    }
 }
