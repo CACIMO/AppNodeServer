@@ -158,6 +158,10 @@ let CarritoSchema = mongoose.Schema({
     active: {
         type: Boolean,
         required: true
+    },
+    envio:{
+        type: Number,
+        required: true
     }
 });
 let CarritoItemSchema = mongoose.Schema({
@@ -258,6 +262,11 @@ let FormatoSchema = mongoose.Schema({
     fac: {
         type: Buffer,
         default:null
+    },
+    envio: {
+        type: Number,
+        default:0,
+        require: true
     },
 })
 let ErrorLogSchema = mongoose.Schema({

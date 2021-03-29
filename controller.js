@@ -467,6 +467,7 @@ module.exports = {
                 Carrito.formato = token
                 Carrito.active = true
                 Carrito.producto = [Item]
+                Carrito.envio = req.body.envio
 
                 Carrito.save((err, data) => {
 
@@ -660,6 +661,7 @@ module.exports = {
                 data[0]['producto'].forEach(prod => {
                     pago += parseInt(prod['cantidad']) * parseInt(prod['valor'])
                 });
+                pago+=parseInt(data[0]['envio']) 
                 flag = true
                 let Formato = new models.Formato()
                 try {
@@ -674,6 +676,7 @@ module.exports = {
                     Formato.telefono = req.body.telefono
                     Formato.pago = req.body.pago
                     Formato.Productos = data[0]['producto']
+                    Formato.envio = data[0]['envio']
                 }
                 catch (error) {
                     console.log(error)
