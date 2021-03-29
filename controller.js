@@ -837,7 +837,7 @@ module.exports = {
 
                 if (data.length > 0 || err) res.status(400).json({})
                 else models.Producto.remove(
-                    { _id: ObjectId() }
+                    { _id: ObjectId(req.params.prod_id) }
                 ).exec((err, data) => {
                     if (err) res.status(400).json({
                         err: err,
