@@ -31,7 +31,6 @@ router.route('/usuario')
     .post(controller.nuevoUsuario)
 router.route('/getImg/:prod_id')
     .get(controller.getFile)
-    .post(controller.getFac)
 router.route('/carrito')
     .post(controller.addCarrito)
     .get(controller.getListCarrito)
@@ -50,6 +49,7 @@ router.route('/etapa/:formato')
     .post(controller.cambiarEtapa)
 router.route('/fact/:formato')
     .post(controller.subirFactura)
+    .get(controller.getFac)
 
 
 // Export API routes

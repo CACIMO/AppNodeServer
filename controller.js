@@ -359,7 +359,7 @@ module.exports = {
         });
     },
     getFac: (req, res) => {
-        let id = req.params.prod_id
+        let id = req.params.formato
         models.Formato.find({ _id: ObjectId(id) }, { fac: 1 }, (err, data) => {
 
             let name =id
