@@ -363,7 +363,7 @@ module.exports = {
         models.Formato.find({ _id: ObjectId(id) }, { fac: 1 }, (err, data) => {
 
             let name =id
-            let imgBinary = data[0].img
+            let imgBinary = data[0].fac
             if (err) res.status(400).json({})
             else {
 
