@@ -563,9 +563,9 @@ module.exports = {
         models.Formato.aggregate(
             [
                 { $match: { _id: ObjectId(req.body.formato) } },
-                { $lookup: { from: 'producto', localField: 'Prodcutos.id', foreignField: '_id', as: 'Prods' } },
-                { $lookup: { from: 'color', localField: 'Prodcutos.color', foreignField: '_id', as: 'Colores' } },
-                { $lookup: { from: 'talla', localField: 'Prodcutos.talla', foreignField: '_id', as: 'Tallas' } },
+                { $lookup: { from: 'producto', localField: 'Productos.id', foreignField: '_id', as: 'Prods' } },
+                { $lookup: { from: 'color', localField: 'Productos.color', foreignField: '_id', as: 'Colores' } },
+                { $lookup: { from: 'talla', localField: 'Productos.talla', foreignField: '_id', as: 'Tallas' } },
                 { $lookup: { from: 'usuario', localField: 'vendedor', foreignField: '_id', as: 'Vendedor' } },
                 { $lookup: { from: 'etapa', localField: 'etapa', foreignField: '_id', as: 'Etapa' } },
                 {
@@ -608,7 +608,7 @@ module.exports = {
                 { $lookup: { from: 'pago', localField: 'pago', foreignField: 'short', as: 'FPago' } },
                 {
                     $project: {
-                        Prodcutos: 0,
+                        Productos: 0,
                         active: 0,
                         'FPago._id:': 0,
                         'Etapa._id:': 0
@@ -654,7 +654,7 @@ module.exports = {
                     Formato.nombre = req.body.nombre
                     Formato.telefono = req.body.telefono
                     Formato.pago = req.body.pago
-                    Formato.Prodcutos = data[0]['producto']
+                    Formato.Productos = data[0]['producto']
                 }
                 catch (error) {
                     console.log(error)
@@ -810,7 +810,7 @@ module.exports = {
                 { $lookup: { from: 'pago', localField: 'pago', foreignField: 'short', as: 'FPago' } },
                 {
                     $project: {
-                        Prodcutos: 0,
+                        Productos: 0,
                         active: 0,
                         'FPago._id:': 0,
                         'Etapa._id:': 0
@@ -829,28 +829,26 @@ module.exports = {
         })
     },
     deleteProd: (req, res) => {
-        
-        models.Formato.find({ 'Prodcutos.id': { $in: [ObjectId(req.params.prod_id)] } }).exec((err, data) => {
-            console.log(err,data)
-            res.status(200).json({
-                err: err,
-                data: data
+
+        models.Formato.find({ 'Productos.id': { $in: [ObjectId(req.params.prod_id)] } }).exec((err, data) => {
+
+            if (data.length > 0 || err) res.status(400).json({})
+            else models.Carrito.find({ 'producto.id': { $in: [ObjectId(req.params.prod_id)] } }).exec((err, data) => {
+
+                if (data.length > 0 || err) res.status(400).json({})
+                else models.Producto.remove(
+                    { _id: ObjectId() }
+                ).exec((err, data) => {
+                    if (err) res.status(400).json({
+                        err: err,
+                        data: data || null
+                    })
+                    else res.status(200).json({
+                        err: err,
+                        data: data
+                    })
+                })
             })
         })
-
-
-
-        /* models.Producto.remove(
-            { _id: ObjectId() }
-        ).exec((err, data) => {
-            if (err) res.status(400).json({
-                err: err,
-                data: data || null
-            })
-            else res.status(200).json({
-                err: err,
-                data: data
-            })
-        }) */
     },
 }

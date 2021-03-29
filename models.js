@@ -252,7 +252,7 @@ let FormatoSchema = mongoose.Schema({
         type: ObjectId,
         default: ObjectId("604b87f49ed8c060cc0e11db")
     },
-    Prodcutos: {
+    Productos: {
         type: Array
     }
 })
