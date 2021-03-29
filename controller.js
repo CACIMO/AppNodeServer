@@ -886,7 +886,7 @@ module.exports = {
         console.log(req.params.prod_id, req.file)
 
         if (req.file) models.Formato.updateOne(
-            { _id: ObjectId(req.params.prod_id) },
+            { _id: ObjectId(req.params.formato) },
             { fac: req.file.buffer },
             (err, data) => {
                 if (err) res.status(400).json({
