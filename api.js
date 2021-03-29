@@ -48,6 +48,7 @@ router.route('/menuTk')
 router.route('/etapa/:formato')
     .post(controller.cambiarEtapa)
     .put(controller.subirFactura)
+    .get(controller.getFac)
 
 
 // Export API routes

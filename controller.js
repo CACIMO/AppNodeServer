@@ -358,6 +358,22 @@ module.exports = {
             }
         });
     },
+    getFac: (req, res) => {
+        let id = req.params.formato
+        models.Formato.find({ _id: ObjectId(id) }, { fac: 1 }, (err, data) => {
+
+            let name =id
+            let imgBinary = data[0].img
+            if (err) res.status(400).json({})
+            else {
+
+                if (!fs.existsSync(`/tmp/nodetmp`)) fs.mkdirSync(`/tmp/nodetmp`);
+                if (!fs.existsSync(`/tmp/nodetmp/${name}`)) fs.writeFileSync(`/tmp/nodetmp/${name}`, imgBinary, 'binary')
+                res.contentType('image/jpg')
+                res.status(200).sendFile(`/tmp/nodetmp/${name}`)
+            }
+        });
+    },
     getProductList: (req, res) => {
         let id = req.params.prod_id
         let color = []
@@ -584,6 +600,7 @@ module.exports = {
                         'Prods.valor': 0,
                         'Prods.descripcion': 0,
                         'Prods.__v': 0,
+                        fac:0,
                         active: 0
                     }
                 }
@@ -611,7 +628,8 @@ module.exports = {
                         Productos: 0,
                         active: 0,
                         'FPago._id:': 0,
-                        'Etapa._id:': 0
+                        'Etapa._id:': 0,
+                        fac:0
                     }
                 }
             ]
@@ -813,7 +831,8 @@ module.exports = {
                         Productos: 0,
                         active: 0,
                         'FPago._id:': 0,
-                        'Etapa._id:': 0
+                        'Etapa._id:': 0,
+                        fac:0
                     }
                 }
             ]
@@ -830,7 +849,7 @@ module.exports = {
     },
     deleteProd: (req, res) => {
 
-        models.Formato.find({ 'Productos.id': { $in: [ObjectId(req.params.prod_id)] } }).exec((err, data) => {
+        models.Formato.find({ 'Productos.id': { $in: [ObjectId(req.params.prod_id)] }},{fac:0}).exec((err, data) => {
 
             if (data.length > 0 || err) res.status(400).json({})
             else models.Carrito.find({ 'producto.id': { $in: [ObjectId(req.params.prod_id)] } }).exec((err, data) => {
@@ -860,10 +879,7 @@ module.exports = {
                     err: err,
                     data: data || null
                 })
-                else res.status(200).json({
-                    err: err,
-                    data: data
-                })
+                else res.status(200).json({})
             })
     },
     subirFactura: (req, res) => {
@@ -876,10 +892,7 @@ module.exports = {
                     err: err,
                     data: data || null
                 })
-                else res.status(200).json({
-                    err: err,
-                    data: data
-                })
+                else res.status(200).json({})
             })
         else res.status(400).json({})
     }
