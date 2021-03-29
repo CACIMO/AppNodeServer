@@ -363,7 +363,7 @@ module.exports = {
         models.Formato.find({ _id: ObjectId(id) }, { fac: 1 }, (err, data) => {
 
             console.log()
-            let name =id
+            let name = id
             let imgBinary = data[0].fac
             if (err) res.status(400).json({})
             else {
@@ -602,7 +602,7 @@ module.exports = {
                         'Prods.valor': 0,
                         'Prods.descripcion': 0,
                         'Prods.__v': 0,
-                        fac:0,
+                        fac: 0,
                         active: 0
                     }
                 }
@@ -631,7 +631,7 @@ module.exports = {
                         active: 0,
                         'FPago._id:': 0,
                         'Etapa._id:': 0,
-                        fac:0
+                        fac: 0
                     }
                 }
             ]
@@ -661,7 +661,7 @@ module.exports = {
                 data[0]['producto'].forEach(prod => {
                     pago += parseInt(prod['cantidad']) * parseInt(prod['valor'])
                 });
-                pago+=parseInt(req.body.envio) 
+                pago += parseInt(req.body.envio)
                 flag = true
                 let Formato = new models.Formato()
                 try {
@@ -836,7 +836,7 @@ module.exports = {
                         active: 0,
                         'FPago._id:': 0,
                         'Etapa._id:': 0,
-                        fac:0
+                        fac: 0
                     }
                 }
             ]
@@ -853,7 +853,7 @@ module.exports = {
     },
     deleteProd: (req, res) => {
 
-        models.Formato.find({ 'Productos.id': { $in: [ObjectId(req.params.prod_id)] }},{fac:0}).exec((err, data) => {
+        models.Formato.find({ 'Productos.id': { $in: [ObjectId(req.params.prod_id)] } }, { fac: 0 }).exec((err, data) => {
 
             if (data.length > 0 || err) res.status(400).json({})
             else models.Carrito.find({ 'producto.id': { $in: [ObjectId(req.params.prod_id)] } }).exec((err, data) => {
@@ -900,5 +900,18 @@ module.exports = {
                 else res.status(200).json({})
             })
         else res.status(400).json({})
+    },
+    removeCarrtito: (req, res) => {
+        models.Carrito.update({ _id: ObjectId(req.body.idCarrito) }, { $pull: { producto: { _id: ObjectId(req.body.iditem) } } }).exec((err, data) => {
+            if (err) res.status(400).json({
+                err: err,
+                data: data || null
+            })
+            else res.status(200).json({
+                err: err,
+                data: data
+            })
+        })
     }
+
 }
