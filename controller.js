@@ -362,13 +362,14 @@ module.exports = {
         let id = req.params.formato
         models.Formato.find({ _id: ObjectId(id) }, { fac: 1 }, (err, data) => {
 
+            console.log()
             let name =id
             let imgBinary = data[0].fac
             if (err) res.status(400).json({})
             else {
 
                 if (!fs.existsSync(`/tmp/nodetmp`)) fs.mkdirSync(`/tmp/nodetmp`);
-                if (!fs.existsSync(`/tmp/nodetmp/${name}`)) fs.writeFileSync(`/tmp/nodetmp/${name}`, imgBinary, 'binary')
+                /* if (!fs.existsSync(`/tmp/nodetmp/${name}`))  */fs.writeFileSync(`/tmp/nodetmp/${name}`, imgBinary, 'binary')
                 res.contentType('image/jpg')
                 res.status(200).sendFile(`/tmp/nodetmp/${name}`)
             }
