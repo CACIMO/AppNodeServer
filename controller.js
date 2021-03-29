@@ -883,6 +883,7 @@ module.exports = {
             })
     },
     subirFactura: (req, res) => {
+        console.log(req.params.prod_id, req.file)
 
         if (req.file) models.Formato.updateOne(
             { _id: ObjectId(req.params.prod_id) },

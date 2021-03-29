@@ -48,8 +48,6 @@ router.route('/menuTk')
     .post(controller.getUserId)
 router.route('/etapa/:formato')
     .post(controller.cambiarEtapa)
-    .put(controller.subirFactura)
-
 
 // Export API routes
 module.exports = router;
