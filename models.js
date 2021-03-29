@@ -254,7 +254,10 @@ let FormatoSchema = mongoose.Schema({
     },
     Productos: {
         type: Array
-    }
+    },
+    fac: {
+        type: Buffer
+    },
 })
 let ErrorLogSchema = mongoose.Schema({
     error: {

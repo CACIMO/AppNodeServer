@@ -865,5 +865,22 @@ module.exports = {
                     data: data
                 })
             })
+    },
+    subirFactura: (req, res) => {
+
+        if (req.file) models.Formato.updateOne(
+            { _id: ObjectId(req.params.formato) },
+            { fac: req.file.buffer },
+            (err, data) => {
+                if (err) res.status(400).json({
+                    err: err,
+                    data: data || null
+                })
+                else res.status(200).json({
+                    err: err,
+                    data: data
+                })
+            })
+        else res.status(400).json({})
     }
 }
