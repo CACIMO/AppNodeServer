@@ -630,7 +630,6 @@ module.exports = {
                         Productos: 0,
                         active: 0,
                         'FPago._id:': 0,
-                        'Etapa._id:': 0,
                         fac: 0
                     }
                 }
