@@ -32,15 +32,14 @@ module.exports = {
         let deviceId = req.headers['device-id']
 
         if (token) jwt.verify(token, con.conf.key, (err, decoded) => {
-            console.log(err, decoded);
-            if (err) module.exports.errorLog(req,res)
+            if (err) module.exports.errorLog(req,res,err)
             else res.status(200).json({
                 err: err,
                 data: decoded
             })
         });
     },
-    errorLog:(req,res)=>{
+    errorLog:(req,res,err)=>{
         
         console.log('Entre Aqui');
         let deviceId = req.headers['device-id']
