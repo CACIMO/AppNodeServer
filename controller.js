@@ -28,9 +28,9 @@ module.exports = {
     },
     auth: (req, res) => {
 
-        console.log(deviceId);
         let token = req.headers['access-token']
         let deviceId = req.headers['device-id']
+        console.log(deviceId);
 
         if (token) jwt.verify(token, con.conf.key, (err, decoded) => {
 
