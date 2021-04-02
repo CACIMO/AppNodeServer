@@ -32,7 +32,7 @@ module.exports = {
         let deviceId = req.headers['device-id']
 
         if (token) jwt.verify(token, con.conf.key, (err, decoded) => {
-
+            console.log(err, decoded);
             if (err) errorLog(req,res)
             else res.status(200).json({
                 err: err,
