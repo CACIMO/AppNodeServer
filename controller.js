@@ -30,7 +30,6 @@ module.exports = {
 
         let token = req.headers['access-token']
         let deviceId = req.headers['device-id']
-        console.log(deviceId);
 
         if (token) jwt.verify(token, con.conf.key, (err, decoded) => {
 
@@ -43,6 +42,7 @@ module.exports = {
     },
     errorLog:(req,res)=>{
         
+        console.log('Entre Aqui');
         let deviceId = req.headers['device-id']
         
         let Error = new models.ErrorLog()
