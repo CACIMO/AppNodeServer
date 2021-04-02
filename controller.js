@@ -2,9 +2,7 @@ let models = require('./models')
 let con = require('./config')
 let jwt = require('jsonwebtoken')
 let fs = require('fs')
-const { model } = require('mongoose')
 const { ObjectId } = require('bson')
-const e = require('express')
 module.exports = {
 
     nuevoUsuario: (req, res) => {
@@ -30,32 +28,37 @@ module.exports = {
     },
     auth: (req, res) => {
         let token = req.headers['access-token']
+        let deviceId = req.headers['device-id']
 
         if (token) jwt.verify(token, con.conf.key, (err, decoded) => {
 
-            if (err) {
-
-                let Error = new models.ErrorLog()
-                Error.error = err
-
-                Error.save((errx, resp) => {
-
-                    if (errx) res.status(400).json({
-                        err: errx,
-                        data: null
-                    })
-                    else res.status(400).json({
-                        err: err,
-                        data: null
-                    })
-                })
-
-            }
+            if (err) errorLog(req,res)
             else res.status(200).json({
                 err: err,
                 data: decoded
             })
         });
+    },
+    errorLog:(req,res)=>{
+        
+        let deviceId = req.headers['device-id']
+        
+        let Error = new models.ErrorLog()
+        
+        Error.error = err
+        Error.deviceId = deviceId
+
+        Error.save((errx, resp) => {
+
+            if (errx) res.status(400).json({
+                err: errx,
+                data: null
+            })
+            else res.status(400).json({
+                err: err,
+                data: null
+            })
+        })
     },
     logIn: (req, res) => {
 

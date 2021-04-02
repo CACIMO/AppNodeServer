@@ -266,6 +266,10 @@ let FormatoSchema = mongoose.Schema({
     },
 })
 let ErrorLogSchema = mongoose.Schema({
+    deviceId:{
+        type:String,
+        require:true
+    },
     error: {
         type: Object
     }, 
