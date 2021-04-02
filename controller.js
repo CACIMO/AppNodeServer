@@ -33,7 +33,7 @@ module.exports = {
 
         if (token) jwt.verify(token, con.conf.key, (err, decoded) => {
             console.log(err, decoded);
-            if (err) errorLog(req,res)
+            if (err) module.exports.errorLog(req,res)
             else res.status(200).json({
                 err: err,
                 data: decoded
