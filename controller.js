@@ -41,7 +41,6 @@ module.exports = {
     },
     errorLog:(req,res,err)=>{
         
-        console.log('Entre Aqui');
         let deviceId = req.headers['device-id']
         
         let Error = new models.ErrorLog()
