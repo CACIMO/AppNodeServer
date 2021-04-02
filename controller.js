@@ -50,10 +50,10 @@ module.exports = {
 
         Error.save((errx, resp) => {
 
-            if (errx) res.status(400).json({
+            if (errx) res.status(200).json({
                 err: errx
             })
-            else res.status(400).json({
+            else res.status(200).json({
                 err: err
             })
         })
