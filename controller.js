@@ -28,6 +28,7 @@ module.exports = {
     },
     auth: (req, res) => {
 
+        console.log('aqui estoy')
         let token = req.headers['access-token']
         let deviceId = req.headers['device-id']
 
