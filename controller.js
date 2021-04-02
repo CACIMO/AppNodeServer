@@ -35,7 +35,6 @@ module.exports = {
         if (token) jwt.verify(token, con.conf.key, (err, decoded) => {
             if (err) module.exports.errorLog(req,res,err)
             else res.status(200).json({
-                err: err,
                 data: decoded
             })
         });
@@ -52,12 +51,10 @@ module.exports = {
         Error.save((errx, resp) => {
 
             if (errx) res.status(400).json({
-                err: errx,
-                data: null
+                err: errx
             })
             else res.status(400).json({
-                err: err,
-                data: null
+                err: err
             })
         })
     },
