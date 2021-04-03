@@ -32,13 +32,13 @@ module.exports = {
         let deviceId = req.headers['device-id']
 
         if (token) jwt.verify(token, con.conf.key, (err, decoded) => {
-            if (err) module.exports.errorLog(req, err).finally(() => {
-                res.status(400).json({})
-            })
+
+            if (err) module.exports.errorLog(req, err).finally(() => { res.status(400).json({}) })
             else res.status(200).json({
                 data: decoded
             })
-        });
+        })
+        else res.status(400).json({})
 
         /* 
                 if (errx) res.status(400).json({
@@ -50,7 +50,6 @@ module.exports = {
                 }) */
     },
     errorLog: (req, err) => {
-        console.log('aqui')
         let deviceId = req.headers['device-id']
 
         let Error = new models.ErrorLog()
@@ -60,8 +59,6 @@ module.exports = {
 
         let promise = new Promise((err, solve) => {
             Error.save((errx, resp) => {
-
-                console.log(errx,resp)
                 if (errx) { err(errx) }
                 else { solve(resp) }
             })
