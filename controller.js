@@ -28,18 +28,28 @@ module.exports = {
     },
     auth: (req, res) => {
 
-        console.log('aqui estoy')
         let token = req.headers['access-token']
         let deviceId = req.headers['device-id']
 
         if (token) jwt.verify(token, con.conf.key, (err, decoded) => {
-            if (err) module.exports.errorLog(req,res,err)
+            if (err) module.exports.errorLog(req,err).finally(()=>{
+                res.status(400).json({})
+            })
             else res.status(200).json({
                 data: decoded
             })
         });
+        
+/* 
+        if (errx) res.status(400).json({
+                err: errx
+            })
+            else res.status(400).json({
+                err: err
+            })
+        }) */
     },
-    errorLog:(req,res,err)=>{
+    errorLog:(req,err)=>{
         
         let deviceId = req.headers['device-id']
         
@@ -48,15 +58,15 @@ module.exports = {
         Error.error = err
         Error.deviceId = deviceId
 
-        Error.save((errx, resp) => {
-
-            if (errx) res.status(200).json({
-                err: errx
-            })
-            else res.status(200).json({
-                err: err
+        let promise = new Promise((err,solve)=>{
+            Error.save((errx, resp) => {
+                if(errx)err(errx)
+                else solve(resp)
             })
         })
+
+        return promise
+        
     },
     logIn: (req, res) => {
 
