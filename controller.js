@@ -863,7 +863,7 @@ module.exports = {
     deleteProd: (req, res) => {
 
         models.Formato.find({ 'Productos.id': { $in: [ObjectId(req.params.prod_id)] } }, { fac: 0 }).exec((err, data) => {
-
+            console.log(err, data)
             if (data.length > 0 || err) res.status(400).json({})
             else models.Carrito.find({ 'producto.id': { $in: [ObjectId(req.params.prod_id)] } }).exec((err, data) => {
 
