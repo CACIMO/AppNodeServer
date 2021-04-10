@@ -915,7 +915,7 @@ module.exports = {
         models.Producto.updateOne({ _id: ObjectId(req.body.idProducto) }, { $inc: { stock: (req.body.cantidad) } }, (err, datax) => {
             if (err) res.status(400).json({
                 err: err,
-                data: data || null
+                data: datax || null
             })
             else models.Carrito.update({ _id: ObjectId(req.body.idCarrito) }, { $pull: { producto: { _id: ObjectId(req.body.iditem) } } }).exec((err, data) => {
                 if (err) res.status(400).json({
