@@ -930,13 +930,13 @@ module.exports = {
         })
     },
     procesarPed: (req, res) => {
-
+console.log(req.body)
         models.Formato.updateOne(
             {
                 _id: ObjectId(req.body.formatoId),
                 Productos: {
                     $elemMatch: {
-                        _id: ObjectId(req.body.itemId)
+                        id: ObjectId(req.body.itemId)
                     }
                 }
             },
