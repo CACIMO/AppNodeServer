@@ -51,7 +51,7 @@ router.route('/etapa/:formato')
 router.route('/fact/:formato')
     .post(controller.subirFactura)
     .get(controller.getFac)
-router.route('/qrScann')
+router.route('/qrscann')
     .post(controller.procesarPed)
     .put(controller.generateQr)
 
