@@ -947,7 +947,7 @@ module.exports = {
     generateQr: (req, res) => {
 
         let data = req.body.data
-        let id = req.body.prod_id
+        let id = req.params.id
 
         models.Producto.findOne({_id:ObjectId(id)},{img:0},(err,data)=>{
             console.log(data);
