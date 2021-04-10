@@ -29,7 +29,6 @@ module.exports = {
     auth: (req, res) => {
 
         let token = req.headers['access-token']
-        let deviceId = req.headers['device-id']
 
         if (token) jwt.verify(token, con.conf.key, (err, decoded) => {
 
@@ -39,15 +38,6 @@ module.exports = {
             })
         })
         else res.status(400).json({})
-
-        /* 
-                if (errx) res.status(400).json({
-                        err: errx
-                    })
-                    else res.status(400).json({
-                        err: err
-                    })
-                }) */
     },
     errorLog: (req, err) => {
         let deviceId = req.headers['device-id']
@@ -76,7 +66,7 @@ module.exports = {
             [
                 { $match: { usuario: usu, password: pass } },
                 { $lookup: { from: 'permiso', localField: 'Permiso', foreignField: '_id', as: 'Permisos' } },
-                { $lookup: { from: 'menu', localField: 'Permisos.menuOpcions', foreignField: '_id', as: 'MenuData' } },
+                { $lookup: { from: 'menu', localField: 'Permisos.menuOptions', foreignField: '_id', as: 'MenuData' } },
                 { $match: { 'MenuData.active': true } },
                 {
                     $project: {
@@ -728,7 +718,7 @@ module.exports = {
                 {
                     $project: {
                         password: 0,
-                        'Permisos.menuOpcions': 0
+                        'Permisos.menuOptions': 0
                     }
                 }
 
@@ -753,7 +743,7 @@ module.exports = {
             [
                 { $match: { token: tk } },
                 { $lookup: { from: 'permiso', localField: 'Permiso', foreignField: '_id', as: 'Permisos' } },
-                { $lookup: { from: 'menu', localField: 'Permisos.menuOpcions', foreignField: '_id', as: 'MenuData' } },
+                { $lookup: { from: 'menu', localField: 'Permisos.menuOptions', foreignField: '_id', as: 'MenuData' } },
                 { $match: { 'MenuData.active': true } },
                 {
                     $project: {
@@ -818,7 +808,7 @@ module.exports = {
                 {
                     $project: {
                         password: 0,
-                        'Permisos.menuOpcions': 0
+                        'Permisos.menuOptions': 0
                     }
                 }
 
@@ -930,7 +920,6 @@ module.exports = {
         })
     },
     procesarPed: (req, res) => {
-console.log(req.body)
         models.Formato.updateOne(
             {
                 _id: ObjectId(req.body.formatoId),
