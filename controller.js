@@ -946,12 +946,16 @@ module.exports = {
     },
     generateQr: (req, res) => {
 
-        let data = req.body.data
         let id = req.params.id
 
         models.Producto.findOne({_id:ObjectId(id)},{img:0},(err,data)=>{
-            console.log(data);
-            res.status(200).json({})
+            if (err) res.status(400).json({})
+            qrCode.toFile(`/tmp/nodetmp/${id}.png`, JSON.stringify(data), function (err) {
+                if (err) res.status(400).json({})
+                res.contentType('image/png')
+                res.status(200).sendFile(`/tmp/nodetmp/${id}.png`)
+                //fs.unlinkSync(`/tmp/nodetmp/${id}.png`)
+            })
         })
     }
 
