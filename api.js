@@ -53,7 +53,7 @@ router.route('/fact/:formato')
     .get(controller.getFac)
 router.route('/qrscann/:id')
     .post(controller.procesarPed)
-    .put(controller.generateQr)
+    .get(controller.generateQr)
 
 
 
