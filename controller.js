@@ -953,7 +953,7 @@ module.exports = {
             if (err) res.status(400).json({})
             res.contentType('image/png')
             res.status(200).sendFile(`/tmp/nodetmp/${id}.png`)
-            fs.unlinkSync(`/tmp/nodetmp/${id}.png`)
+            //fs.unlinkSync(`/tmp/nodetmp/${id}.png`)
         })
     }
 
