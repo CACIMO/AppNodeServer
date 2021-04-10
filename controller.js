@@ -949,7 +949,7 @@ module.exports = {
         let data = req.body.data
         let id = req.body.prod_id
 
-        models.Producto({_id:ObjectId(id)},{img:0},(err,data)=>{
+        models.Producto.findOne({_id:ObjectId(id)},{img:0},(err,data)=>{
             console.log(data);
             res.status(200).json({})
         })
