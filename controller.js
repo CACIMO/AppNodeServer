@@ -466,6 +466,7 @@ module.exports = {
         Item.color = ObjectId(req.body.color)
         Item.talla = ObjectId(req.body.talla)
         Item.cantidad = req.body.cantidad
+        Item.restante = req.body.cantidad
 
 
         models.Carrito.find({ formato: token, active: true }, (err, data) => {
@@ -910,16 +911,48 @@ module.exports = {
         else res.status(400).json({})
     },
     removeCarrtito: (req, res) => {
-        models.Carrito.update({ _id: ObjectId(req.body.idCarrito) }, { $pull: { producto: { _id: ObjectId(req.body.iditem) } } }).exec((err, data) => {
+
+        models.Producto.updateOne({ _id: ObjectId(req.body.idProducto) }, { $inc: { stock: (req.body.cantidad) } }, (err, datax) => {
             if (err) res.status(400).json({
                 err: err,
                 data: data || null
             })
-            else res.status(200).json({
-                err: err,
-                data: data
+            else models.Carrito.update({ _id: ObjectId(req.body.idCarrito) }, { $pull: { producto: { _id: ObjectId(req.body.iditem) } } }).exec((err, data) => {
+                if (err) res.status(400).json({
+                    err: err,
+                    data: data || null
+                })
+                else res.status(200).json({
+                    err: err,
+                    data: data
+                })
             })
         })
+    },
+    procesarPed: (req, res) => {
+
+        models.Formato.updateOne(
+            {
+                _id: ObjectId(req.body.formatoId),
+                Productos: {
+                    $elemMatch: {
+                        _id: ObjectId(req.body.itemId)
+                    }
+                }
+            },
+            {
+                $inc: { "Productos.$.restante": -1 },
+                $set: { etapa: ObjectId("604b88049ed8c060cc0e11dc") }
+            }).exec((err, data) => {
+                if (err) res.status(400).json({
+                    err: err,
+                    data: data || null
+                })
+                else res.status(200).json({
+                    err: err,
+                    data: data
+                })
+            });
     }
 
 }

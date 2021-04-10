@@ -181,6 +181,10 @@ let CarritoItemSchema = mongoose.Schema({
     cantidad: {
         type: Number,
         required: true
+    },
+    restante: {
+        type: Number,
+        required: true
     }
 });
 let ConfigSchema = mongoose.Schema({
