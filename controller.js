@@ -934,13 +934,14 @@ module.exports = {
         }).exec((err, data) => {
 
 
-            console.log(data)
+
             let thereAreProds = data.Productos.length
-            console.log(thereAreProds)
-            if(err)res.status(400).json({
-                msg: 'Ya ha registrado todas las unidades'
+            if (err) res.status(400).json({
+                err: {
+                    msg: 'Error en el server'
+                }
             })
-            else if (thereAreProds>0) {
+            else if (thereAreProds) {
                 let rest = data.Productos[0].restante
                 if (rest) {
 
@@ -970,7 +971,9 @@ module.exports = {
                         })
                 }
                 else res.status(400).json({
-                    msg: 'Ya ha registrado todas las unidades'
+                    err: {
+                        msg: 'Ya ha registrado todas las unidades'
+                    }
                 })
             }
             else {
