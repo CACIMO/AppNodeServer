@@ -946,6 +946,7 @@ module.exports = {
         try {
             console.log(req.params.id)
             let data = JSON.parse(req.params.id)
+            
             qrCode.toFile(`/tmp/nodetmp/${data._id}.png`, data, function (err) {
                 if (err) res.status(400).json({})
                 res.contentType('image/png')
