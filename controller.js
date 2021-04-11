@@ -932,37 +932,46 @@ module.exports = {
                 }
             }
         }).exec((err, data) => {
+
+
             console.log(data)
-            let rest = data.Productos[0].restante
-            if (rest) {
-                models.Formato.updateOne(
-                    {
-                        _id: ObjectId(req.body.formatoId),
-                        Productos: {
-                            $elemMatch: {
-                                id: ObjectId(req.body.itemId),
-                                color: ObjectId(req.body.colorId),
-                                talla: ObjectId(req.body.tallaId)
+            let thereAreProds = data.Productos.length
+            if (thereAreProds || !err) {
+                let rest = data.Productos[0].restante
+                if (rest) {
+
+                    models.Formato.updateOne(
+                        {
+                            _id: ObjectId(req.body.formatoId),
+                            Productos: {
+                                $elemMatch: {
+                                    id: ObjectId(req.body.itemId),
+                                    color: ObjectId(req.body.colorId),
+                                    talla: ObjectId(req.body.tallaId)
+                                }
                             }
-                        }
-                    },
-                    {
-                        $inc: { "Productos.$.restante": -1 },
-                        $set: { etapa: ObjectId("604b88049ed8c060cc0e11dc") }
-                    }).exec((err, data) => {
-                        if (err) res.status(400).json({
-                            err: err,
-                            data: data || null
+                        },
+                        {
+                            $inc: { "Productos.$.restante": -1 },
+                            $set: { etapa: ObjectId("604b88049ed8c060cc0e11dc") }
+                        }).exec((err, data) => {
+                            if (err) res.status(400).json({
+                                err: err,
+                                data: data || null
+                            })
+                            else res.status(200).json({
+                                err: err,
+                                data: data
+                            })
                         })
-                        else res.status(200).json({
-                            err: err,
-                            data: data
-                        })
-                    })
+                }
+                else res.status(400).json({
+                    msg: 'Ya ha registrado todas las unidades'
+                })
             }
             else {
                 res.status(400).json({
-                    err: err
+                    err: { msg: 'El producto no hace parte de la orden.' }
                 })
             }
 
