@@ -363,7 +363,6 @@ module.exports = {
         let id = req.params.formato
         models.Formato.find({ _id: ObjectId(id) }, { fac: 1 }, (err, data) => {
 
-            console.log()
             let name = id
             let imgBinary = data[0].fac
             if (err) res.status(400).json({})
@@ -887,7 +886,6 @@ module.exports = {
             })
     },
     subirFactura: (req, res) => {
-        console.log(req.params.formato, req.file)
 
         if (req.file) models.Formato.updateOne(
             { _id: ObjectId(req.params.formato) },
@@ -945,18 +943,21 @@ module.exports = {
             });
     },
     generateQr: (req, res) => {
-
-        let id = req.params.id
-
-        models.Producto.findOne({ _id: ObjectId(id) }, { img: 0 }, (err, data) => {
-            if (err) res.status(400).json({})
-            qrCode.toFile(`/tmp/nodetmp/${id}.png`, JSON.stringify(data), function (err) {
+        try {
+            let data = JSON.parse(req.params.id)
+            qrCode.toFile(`/tmp/nodetmp/${data._id}.png`, data, function (err) {
                 if (err) res.status(400).json({})
                 res.contentType('image/png')
                 res.status(200).sendFile(`/tmp/nodetmp/${id}.png`)
                 //fs.unlinkSync(`/tmp/nodetmp/${id}.png`)
             })
-        })
+        } catch (onError) {
+            res.status(400).json({
+                err: onError,
+                data: data || nul
+            })
+        }
+
     },
     sendEmail: (req, res) => {
 
