@@ -944,6 +944,7 @@ module.exports = {
     },
     generateQr: (req, res) => {
         try {
+            console.log(req.params.id)
             let data = JSON.parse(req.params.id)
             qrCode.toFile(`/tmp/nodetmp/${data._id}.png`, data, function (err) {
                 if (err) res.status(400).json({})
@@ -952,9 +953,9 @@ module.exports = {
                 //fs.unlinkSync(`/tmp/nodetmp/${id}.png`)
             })
         } catch (onError) {
+            console.log(onError)
             res.status(400).json({
-                err: onError,
-                data: data || nul
+                err: onError
             })
         }
 
