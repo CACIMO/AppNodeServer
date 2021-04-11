@@ -919,34 +919,59 @@ module.exports = {
         })
     },
     procesarPed: (req, res) => {
-        models.Formato.updateOne(
-            {
-                _id: ObjectId(req.body.formatoId),
-                Productos: {
-                    $elemMatch: {
-                        id: ObjectId(req.body.itemId)
-                    }
+
+        models.Formato.findOne({
+            _id: ObjectId(req.body.itemId)
+        }, {
+            _id: 0,
+            Productos: {
+                $elemMatch: {
+                    id: ObjectId(req.body.itemId),
+                    color: ObjectId(req.body.colorId),
+                    talla: ObjectId(req.body.tallaId)
                 }
-            },
-            {
-                $inc: { "Productos.$.restante": -1 },
-                $set: { etapa: ObjectId("604b88049ed8c060cc0e11dc") }
-            }).exec((err, data) => {
-                if (err) res.status(400).json({
-                    err: err,
-                    data: data || null
+            }
+        }).exec((err, data) => {
+            let rest = data.Productos[0].restante
+            if (rest) {
+                models.Formato.updateOne(
+                    {
+                        _id: ObjectId(req.body.formatoId),
+                        Productos: {
+                            $elemMatch: {
+                                id: ObjectId(req.body.itemId),
+                                color: ObjectId(req.body.colorId),
+                                talla: ObjectId(req.body.tallaId)
+                            }
+                        }
+                    },
+                    {
+                        $inc: { "Productos.$.restante": -1 },
+                        $set: { etapa: ObjectId("604b88049ed8c060cc0e11dc") }
+                    }).exec((err, data) => {
+                        if (err) res.status(400).json({
+                            err: err,
+                            data: data || null
+                        })
+                        else res.status(200).json({
+                            err: err,
+                            data: data
+                        })
+                    })
+            }
+            else {
+                res.status(400).json({
+                    err: err
                 })
-                else res.status(200).json({
-                    err: err,
-                    data: data
-                })
-            });
+            }
+
+        })
     },
     generateQr: (req, res) => {
         try {
             console.log(req.params.id)
             let data = JSON.parse(req.params.id)
-            
+
             qrCode.toFile(`/tmp/nodetmp/${data._id}.png`, req.params.id, function (err) {
                 if (err) res.status(400).json({})
                 res.contentType('image/png')
