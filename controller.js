@@ -932,6 +932,7 @@ module.exports = {
                 }
             }
         }).exec((err, data) => {
+            console.log(data)
             let rest = data.Productos[0].restante
             if (rest) {
                 models.Formato.updateOne(
