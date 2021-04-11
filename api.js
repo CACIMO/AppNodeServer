@@ -54,6 +54,8 @@ router.route('/fact/:formato')
 router.route('/qrscann/:id')
     .post(controller.procesarPed)
     .get(controller.generateQr)
+router.route('/email')
+    .get(controller.sendEmail)
 
 
 

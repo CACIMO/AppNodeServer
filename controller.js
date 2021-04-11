@@ -948,7 +948,7 @@ module.exports = {
 
         let id = req.params.id
 
-        models.Producto.findOne({_id:ObjectId(id)},{img:0},(err,data)=>{
+        models.Producto.findOne({ _id: ObjectId(id) }, { img: 0 }, (err, data) => {
             if (err) res.status(400).json({})
             qrCode.toFile(`/tmp/nodetmp/${id}.png`, JSON.stringify(data), function (err) {
                 if (err) res.status(400).json({})
@@ -957,6 +957,23 @@ module.exports = {
                 //fs.unlinkSync(`/tmp/nodetmp/${id}.png`)
             })
         })
+    },
+    sendEmail: (req, res) => {
+
+        const message = {
+            from: 'admin@amordebb.com', // Sender address
+            to: 'cart684@gmail.com',         // List of recipients
+            subject: 'Design Your Model S | Tesla', // Subject line
+            text: 'Have the most fun you can in a car. Get your Tesla today!' // Plain text body
+        };
+        con.conf.transport.sendMail(message, function (err, info) {
+            if (err) {
+                console.log(err)
+            } else {
+                console.log(info);
+            }
+        });
+
     }
 
 }
