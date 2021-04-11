@@ -946,13 +946,13 @@ module.exports = {
         try {
             console.log(req.params.id)
             let data = JSON.parse(req.params.id)
-
-        /*     qrCode.toFile(`/tmp/nodetmp/${data._id}.png`, data, function (err) {
+            
+            qrCode.toFile(`/tmp/nodetmp/${data._id}.png`, data, function (err) {
                 if (err) res.status(400).json({})
                 res.contentType('image/png')
-                res.status(200).sendFile(`/tmp/nodetmp/${id}.png`)
+                res.status(200).sendFile(`/tmp/nodetmp/${data._id}.png`)
                 //fs.unlinkSync(`/tmp/nodetmp/${id}.png`)
-            }) */
+            })
         } catch (onError) {
             console.log(onError)
             res.status(400).json({
