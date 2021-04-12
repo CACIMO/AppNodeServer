@@ -1009,6 +1009,7 @@ module.exports = {
         let fecIni = new Date(req.body.fecini)
         let fecFin = new Date(req.body.fecfin)
         let email = req.body.email
+
         let message = {
             from: 'admin@amordebb.com',
             to: email,
@@ -1061,7 +1062,7 @@ module.exports = {
                             if (info._id == prod.id) arryLine.push(info.refVendedora)
                         })
 
-                        ft.Color.forEach((info) => {
+                        ft.ColorInfo.forEach((info) => {
                             if (info._id == prod.color) arryLine.push(info.titulo)
                         })
 
