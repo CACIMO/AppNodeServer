@@ -1007,19 +1007,27 @@ module.exports = {
     },
     sendEmail: (req, res) => {
 
-        let fecIni = new Date(req.body.fecini)
-        let fecFin = new Date(req.body.fecfin)
+        let fecIni = new Date(`${req.body.fecini}T00:00:00Z`)
+        let fecFin = new Date(`${req.body.fecfin}T23:59:59Z`)
         let email = req.body.email
 
         let message = {
             from: 'admin@amordebb.com',
             to: email,
-            subject: `Formato de Ventas entre ${fecIni} y ${fecFin}`,
+            subject: `Formato de Ventas entre ${req.body.fecini} y ${req.body.fecfin}`,
             text: 'Formatos de Venta Amor de Bebe'
         }
 
         models.Formato.aggregate(
             [
+                {
+                    $match: {
+                        fecha: {
+                            $gte: fecIni,
+                            $lt: fecFin
+                        }
+                    }
+                },
                 { $lookup: { from: 'producto', localField: 'Productos.id', foreignField: '_id', as: 'ProdInfo' } },
                 { $lookup: { from: 'color', localField: 'Productos.color', foreignField: '_id', as: 'ColorInfo' } },
                 {
@@ -1047,18 +1055,20 @@ module.exports = {
                 }
             ]
         ).exec((err, data) => {
-
+            console.log(data)
             if (err) res.status(400).json({
                 err: err,
                 data: data || null
             })
-            else {
+            else if (data.length) {
                 var allLines = []
                 var arryLine = []
 
                 data.forEach((ft) => {
                     ft.Productos.forEach((prod) => {
-                        arryLine.push(ft.fecha)
+
+                        stringDate = new Date(ft.fecha - 3600000 * 5).
+                            arryLine.push()
                         var costUni = 0
                         ft.ProdInfo.forEach((info) => {
 
@@ -1090,9 +1100,14 @@ module.exports = {
                     documento += auxLine
                 })
                 console.log(documento)
+                res.status(200).json({})
             }
-
-
+            else {
+                res.status(400).json({
+                    err: err,
+                    data: data || null
+                })
+            }
 
             /* 
                     const message = {
@@ -1110,9 +1125,5 @@ module.exports = {
                     });
              */
         })
-
-
-        res.status(200).json({})
-
     }
 }
