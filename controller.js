@@ -1055,7 +1055,6 @@ module.exports = {
                 }
             ]
         ).exec((err, data) => {
-            console.log(data)
             if (err) res.status(400).json({
                 err: err,
                 data: data || null
@@ -1099,8 +1098,18 @@ module.exports = {
                     let auxLine = line.join(con.conf.separador) + '\n'
                     documento += auxLine
                 })
-                console.log(documento)
-                res.status(200).json({})
+                message.attachments = [
+                    {
+                        filename: 'Formato_de_Venta.csv',
+                        content: new Buffer(documento,'utf-8')
+                    }
+                ]
+
+                con.conf.transport.sendMail(message, function (err, info) {
+                    if (err) res.status(400).json({})
+                    else res.status(200).json({})
+                });
+
             }
             else {
                 res.status(400).json({
