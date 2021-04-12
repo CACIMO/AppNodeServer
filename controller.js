@@ -1060,29 +1060,29 @@ module.exports = {
                         arryLine.push(ft.fecha)
                         var costUni = 0
                         ft.ProdInfo.forEach((info) => {
-                            console.log(typeof(info._id) +'=='+ typeof(prod.id))
-                            if (info._id === prod.id) { 
+
+                            if (info._id.equals(prod.id)) {
                                 console.log('no entro')
                                 costUni = info.costo
-                                arryLine.push(info.refVendedora) 
+                                arryLine.push(info.refVendedora)
                             }
                         })
 
                         ft.ColorInfo.forEach((info) => {
-                            if (info._id == prod.color) arryLine.push(info.titulo)
+                            if (info._id.equals(prod.color)) arryLine.push(info.titulo)
                         })
                         arryLine.push(prod.cantidad)
                         arryLine.push(prod.valor)
                         arryLine.push(costUni)
-                        arryLine.push(prod.valor*prod.cantidad)
-                        arryLine.push(costUni*prod.cantidad)
+                        arryLine.push(prod.valor * prod.cantidad)
+                        arryLine.push(costUni * prod.cantidad)
 
                     })
                     arryLine.push(ft.formato.substr(0, 2))
                     arryLine.push(ft.formato.substr(2))
                     allLines.push(arryLine)
                     arryLine = []
-                    
+
                 })
                 console.log(allLines)
             }
