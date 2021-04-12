@@ -1063,6 +1063,7 @@ module.exports = {
                             console.log(info.costo)
                             if (info._id == prod.id) { 
                                 costUni = info.costo
+                                console.log(costUni)
                                 arryLine.push(info.refVendedora) 
                             }
                         })
