@@ -1049,23 +1049,23 @@ module.exports = {
             else {
                 var arryLine = []
                 data.forEach((ft) => {
-                    
 
-                    ft.Productos.forEach(( prod)=>{
+
+                    ft.Productos.forEach((prod) => {
                         arryLine.push(ft.fecha)
                         console.log(prod.id)
                         console.log(ft.ProdInfo)
-                        let Ref = ft.ProdInfo.forEach((info)=>{
-                            console.log(info._id + '==' + prod.id)
-                            return 1
-                        })//[0].refInterna
+                        let Ref = ft.ProdInfo.filter((info) => {
+                            if (prod.id == info._id) return true
+                            else false
+                        })
                         console.log(Ref)
 
                     })
 
-                    arryLine.push(ft.formato.substr(0,2))
+                    arryLine.push(ft.formato.substr(0, 2))
                     arryLine.push(ft.formato.substr(2))
-                    
+
 
                 })
             }
