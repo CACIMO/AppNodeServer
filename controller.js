@@ -1005,25 +1005,84 @@ module.exports = {
 
     },
     sendEmail: (req, res) => {
-        res.status(200).json({})
 
+        let fecIni = new Date(req.body.fecini)
+        let fecFin = new Date(req.body.fecfin)
+        let email = req.body.email
+        let message = {
+            from: 'admin@amordebb.com',
+            to: email,
+            subject: `Formato de Ventas entre ${fecIni} y ${fecFin}`,
+            text: 'Formatos de Venta Amor de Bebe'
+        }
 
+        models.Formato.aggregate(
+            [
+                { $lookup: { from: 'producto', localField: 'Productos.id', foreignField: '_id', as: 'ProdInfo' } },
+                { $lookup: { from: 'color', localField: 'Productos.color', foreignField: '_id', as: 'ColorInfo' } },
+                {
+                    $project: {
+                        fac: 0,
+                        'ProdInfo.img': 0,
+                        'ProdInfo.tag': 0,
+                        'ProdInfo.color': 0,
+                        'ProdInfo.categoria': 0,
+                        'ProdInfo.talla': 0,
+                        'ProdInfo.valor': 0,
+                        'ProdInfo.fileName': 0,
+                        'ProdInfo.descripcion': 0,
+                        'ProdInfo.refInterna': 0,
+                        'ProdInfo.stock': 0,
+                        'ProdInfo.pesoImg': 0,
+                        'ProdInfo.__v': 0,
+                        'ProdInfo.fecha': 0,
+                        __v: 0
+                    }
+                }
+            ]
+        ).exec((err, data) => {
 
-/* 
-        const message = {
-            from: 'admin@amordebb.com', // Sender address
-            to: 'cart684@gmail.com',         // List of recipients
-            subject: 'Design Your Model S | Tesla', // Subject line
-            text: 'Have the most fun you can in a car. Get your Tesla today!' // Plain text body
-        };
-        con.conf.transport.sendMail(message, function (err, info) {
-            if (err) {
-                console.log(err)
-            } else {
-                console.log(info);
+            if (err) res.status(400).json({
+                err: err,
+                data: data || null
+            })
+            else {
+                let arryLine = []
+                data.forEach((ft) => {
+                    
+
+                    ft.Productos.forEach(( prod)=>{
+                        arryLine.add(ft.fecha)
+                        let Ref = ft.ProdInfo.filter((info)=>info._id == prod.id)//[0].refInterna
+                        console.log(Ref)
+
+                    })
+
+                    arryLine.add(ft.formato.substr(0,2))
+                    arryLine.add(ft.formato.substr(2))
+                    
+
+                })
             }
-        });
- */
-    }
+            res.status(200).json({})
 
+
+
+            /* 
+                    const message = {
+                        from: 'admin@amordebb.com', // Sender address
+                        to: 'cart684@gmail.com',         // List of recipients
+                        subject: 'Design Your Model S | Tesla', // Subject line
+                        text: 'Have the most fun you can in a car. Get your Tesla today!' // Plain text body
+                    };
+                    con.conf.transport.sendMail(message, function (err, info) {
+                        if (err) {
+                            console.log(err)
+                        } else {
+                            console.log(info);
+                        }
+                    });
+             */
+        })
+    }
 }
