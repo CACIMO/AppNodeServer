@@ -1101,11 +1101,12 @@ module.exports = {
                 message.attachments = [
                     {
                         filename: 'Formato_de_Venta.csv',
-                        content: new Buffer(documento,'utf-8')
+                        content: documento
                     }
                 ]
 
                 con.conf.transport.sendMail(message, function (err, info) {
+                    console.log(err);
                     if (err) res.status(400).json({})
                     else res.status(200).json({})
                 });
