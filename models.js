@@ -65,6 +65,10 @@ let ProductoSchema = mongoose.Schema({
         type: Number,
         required: true
     },
+    costo: {
+        type: Number,
+        required: true
+    },
     fileName: {
         type: String,
         required: true

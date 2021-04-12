@@ -119,6 +119,7 @@ module.exports = {
         let Producto = new models.Producto()
         Producto.titulo = req.body.titulo
         Producto.valor = req.body.valor
+        Producto.costo = req.body.costo
         Producto.fileName = req.body.nombre
         Producto.descripcion = req.body.descripcion
         Producto.refVendedora = req.body.refVendedora
@@ -1037,10 +1038,10 @@ module.exports = {
                         'ProdInfo.pesoImg': 0,
                         'ProdInfo.__v': 0,
                         'ProdInfo.fecha': 0,
-                        'ColorInfo.primario' : 0,
-                        'ColorInfo.segundario' : 0,
-                        'ColorInfo.active' : 0,
-                        'ColorInfo.__v' : 0,
+                        'ColorInfo.primario': 0,
+                        'ColorInfo.segundario': 0,
+                        'ColorInfo.active': 0,
+                        'ColorInfo.__v': 0,
                         __v: 0
                     }
                 }
@@ -1052,29 +1053,36 @@ module.exports = {
                 data: data || null
             })
             else {
+                var allLines = []
                 var arryLine = []
                 data.forEach((ft) => {
-                    
-                    console.log(ft)
-
                     ft.Productos.forEach((prod) => {
                         arryLine.push(ft.fecha)
-
+                        let costUni = 0
                         ft.ProdInfo.forEach((info) => {
-                            if (info._id == prod.id) arryLine.push(info.refVendedora)
+                            if (info._id == prod.id) { 
+                                costUni = info.costo
+                                arryLine.push(info.refVendedora) 
+                            }
                         })
 
                         ft.ColorInfo.forEach((info) => {
                             if (info._id == prod.color) arryLine.push(info.titulo)
                         })
+                        arryLine.push(prod.cantidad)
+                        arryLine.push(prod.valor)
+                        arryLine.push(costUni)
+                        arryLine.push(prod.valor*prod.cantidad)
+                        arryLine.push(costUni*prod.cantidad)
 
                     })
-
                     arryLine.push(ft.formato.substr(0, 2))
                     arryLine.push(ft.formato.substr(2))
-
-
+                    allLines.push(arryLine)
+                    arryLine = []
+                    
                 })
+                console.log(arryLine)
             }
 
 
