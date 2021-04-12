@@ -1055,6 +1055,7 @@ module.exports = {
             else {
                 var allLines = []
                 var arryLine = []
+
                 data.forEach((ft) => {
                     ft.Productos.forEach((prod) => {
                         arryLine.push(ft.fecha)
@@ -1062,7 +1063,6 @@ module.exports = {
                         ft.ProdInfo.forEach((info) => {
 
                             if (info._id.equals(prod.id)) {
-                                console.log('no entro')
                                 costUni = info.costo
                                 arryLine.push(info.refVendedora)
                             }
@@ -1084,7 +1084,12 @@ module.exports = {
                     arryLine = []
 
                 })
-                console.log(allLines)
+                let documento = con.conf.csvEncabezado
+                allLines.forEach((line) => {
+                    let line = line.join(con.conf.separador) + '\n'
+                    documento += line
+                })
+                console.log(documento)
             }
 
 
