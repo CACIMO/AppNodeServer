@@ -1062,6 +1062,7 @@ module.exports = {
                         ft.ProdInfo.forEach((info) => {
                             console.log(info._id +'=='+ prod.id)
                             if (info._id == prod.id) { 
+                                console.log('no entro')
                                 costUni = info.costo
                                 arryLine.push(info.refVendedora) 
                             }
