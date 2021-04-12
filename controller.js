@@ -1036,7 +1036,9 @@ module.exports = {
                         'ProdInfo.pesoImg': 0,
                         'ProdInfo.__v': 0,
                         'ProdInfo.fecha': 0,
-                        'ColorInfo.titulo' : 0,
+                        'ColorInfo.primario' : 0,
+                        'ColorInfo.segundario' : 0,
+                        'ColorInfo.active' : 0,
                         'ColorInfo.__v' : 0,
                         __v: 0
                     }
@@ -1057,6 +1059,10 @@ module.exports = {
 
                         ft.ProdInfo.forEach((info) => {
                             if (info._id == prod.id) arryLine.push(info.refVendedora)
+                        })
+
+                        ft.Color.forEach((info) => {
+                            if (info._id == prod.color) arryLine.push(info.titulo)
                         })
 
                     })
