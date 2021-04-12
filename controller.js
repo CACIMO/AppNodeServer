@@ -1006,7 +1006,7 @@ module.exports = {
 
     },
     sendEmail: (req, res) => {
-
+        console.log(req.body)
         let fecIni = new Date(`${req.body.fecini}T00:00:00Z`)
         let fecFin = new Date(`${req.body.fecfin}T23:59:59Z`)
         let email = req.body.email
