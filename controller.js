@@ -1047,19 +1047,19 @@ module.exports = {
                 data: data || null
             })
             else {
-                let arryLine = []
+                var arryLine = []
                 data.forEach((ft) => {
                     
 
                     ft.Productos.forEach(( prod)=>{
-                        arryLine.add(ft.fecha)
+                        arryLine.push(ft.fecha)
                         let Ref = ft.ProdInfo.filter((info)=>info._id == prod.id)//[0].refInterna
                         console.log(Ref)
 
                     })
 
-                    arryLine.add(ft.formato.substr(0,2))
-                    arryLine.add(ft.formato.substr(2))
+                    arryLine.push(ft.formato.substr(0,2))
+                    arryLine.push(ft.formato.substr(2))
                     
 
                 })
@@ -1084,5 +1084,9 @@ module.exports = {
                     });
              */
         })
+
+
+        res.status(200).json({})
+
     }
 }
