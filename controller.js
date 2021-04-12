@@ -1005,7 +1005,11 @@ module.exports = {
 
     },
     sendEmail: (req, res) => {
+        res.status(200).json({})
 
+
+
+/* 
         const message = {
             from: 'admin@amordebb.com', // Sender address
             to: 'cart684@gmail.com',         // List of recipients
@@ -1019,7 +1023,7 @@ module.exports = {
                 console.log(info);
             }
         });
-
+ */
     }
 
 }
