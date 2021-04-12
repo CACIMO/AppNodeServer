@@ -1086,8 +1086,8 @@ module.exports = {
                 })
                 let documento = con.conf.csvEncabezado
                 allLines.forEach((line) => {
-                    let line = line.join(con.conf.separador) + '\n'
-                    documento += line
+                    let auxLine = line.join(con.conf.separador) + '\n'
+                    documento += auxLine
                 })
                 console.log(documento)
             }
