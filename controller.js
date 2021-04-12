@@ -1056,6 +1056,7 @@ module.exports = {
                         console.log(prod.id)
                         console.log(ft.ProdInfo)
                         let Ref = ft.ProdInfo.filter((info) => {
+                            console.log(prod.id +'=='+ info._id)
                             if (prod.id == info._id) return true
                             else false
                         })
