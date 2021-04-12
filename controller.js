@@ -1054,8 +1054,10 @@ module.exports = {
             else {
                 var arryLine = []
                 data.forEach((ft) => {
+                    
+                    console.log(ft)
 
-                    ft.Productos.forEach((prod) => {
+                   /*  ft.Productos.forEach((prod) => {
                         arryLine.push(ft.fecha)
 
                         ft.ProdInfo.forEach((info) => {
@@ -1066,7 +1068,7 @@ module.exports = {
                             if (info._id == prod.color) arryLine.push(info.titulo)
                         })
 
-                    })
+                    }) */
 
                     arryLine.push(ft.formato.substr(0, 2))
                     arryLine.push(ft.formato.substr(2))
