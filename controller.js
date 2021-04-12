@@ -1060,10 +1060,10 @@ module.exports = {
                         arryLine.push(ft.fecha)
                         var costUni = 0
                         ft.ProdInfo.forEach((info) => {
-                            console.log(info.costo)
+                            console.log(`1${info.costo}`)
                             if (info._id == prod.id) { 
                                 costUni = info.costo
-                                console.log(costUni)
+                                console.log(`2${costUni}`)
                                 arryLine.push(info.refVendedora) 
                             }
                         })
