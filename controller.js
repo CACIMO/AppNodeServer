@@ -1082,7 +1082,7 @@ module.exports = {
                     arryLine = []
                     
                 })
-                console.log(arryLine)
+                console.log(allLines)
             }
 
 
