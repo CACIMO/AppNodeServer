@@ -1098,12 +1098,12 @@ module.exports = {
                     let auxLine = line.join(con.conf.separador) + '\n'
                     documento += auxLine
                 })
-                message.attachments = [
+               /*  message.attachments = [
                     {
                         filename: 'Formato_de_Venta.csv',
                         content: documento
                     }
-                ]
+                ] */
 
                 con.conf.transport.sendMail(message, function (err, info) {
                     console.log(err);
