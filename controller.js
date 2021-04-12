@@ -1067,7 +1067,7 @@ module.exports = {
                 data.forEach((ft) => {
                     ft.Productos.forEach((prod) => {
 
-                        stringDate = new Date(ft.fecha - 3600000 * 5).toISOString
+                        stringDate = new Date(ft.fecha - 3600000 * 5).toISOString()
                         arryLine.push(stringDate)
                         var costUni = 0
                         ft.ProdInfo.forEach((info) => {
