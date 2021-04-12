@@ -1060,7 +1060,7 @@ module.exports = {
                         arryLine.push(ft.fecha)
                         var costUni = 0
                         ft.ProdInfo.forEach((info) => {
-                            console.log(info._id +'=='+ prod.id)
+                            console.log(typeof(info._id) +'=='+ typeof(prod.id))
                             if (info._id === prod.id) { 
                                 console.log('no entro')
                                 costUni = info.costo
