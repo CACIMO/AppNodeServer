@@ -1036,6 +1036,8 @@ module.exports = {
                         'ProdInfo.pesoImg': 0,
                         'ProdInfo.__v': 0,
                         'ProdInfo.fecha': 0,
+                        'ColorInfo.titulo' : 0,
+                        'ColorInfo.__v' : 0,
                         __v: 0
                     }
                 }
@@ -1050,17 +1052,12 @@ module.exports = {
                 var arryLine = []
                 data.forEach((ft) => {
 
-
                     ft.Productos.forEach((prod) => {
                         arryLine.push(ft.fecha)
-                        console.log(prod.id)
-                        console.log(ft.ProdInfo)
-                        let Ref = ft.ProdInfo.filter((info) => {
-                            console.log(prod.id +'=='+ info._id)
-                            if (prod.id == info._id) return true
-                            else false
+
+                        ft.ProdInfo.forEach((info) => {
+                            if (info._id == prod.id) arryLine.push(info.refVendedora)
                         })
-                        console.log(Ref)
 
                     })
 
