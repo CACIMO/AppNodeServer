@@ -1053,6 +1053,8 @@ module.exports = {
 
                     ft.Productos.forEach(( prod)=>{
                         arryLine.push(ft.fecha)
+                        console.log(prod.id)
+                        console.log(ft.ProdInfo)
                         let Ref = ft.ProdInfo.filter((info)=>info._id == prod.id)//[0].refInterna
                         console.log(Ref)
 
