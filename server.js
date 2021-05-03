@@ -7,7 +7,7 @@ let apiRoutes= require('./api')
 let multer = require('multer')()
 let app = express()
 var path = require('path');
-var cookieParser = require('cookie-parser');
+//var cookieParser = require('cookie-parser');
 
 app.use(cors({
     origin: '*',
