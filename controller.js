@@ -63,7 +63,40 @@ module.exports = {
         let usu = req.body.usuario
         let pass = req.body.password
 
-        models.Usuario.aggregate(
+        models.Usuario.find({ usuario: usu, password: pass },{token:0,password:0}).exec((err, data) => {
+            
+            if (err) res.status(400).json({
+                err: err
+            })
+            else {
+                if (data) jwt.sign({ expiresIn: "30d" }, con.conf.key, (err, tk) => {
+                    if (err) res.status(400).json({
+                        err: err
+                    })
+                    else
+                        models.Usuario.updateOne(
+                            { usuario: usu, password: pass },
+                            { token: tk },
+                            (err, datax) => {
+                                if (err) res.status(400).json({
+                                    err: err
+                                })
+                                else res.status(200).json({
+                                    data: {
+                                        token: tk,
+                                        usuario: data
+                                    }
+                                })
+                            })
+                })
+                else res.status(401).json({
+                    err: { msg: 'Clave o usario incorrectos' },
+                })
+            }
+
+        }) 
+
+       /*  models.Usuario.aggregate(
             [
                 { $match: { usuario: usu, password: pass } },
                 { $lookup: { from: 'permiso', localField: 'Permiso', foreignField: '_id', as: 'Permisos' } },
@@ -113,7 +146,7 @@ module.exports = {
                 })
             }
 
-        })
+        }) */
     },
     newProd: (req, res) => {
         let Producto = new models.Producto()
