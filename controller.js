@@ -420,10 +420,10 @@ module.exports = {
         params.push({ $lookup: { from: 'talla', localField: 'talla', foreignField: '_id', as: 'tallaData' } })
         params.push({ $project: { img: 0, color: 0, talla: 0, tag: 0, categoria: 0 } })
         params.push({ $sort: { titulo:1} })
-        //params.push({$skip:})
-        //params.push({$limit:})
+        params.push({$skip:parseInt(init)})
+        params.push({$limit:parseInt(last)})
         console.log(params)
-        models.Producto.aggregate(params).skip(parseInt(init)).limit(parseInt(last)).exec((err, data) => {
+        models.Producto.aggregate(params).exec((err, data) => {
             if (err) res.status(400).json({
                 err: err,
                 data: data || null
