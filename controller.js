@@ -359,9 +359,9 @@ module.exports = {
     },
     getProductList: (req, res) => {
         let id = req.body.prod_id
-        let id = req.body.nombre
-        let id = req.body.init
-        let id = req.body.last
+        let nombre = req.body.nombre
+        let init = req.body.init
+        let last = req.body.last
         let color = []
         let categoria = []
         let tag = []
