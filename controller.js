@@ -358,7 +358,10 @@ module.exports = {
         });
     },
     getProductList: (req, res) => {
-        let id = req.params.prod_id
+        let id = req.body.prod_id
+        let id = req.body.nombre
+        let id = req.body.init
+        let id = req.body.last
         let color = []
         let categoria = []
         let tag = []
