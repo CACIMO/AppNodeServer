@@ -1,7 +1,7 @@
 let router = require('express').Router()
 var controller = require('./controller')
 
-router.route('/producto/:prod_id')
+router.route('/producto')
     .put(controller.newProd)
     .post(controller.getProductList)
     .delete(controller.deleteProd)
