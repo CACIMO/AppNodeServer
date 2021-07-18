@@ -419,6 +419,7 @@ module.exports = {
         params.push({ $lookup: { from: 'categoria', localField: 'categoria', foreignField: '_id', as: 'categoriaData' } })
         params.push({ $lookup: { from: 'talla', localField: 'talla', foreignField: '_id', as: 'tallaData' } })
         params.push({ $project: { img: 0, color: 0, talla: 0, tag: 0, categoria: 0 } })
+        params.push({$limit:10})
 
         models.Producto.aggregate(params).sort({ fecha: -1 }).exec((err, data) => {
             if (err) res.status(400).json({
