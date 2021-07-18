@@ -422,7 +422,7 @@ module.exports = {
         params.push({ $sort: { titulo:1} })
         //params.push({$skip:})
         //params.push({$limit:})
-
+        console.log(params)
         models.Producto.aggregate(params).skip(parseInt(init)).limit(parseInt(last)).exec((err, data) => {
             if (err) res.status(400).json({
                 err: err,
