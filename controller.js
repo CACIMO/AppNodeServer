@@ -358,8 +358,8 @@ module.exports = {
         });
     },
     getProductList: (req, res) => {
-        let id = req.body.prod_id
-        let nombre = req.body.nombre
+        //let id = req.body.prod_id
+        let busqueda = req.body.busqueda
         let init = req.body.init
         let last = req.body.last
         let color = []
@@ -394,19 +394,19 @@ module.exports = {
                     $or: [
                         {
                             titulo: {
-                                $regex: `^${id != 'null' ? id : ''}`,
+                                $regex: `^${busqueda != 'null' ? busqueda : ''}`,
                                 $options: 'i'
                             }
                         },
                         {
                             refVendedora: {
-                                $regex: `^${id != 'null' ? id : ''}`,
+                                $regex: `^${busqueda != 'null' ? busqueda : ''}`,
                                 $options: 'i'
                             }
                         },
                         {
                             refInterna: {
-                                $regex: `^${id != 'null' ? id : ''}`,
+                                $regex: `^${busqueda != 'null' ? busqueda : ''}`,
                                 $options: 'i'
                             }
                         }
