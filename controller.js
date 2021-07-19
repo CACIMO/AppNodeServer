@@ -368,6 +368,8 @@ module.exports = {
         let talla = []
         let params = []
 
+        console.log(busqueda)
+
         try {
 
             color = JSON.parse(req.body.col).map((id) => ObjectId(id))
