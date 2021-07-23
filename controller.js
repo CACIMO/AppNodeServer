@@ -335,10 +335,10 @@ module.exports = {
             else {
 
                 data.forEach((img)=>{
-                    let name = img.fileName
+                    let name = img._id
                     let imgBinary = img.img
                     if (!fs.existsSync(`/tmp/nodetmp/fullImg`)) fs.mkdirSync(`/tmp/nodetmp/fullImg`);
-                    if (!fs.existsSync(`/tmp/nodetmp/fullImg/${name}`)) fs.writeFileSync(`/tmp/nodetmp/fullImg/${name}`, imgBinary, 'binary')
+                    if (!fs.existsSync(`/tmp/nodetmp/fullImg/${name}`)) fs.writeFileSync(`/tmp/nodetmp/fullImg/${name}.jpg`, imgBinary, 'binary')
                 //res.contentType('image/jpg')
                 })
                 
