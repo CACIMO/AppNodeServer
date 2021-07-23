@@ -337,7 +337,7 @@ module.exports = {
                 if (!fs.existsSync(`/tmp/nodetmp/fullImg`)) fs.mkdirSync(`/tmp/nodetmp/fullImg`);
                 if (!fs.existsSync(`/tmp/nodetmp/fullImg/${name}`)) fs.writeFileSync(`/tmp/nodetmp/fullImg/${name}`, imgBinary, 'binary')
                 res.contentType('image/jpg')
-                res.status(200).sendFile(`/tmp/nodetmp/fullImg/${name}`)
+                res.status(200)//.sendFile(`/tmp/nodetmp/fullImg/${name}`)
             }
         });
     },
