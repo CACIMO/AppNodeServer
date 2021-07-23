@@ -337,8 +337,8 @@ module.exports = {
                 data.forEach((img)=>{
                     let name = img._id
                     let imgBinary = img.img
-                    if (!fs.existsSync(`/tmp/nodetmp/fullImg`)) fs.mkdirSync(`/tmp/nodetmp/fullImg`);
-                    if (!fs.existsSync(`/tmp/nodetmp/fullImg/${name}`)) fs.writeFileSync(`/tmp/nodetmp/fullImg/${name}.jpg`, imgBinary, 'binary')
+                    if (!fs.existsSync(`/home/ubuntu/fullImg`)) fs.mkdirSync(`/home/ubuntu/fullImg`);
+                    if (!fs.existsSync(`/home/ubuntu/fullImg/${name}`)) fs.writeFileSync(`/home/ubuntu/fullImg/${name}.jpg`, imgBinary, 'binary')
                 //res.contentType('image/jpg')
                 })
                 
