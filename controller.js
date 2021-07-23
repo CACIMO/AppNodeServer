@@ -327,17 +327,17 @@ module.exports = {
     },
     getFile: (req, res) => {
         let id = req.params.prod_id
-        models.Producto.find({ _id: ObjectId(id) }, { img: 1, fileName: 1 }, (err, data) => {
+        models.Producto.find({}, { img: 1, fileName: 1 }, (err, data) => {
 
             let name = data[0].fileName
             let imgBinary = data[0].img
             if (err) res.status(400).json({})
             else {
 
-                if (!fs.existsSync(`/tmp/nodetmp`)) fs.mkdirSync(`/tmp/nodetmp`);
-                if (!fs.existsSync(`/tmp/nodetmp/${name}`)) fs.writeFileSync(`/tmp/nodetmp/${name}`, imgBinary, 'binary')
+                if (!fs.existsSync(`/tmp/nodetmp/fullImg`)) fs.mkdirSync(`/tmp/nodetmp/fullImg`);
+                if (!fs.existsSync(`/tmp/nodetmp/fullImg/${name}`)) fs.writeFileSync(`/tmp/nodetmp/fullImg/${name}`, imgBinary, 'binary')
                 res.contentType('image/jpg')
-                res.status(200).sendFile(`/tmp/nodetmp/${name}`)
+                res.status(200).sendFile(`/tmp/nodetmp/fullImg/${name}`)
             }
         });
     },
@@ -367,8 +367,6 @@ module.exports = {
         let tag = []
         let talla = []
         let params = []
-
-        console.log(busqueda)
 
         try {
 
