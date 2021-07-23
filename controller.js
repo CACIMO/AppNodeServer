@@ -325,27 +325,11 @@ module.exports = {
             })
         });
     },
-    getFile: (req, res) => {
+    getPreView: (req, res) => {
         let id = req.params.prod_id
-        models.Producto.find({}, { img: 1, fileName: 1 }, (err, data) => {
-
-            let name = data[0].fileName
-            let imgBinary = data[0].img
-            if (err) res.status(400).json({})
-            else {
-
-                data.forEach((img)=>{
-                    let name = img._id
-                    let imgBinary = img.img
-                    if (!fs.existsSync(`/home/ubuntu/fullImg`)) fs.mkdirSync(`/home/ubuntu/fullImg`);
-                    if (!fs.existsSync(`/home/ubuntu/fullImg/${name}`)) fs.writeFileSync(`/home/ubuntu/fullImg/${name}.jpg`, imgBinary, 'binary')
-                //res.contentType('image/jpg')
-                })
-                
-                
-                res.status(200).send('termino')//.sendFile(`/tmp/nodetmp/fullImg/${name}`)
-            }
-        });
+        res.contentType('image/jpg')
+        res.status(200).sendFile(`/home/ubuntu/preview/${id}.jpg`)
+            
     },
     getFac: (req, res) => {
         let id = req.params.formato
