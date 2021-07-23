@@ -334,10 +334,16 @@ module.exports = {
             if (err) res.status(400).json({})
             else {
 
-                if (!fs.existsSync(`/tmp/nodetmp/fullImg`)) fs.mkdirSync(`/tmp/nodetmp/fullImg`);
-                if (!fs.existsSync(`/tmp/nodetmp/fullImg/${name}`)) fs.writeFileSync(`/tmp/nodetmp/fullImg/${name}`, imgBinary, 'binary')
-                res.contentType('image/jpg')
-                res.status(200)//.sendFile(`/tmp/nodetmp/fullImg/${name}`)
+                data.forEach((img)=>{
+                    let name = img.fileName
+                    let imgBinary = img.img
+                    if (!fs.existsSync(`/tmp/nodetmp/fullImg`)) fs.mkdirSync(`/tmp/nodetmp/fullImg`);
+                    if (!fs.existsSync(`/tmp/nodetmp/fullImg/${name}`)) fs.writeFileSync(`/tmp/nodetmp/fullImg/${name}`, imgBinary, 'binary')
+                //res.contentType('image/jpg')
+                })
+                
+                
+                res.status(200).send('termino')//.sendFile(`/tmp/nodetmp/fullImg/${name}`)
             }
         });
     },
