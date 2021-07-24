@@ -404,10 +404,10 @@ module.exports = {
                     ]
                 }
             })
-        params.push({ $lookup: { from: 'color', localField: 'color', foreignField: '_id', as: 'colorData' } })
+        params.push({ $lookup: { from: 'color', localField: 'combinacion.color', foreignField: '_id', as: 'colorData' } })
         params.push({ $lookup: { from: 'tag', localField: 'tag', foreignField: '_id', as: 'tagData' } })
         params.push({ $lookup: { from: 'categoria', localField: 'categoria', foreignField: '_id', as: 'categoriaData' } })
-        params.push({ $lookup: { from: 'talla', localField: 'talla', foreignField: '_id', as: 'tallaData' } })
+        params.push({ $lookup: { from: 'talla', localField: 'combinacion.talla', foreignField: '_id', as: 'tallaData' } })
         params.push({ $project: { img: 0, color: 0, talla: 0, tag: 0, categoria: 0 } })
         params.push({ $sort: { titulo:1} })
         models.Producto.aggregate(params).exec((err, data) => {
