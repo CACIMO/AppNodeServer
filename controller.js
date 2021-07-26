@@ -100,23 +100,17 @@ module.exports = {
         let Producto = new models.Producto()
         Producto.titulo = req.body.titulo
         Producto.valor = req.body.valor
-        Producto.costo = req.body.costo
-        Producto.fileName = req.body.nombre
+        Producto.costo = req.body.cost
         Producto.descripcion = req.body.descripcion
         Producto.refVendedora = req.body.refVendedora
         Producto.refInterna = req.body.refInterna
-        Producto.stock = req.body.stock
-        Producto.color = JSON.parse(req.body.color).map((id) => ObjectId(id))
-        Producto.categoria = JSON.parse(req.body.categoria).map((id) => ObjectId(id))
-        Producto.tag = JSON.parse(req.body.tag).map((id) => ObjectId(id))
-        Producto.talla = JSON.parse(req.body.talla).map((id) => ObjectId(id))
-        Producto.pesoImg = req.body.pesoImg
+        Producto.combinaciones =JSON.parse(req.body.combinaciones)
+                
         if (req.file) Producto.img = req.file.buffer
 
         var params = {
             titulo: req.body.titulo,
             valor: req.body.valor,
-            fileName: req.body.nombre,
             descripcion: req.body.descripcion,
             refVendedora: req.body.refVendedora,
             refInterna: req.body.refInterna,

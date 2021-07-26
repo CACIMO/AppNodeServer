@@ -56,10 +56,6 @@ let ProductoSchema = mongoose.Schema({
         type: String,
         required: true
     },
-    stock: {
-        type: Number,
-        required: true
-    },
 
     valor: {
         type: Number,
@@ -69,34 +65,13 @@ let ProductoSchema = mongoose.Schema({
         type: Number,
         required: true
     },
-    fileName: {
-        type: String,
-        required: true
-    },
     descripcion: {
         type: String,
         required: true
     },
-    img: {
-        type: Buffer,
-        required: true
-    },
-    pesoImg: {
-        type: Number,
-        required: true
-
-    },
-    tag: {
-        type: Array
-    },
-    color: {
-        type: Array
-    },
-    categoria: {
-        type: Array
-    },
-    talla: {
-        type: Array
+    combinaciones:{
+        type:Array,
+        require:true
     }
 
 });
