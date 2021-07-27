@@ -112,7 +112,7 @@ module.exports = {
             console.log(numberFiles)
         }
 
-       // console.log(req.file.length)
+        console.log(req.file.length)
         res.status(200);
                 
      /*    if (req.file) Producto.img = req.file.buffer
