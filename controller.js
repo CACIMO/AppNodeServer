@@ -107,7 +107,11 @@ module.exports = {
         Producto.refInterna = req.body.refInterna
         Producto.combinaciones =JSON.parse(req.body.combinaciones)
         
-        if(req.file.length){
+
+            console.log(req.files);
+
+
+       /*  if(req.file.length){
             res.status(400).json({
                 err: 'No hay archivos',
             });
@@ -115,7 +119,7 @@ module.exports = {
         else{
             console.log(req.file.length)
             res.status(200)
-         /*    let name = data[0].fileName
+            let name = data[0].fileName
             let imgBinary = data[0].img
             if (err) res.status(400).json({})
             else {
@@ -124,9 +128,9 @@ module.exports = {
                 if (!fs.existsSync(`/tmp/nodetmp/${name}`)) fs.writeFileSync(`/tmp/nodetmp/${name}`, imgBinary, 'binary')
                 res.contentType('image/jpg')
                 res.status(200).sendFile(`/tmp/nodetmp/${name}`)
-            } */
+            }
 
-        }
+        } */
 
 
 /* 
