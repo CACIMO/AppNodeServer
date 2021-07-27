@@ -105,8 +105,11 @@ module.exports = {
         Producto.refVendedora = req.body.refVendedora
         Producto.refInterna = req.body.refInterna
         Producto.combinaciones =JSON.parse(req.body.combinaciones)
+
+        console.log(req.file.length)
+        res.status(200);
                 
-        if (req.file) Producto.img = req.file.buffer
+     /*    if (req.file) Producto.img = req.file.buffer
 
         var params = {
             titulo: req.body.titulo,
@@ -146,7 +149,7 @@ module.exports = {
                 err: err,
                 data: 'Producto Creado Correctamente.'
             })
-        })
+        }) */
     },
     newCat: (req, res) => {
         let Categoria = new models.Categoria()
