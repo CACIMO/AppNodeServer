@@ -4,6 +4,7 @@ let qrCode = require('qrcode')
 let jwt = require('jsonwebtoken')
 let fs = require('fs')
 const { ObjectId } = require('bson')
+const { Console } = require('console')
 module.exports = {
 
     nuevoUsuario: (req, res) => {
@@ -105,14 +106,15 @@ module.exports = {
         Producto.refVendedora = req.body.refVendedora
         Producto.refInterna = req.body.refInterna
         Producto.combinaciones =JSON.parse(req.body.combinaciones)
-
-
+        
+        console.log(req)
+/* 
         if(req.file.length){
             numberFiles = fs.readdirSync('/home/ubuntu/preview').length
             console.log(numberFiles)
         }
 
-        console.log(req.file.length)
+        console.log(req.file.length) */
         res.status(200);
                 
      /*    if (req.file) Producto.img = req.file.buffer
