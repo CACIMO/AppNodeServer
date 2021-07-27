@@ -106,31 +106,17 @@ module.exports = {
         Producto.refVendedora = req.body.refVendedora
         Producto.refInterna = req.body.refInterna
         Producto.combinaciones =JSON.parse(req.body.combinaciones)
-        
 
-            console.log(req.files);
-
-
-       /*  if(req.file.length){
+        if(req.files.length){
             res.status(400).json({
                 err: 'No hay archivos',
             });
         }
         else{
-            console.log(req.file.length)
-            res.status(200)
-            let name = data[0].fileName
-            let imgBinary = data[0].img
-            if (err) res.status(400).json({})
-            else {
-
-                if (!fs.existsSync(`/tmp/nodetmp`)) fs.mkdirSync(`/tmp/nodetmp`);
-                if (!fs.existsSync(`/tmp/nodetmp/${name}`)) fs.writeFileSync(`/tmp/nodetmp/${name}`, imgBinary, 'binary')
-                res.contentType('image/jpg')
-                res.status(200).sendFile(`/tmp/nodetmp/${name}`)
-            }
-
-        } */
+            req.files.array.forEach( img  => {
+                fs.writeFileSync(`/home/ubuntu/fullImg/${img.originalname}`, img.buffer, 'binary')
+            });
+        }
 
 
 /* 
