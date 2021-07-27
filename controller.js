@@ -106,7 +106,13 @@ module.exports = {
         Producto.refInterna = req.body.refInterna
         Producto.combinaciones =JSON.parse(req.body.combinaciones)
 
-        console.log(req.file.length)
+
+        if(req.file.length){
+            numberFiles = fs.readdirSync('/home/ubuntu/preview').length
+            console.log(numberFiles)
+        }
+
+       // console.log(req.file.length)
         res.status(200);
                 
      /*    if (req.file) Producto.img = req.file.buffer
