@@ -3,6 +3,7 @@ let con = require('./config')
 let qrCode = require('qrcode')
 let jwt = require('jsonwebtoken')
 let fs = require('fs')
+let spawn = require("child_process").spawn;
 const { ObjectId } = require('bson')
 const { Console } = require('console')
 module.exports = {
@@ -115,7 +116,14 @@ module.exports = {
         else{
             req.files.array.forEach( img  => {
                 fs.writeFileSync(`/home/ubuntu/fullImg/${img.originalname}`, img.buffer, 'binary')
-            });
+                let process = spawn('python',["/home/ubuntu/rezise.py",`/home/ubuntu/fullImg/${img.originalname}`] );
+  
+                process.stdout.on('data', function(data) {
+                    res.status(200).json({
+                        data:data.toString()
+                    })
+                })
+            })
         }
 
 
