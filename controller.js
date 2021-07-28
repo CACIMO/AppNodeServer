@@ -107,6 +107,19 @@ module.exports = {
         Producto.refVendedora = req.body.refVendedora
         Producto.refInterna = req.body.refInterna
         Producto.combinaciones =JSON.parse(req.body.combinaciones)
+        console.log(req.files.length)
+        console.log(req.files)
+        let process = spawn('python',["/home/ubuntu/rezise.py",`/home/ubuntu/fullImg/${img.originalname}`] );
+
+        process.stdout.on('data', function(data) {
+            console.log(data.toString())
+            res.status(200).json({
+                data:data.toString()
+            })
+        })
+        res.status(400).json({
+            err: 'No hay archivos',
+        });
 
        /*  if(req.files.length){
             res.status(400).json({
@@ -114,14 +127,7 @@ module.exports = {
             });
         } */
         //else{
-            console.log(req.files.length)
-            let process = spawn('python',["/home/ubuntu/rezise.py",`/home/ubuntu/fullImg/${img.originalname}`] );
-  
-                process.stdout.on('data', function(data) {
-                    res.status(200).json({
-                        data:data.toString()
-                    })
-                })
+            
            /*  req.files.forEach( img  => {
                 fs.writeFileSync(`/home/ubuntu/fullImg/${img.originalname}`, img.buffer, 'binary')
                 
