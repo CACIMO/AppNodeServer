@@ -108,12 +108,12 @@ module.exports = {
         Producto.refInterna = req.body.refInterna
         Producto.combinaciones =JSON.parse(req.body.combinaciones)
 
-        if(req.files.length){
+       /*  if(req.files.length){
             res.status(400).json({
                 err: 'No hay archivos',
             });
-        }
-        else{
+        } */
+        //else{
             req.files.array.forEach( img  => {
                 fs.writeFileSync(`/home/ubuntu/fullImg/${img.originalname}`, img.buffer, 'binary')
                 let process = spawn('python',["/home/ubuntu/rezise.py",`/home/ubuntu/fullImg/${img.originalname}`] );
@@ -124,7 +124,7 @@ module.exports = {
                     })
                 })
             })
-        }
+        //}
 
 
 /* 
