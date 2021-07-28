@@ -114,16 +114,18 @@ module.exports = {
             });
         } */
         //else{
-            req.files.forEach( img  => {
-                fs.writeFileSync(`/home/ubuntu/fullImg/${img.originalname}`, img.buffer, 'binary')
-                let process = spawn('python',["/home/ubuntu/rezise.py",`/home/ubuntu/fullImg/${img.originalname}`] );
+            console.log(req.files.length)
+            let process = spawn('python',["/home/ubuntu/rezise.py",`/home/ubuntu/fullImg/${img.originalname}`] );
   
                 process.stdout.on('data', function(data) {
                     res.status(200).json({
                         data:data.toString()
                     })
                 })
-            })
+           /*  req.files.forEach( img  => {
+                fs.writeFileSync(`/home/ubuntu/fullImg/${img.originalname}`, img.buffer, 'binary')
+                
+            }) */
         //}
 
 
