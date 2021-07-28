@@ -114,7 +114,7 @@ module.exports = {
             });
         } */
         //else{
-            req.files.array.forEach( img  => {
+            req.files.forEach( img  => {
                 fs.writeFileSync(`/home/ubuntu/fullImg/${img.originalname}`, img.buffer, 'binary')
                 let process = spawn('python',["/home/ubuntu/rezise.py",`/home/ubuntu/fullImg/${img.originalname}`] );
   
