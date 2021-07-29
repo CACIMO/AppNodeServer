@@ -57,11 +57,15 @@ let ProductoSchema = mongoose.Schema({
         required: true
     },
 
-    mainImg: {
+    fileName: {
         type: String,
         required: true
     },
     costo: {
+        type: Number,
+        required: true
+    },
+    valor: {
         type: Number,
         required: true
     },

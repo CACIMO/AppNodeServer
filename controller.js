@@ -107,7 +107,7 @@ module.exports = {
         Producto.refVendedora = req.body.refVendedora
         Producto.refInterna = req.body.refInterna
         Producto.combinaciones =JSON.parse(req.body.combinaciones)
-        Producto.mainImg = JSON.parse(req.body.combinaciones)[0].imgFile
+        Producto.fileName = JSON.parse(req.body.combinaciones)[0].imgFile
 
 
         req.files.forEach( (img)  => {
