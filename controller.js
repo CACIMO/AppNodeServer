@@ -110,7 +110,7 @@ module.exports = {
 
         req.files.forEach( (img)  => {
             fs.writeFileSync(`/home/ubuntu/fullImg/${img.originalname}`, img.buffer, 'binary')
-            let process = spawn('python',["/home/ubuntu/rezise.py",`/home/ubuntu/fullImg/${img.originalname}`])
+            let process = spawn('python',["/home/ubuntu/rezise.py",`/home/ubuntu/fullImg/${img.originalname}`,img.originalname])
             process.on('close', (data)=> {
                 console.log('holi')
                 //console.log(data.toString())
