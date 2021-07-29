@@ -115,13 +115,14 @@ module.exports = {
             let process = spawn('python3',["/home/ubuntu/rezise.py",`/home/ubuntu/fullImg/${img.originalname}`,img.originalname])
             
             process.on('close', (data)=> {
-
+                console.log(data)
                 if(data) res.status(400).json({
                     err: 'Error al procesar archivo',
                 })
                 else Producto.save((err, data) => {
                     
-                    if (err) res.status(400).json({
+                    console.log(err)
+                    if (err) res.status(401).json({
                         err: err,
                     })
                     else res.status(200).json({
