@@ -110,9 +110,16 @@ module.exports = {
 
         req.files.forEach( (img)  => {
             fs.writeFileSync(`/home/ubuntu/fullImg/${img.originalname}`, img.buffer, 'binary')
+            let process = spawn('python',["/home/ubuntu/rezise.py",`/home/ubuntu/fullImg/${img.originalname}`])
+            process.stdout.on('data', (data)=> {
+                console.log(data.toString())
+                res.status(200).json({
+                    data:data.toString()
+                })
+            })
             
-            /*let process = spawn('python',["/home/ubuntu/rezise.py",`/home/ubuntu/fullImg/${img.originalname}`] )
-            pprocess.stdout.on('error', (data)=> {
+            /*
+            process.stdout.on('error', (data)=> {
                 console.log(data)
             })
             process.stdout.on('data', (data)=> {
