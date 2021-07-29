@@ -112,6 +112,7 @@ module.exports = {
             fs.writeFileSync(`/home/ubuntu/fullImg/${img.originalname}`, img.buffer, 'binary')
             let process = spawn('python',["/home/ubuntu/rezise.py",`/home/ubuntu/fullImg/${img.originalname}`])
             process.stdout.on('data', (data)=> {
+                console.log('holi')
                 console.log(data.toString())
                 res.status(200).json({
                     data:data.toString()
