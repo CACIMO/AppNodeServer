@@ -57,8 +57,8 @@ let ProductoSchema = mongoose.Schema({
         required: true
     },
 
-    valor: {
-        type: Number,
+    mainImg: {
+        type: String,
         required: true
     },
     costo: {
