@@ -73,7 +73,7 @@ let ProductoSchema = mongoose.Schema({
         type: String,
         required: true
     },
-    combinaciones:{
+    combinacion:{
         type:Array,
         require:true
     }

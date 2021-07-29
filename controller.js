@@ -106,7 +106,7 @@ module.exports = {
         Producto.descripcion = req.body.descripcion
         Producto.refVendedora = req.body.refVendedora
         Producto.refInterna = req.body.refInterna
-        Producto.combinaciones =JSON.parse(req.body.combinaciones)
+        Producto.combinacion =JSON.parse(req.body.combinaciones)
         Producto.fileName = JSON.parse(req.body.combinaciones)[0].imgFile
 
 
@@ -115,13 +115,10 @@ module.exports = {
             let process = spawn('python3',["/home/ubuntu/rezise.py",`/home/ubuntu/fullImg/${img.originalname}`,img.originalname])
             
             process.on('close', (data)=> {
-                console.log(data)
                 if(data) res.status(400).json({
                     err: 'Error al procesar archivo',
                 })
                 else Producto.save((err, data) => {
-                    
-                    console.log(err)
                     if (err) res.status(401).json({
                         err: err,
                     })
