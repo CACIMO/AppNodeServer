@@ -108,11 +108,10 @@ module.exports = {
         Producto.refInterna = req.body.refInterna
         Producto.combinaciones =JSON.parse(req.body.combinaciones)
 
-        console.log(req.files)
         req.files.forEach( (img)  => {
-            console.log(img)
-           /*  fs.writeFileSync(`/home/ubuntu/fullImg/${img.originalname}`, img.buffer, 'binary')
-            let process = spawn('python',["/home/ubuntu/rezise.py",`/home/ubuntu/fullImg/${img.originalname}`] )
+            fs.writeFileSync(`/home/ubuntu/fullImg/${img.originalname}`, img.buffer, 'binary')
+            
+            /*let process = spawn('python',["/home/ubuntu/rezise.py",`/home/ubuntu/fullImg/${img.originalname}`] )
             pprocess.stdout.on('error', (data)=> {
                 console.log(data)
             })
