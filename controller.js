@@ -107,7 +107,7 @@ module.exports = {
         Producto.refVendedora = req.body.refVendedora
         Producto.refInterna = req.body.refInterna
         Producto.combinacion =JSON.parse(req.body.combinaciones)
-        Producto.fileName = JSON.parse(req.body.combinaciones)[0].imgFile
+        Producto.fileName = JSON.parse(req.body.combinaciones)[0].split('.')[0]
 
 
         req.files.forEach( (img)  => {
@@ -127,92 +127,8 @@ module.exports = {
                         data: data
                     })
                 })
-                
-                
-                
-                
-                
-                /* {
-                    console.log('holi')
-                    console.log(data)
-                    res.status(200).json({
-                        data:data.toString()
-                    })
-                } */
             })
-            
-            /*
-            process.stdout.on('error', (data)=> {
-                console.log(data)
-            })
-            process.stdout.on('data', (data)=> {
-                console.log(data.toString())
-                res.status(200).json({
-                    data:data.toString()
-                })
-            }) */
         })
-       /*  if(req.files.length){
-            res.status(400).json({
-                err: 'No hay archivos',
-            });
-        } */
-        //else{
-            
-           /*   */
-        //}
-
-
-/* 
-        if(req.file.length){
-            
-            console.log(numberFiles)
-        }
-
-        console.log(req.file.length) */
-       
-                
-     /*    if (req.file) Producto.img = req.file.buffer
-
-        var params = {
-            titulo: req.body.titulo,
-            valor: req.body.valor,
-            descripcion: req.body.descripcion,
-            refVendedora: req.body.refVendedora,
-            refInterna: req.body.refInterna,
-            stock: req.body.stock,
-            color: JSON.parse(req.body.color).map((id) => ObjectId(id)),
-            categoria: JSON.parse(req.body.categoria).map((id) => ObjectId(id)),
-            tag: JSON.parse(req.body.tag).map((id) => ObjectId(id)),
-            talla: JSON.parse(req.body.talla).map((id) => ObjectId(id))
-        }
-        if (req.file) {
-            params.pesoImg = req.body.pesoImg
-            params.img = req.file.buffer
-        }
-
-
-        if (req.body.id) models.Producto.updateOne({ _id: ObjectId(req.body.id) }, params).exec((err, data) => {
-            if (err) res.status(400).json({
-                err: err,
-                data: data || null
-            })
-            else res.status(200).json({
-                err: err,
-                data: 'Producto Creado Correctamente.'
-            })
-
-        });
-        else Producto.save((err, data) => {
-            if (err) res.status(400).json({
-                err: err,
-                data: data || null
-            })
-            else res.status(200).json({
-                err: err,
-                data: 'Producto Creado Correctamente.'
-            })
-        }) */
     },
     newCat: (req, res) => {
         let Categoria = new models.Categoria()
