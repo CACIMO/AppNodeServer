@@ -106,9 +106,14 @@ module.exports = {
         Producto.descripcion = req.body.descripcion
         Producto.refVendedora = req.body.refVendedora
         Producto.refInterna = req.body.refInterna
-        Producto.combinacion =JSON.parse(req.body.combinaciones)
+        //
         Producto.fileName = JSON.parse(req.body.combinaciones)[0].split('.')[0]
-
+        let combinaciones = JSON.parse(req.body.combinaciones).map((com)=>{
+            com.talla= ObjectId(com.talla) 
+            com.color= ObjectId(com.color)
+            return com
+        })
+        Producto.combinacion =combinaciones
 
         req.files.forEach( (img)  => {
             fs.writeFileSync(`/home/ubuntu/fullImg/${img.originalname}`, img.buffer, 'binary')
