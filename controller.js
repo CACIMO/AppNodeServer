@@ -386,7 +386,7 @@ module.exports = {
                 }
             })
 
-        if(id)params.push({$match:{_id:ObjectId(id)}})
+        if(id && id !='') params.push({$match:{_id:ObjectId(id)}})
         params.push({ $lookup: { from: 'color', localField: 'combinacion.color', foreignField: '_id', as: 'colorData' } })
         params.push({ $lookup: { from: 'tag', localField: 'tag', foreignField: '_id', as: 'tagData' } })
         params.push({ $lookup: { from: 'categoria', localField: 'categoria', foreignField: '_id', as: 'categoriaData' } })
