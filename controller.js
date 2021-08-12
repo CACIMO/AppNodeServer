@@ -420,10 +420,26 @@ module.exports = {
         let refVendedora = req.body.refVendedora
         let refInterna = req.body.refInterna
 
-        models.Producto.updateOne({_id:id},{$set:{valor:valor,costo:costo,descripcion:descripcion,refInterna:refInterna,refVendedora:refVendedora,titulo:titulo}},(err, data)=>{
-            console.log(data);
+        models.Producto.updateOne({_id:id},{
+            $set:{
+                valor:valor,
+                costo:costo,
+                descripcion:descripcion,
+                refInterna:refInterna,
+                refVendedora:refVendedora,
+                titulo:titulo
+            }
+        },
+        (err, data)=>{
+            if (err) res.status(400).json({
+                err: err,
+                data: data || null
+            })
+            else res.status(200).json({
+                err: err,
+                data: data
+            })
         })
-
     },
     addCarrito: (req, res) => {
 
