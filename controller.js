@@ -106,7 +106,7 @@ module.exports = {
         Producto.descripcion = req.body.descripcion
         Producto.refVendedora = req.body.refVendedora
         Producto.refInterna = req.body.refInterna
-        //
+
         Producto.fileName = JSON.parse(req.body.combinaciones)[0].imgFile.split('.')[0]
         let combinaciones = JSON.parse(req.body.combinaciones).map((com)=>{
             com.talla= ObjectId(com.talla) 
@@ -385,7 +385,6 @@ module.exports = {
                     ]
                 }
             })
-            console.log(id)
         if(id && id  != 'null') params.push({$match:{_id:ObjectId(id)}})
         params.push({ $lookup: { from: 'color', localField: 'combinacion.color', foreignField: '_id', as: 'colorData' } })
         params.push({ $lookup: { from: 'tag', localField: 'tag', foreignField: '_id', as: 'tagData' } })
@@ -410,6 +409,21 @@ module.exports = {
                 data: info
             })}
         })
+    },
+    updProducto:(req, res) => {
+
+        let titulo = req.body.titulo
+        let id = req.body.prod_id
+        let valor = req.body.valor
+        let costo = req.body.costo
+        let descripcion = req.body.descripcion
+        let refVendedora = req.body.refVendedora
+        let refInterna = req.body.refInterna
+
+        models.Producto.updateOne({_id:id},{$set:{valor:valor,costo:costo,descripcion:descripcion,refInterna:refInterna,refVendedora:refVendedora,titulo:titulo}},(err, data)=>{
+            console.log(data);
+        })
+
     },
     addCarrito: (req, res) => {
 
