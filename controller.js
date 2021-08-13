@@ -491,7 +491,7 @@ module.exports = {
                 })
             }
             else {
-                models.Carrito.update({ formato: token, active: true }, { $push: { producto: Item } }, (err, data) => {
+                models.Carrito.updateOne({ formato: token, active: true }, { $push: { producto: Item } }, (err, data) => {
 
                     if (err) res.status(400).json({
                         err: err,
@@ -504,7 +504,7 @@ module.exports = {
                         })
                         else res.status(200).json({
                             err: err,
-                            data: data
+                            data: datax
                         })
                     })
                 })
