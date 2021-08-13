@@ -1202,7 +1202,7 @@ module.exports = {
         let combi = req.body.combi;
 
         let img = req.files[0]
-        fs.unlinkSync(`/home/ubuntu/fullImg/${lastImg}`);
+        fs.unlinkSync(`/home/ubuntu/fullImg/${lastImg}.jpg`);
         fs.writeFileSync(`/home/ubuntu/fullImg/${img.originalname}`, img.buffer, 'binary')
         let process = spawn('python3', ["/home/ubuntu/rezise.py", `/home/ubuntu/fullImg/${img.originalname}`, img.originalname])
 
