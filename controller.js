@@ -65,8 +65,8 @@ module.exports = {
         let usu = req.body.usuario
         let pass = req.body.password
 
-        models.Usuario.find({ usuario: usu, password: pass },{token:0,password:0}).exec((err, data) => {
-            
+        models.Usuario.find({ usuario: usu, password: pass }, { token: 0, password: 0 }).exec((err, data) => {
+
             if (err) res.status(400).json({
                 err: err
             })
@@ -96,7 +96,7 @@ module.exports = {
                 })
             }
 
-        }) 
+        })
     },
     newProd: (req, res) => {
         let Producto = new models.Producto()
@@ -108,19 +108,19 @@ module.exports = {
         Producto.refInterna = req.body.refInterna
 
         Producto.fileName = JSON.parse(req.body.combinaciones)[0].imgFile.split('.')[0]
-        let combinaciones = JSON.parse(req.body.combinaciones).map((com)=>{
-            com.talla= ObjectId(com.talla) 
-            com.color= ObjectId(com.color)
+        let combinaciones = JSON.parse(req.body.combinaciones).map((com) => {
+            com.talla = ObjectId(com.talla)
+            com.color = ObjectId(com.color)
             return com
         })
-        Producto.combinacion =combinaciones
+        Producto.combinacion = combinaciones
 
-        req.files.forEach( (img)  => {
+        req.files.forEach((img) => {
             fs.writeFileSync(`/home/ubuntu/fullImg/${img.originalname}`, img.buffer, 'binary')
-            let process = spawn('python3',["/home/ubuntu/rezise.py",`/home/ubuntu/fullImg/${img.originalname}`,img.originalname])
-            
-            process.on('close', (data)=> {
-                if(data) res.status(400).json({
+            let process = spawn('python3', ["/home/ubuntu/rezise.py", `/home/ubuntu/fullImg/${img.originalname}`, img.originalname])
+
+            process.on('close', (data) => {
+                if (data) res.status(400).json({
                     err: 'Error al procesar archivo',
                 })
                 else Producto.save((err, data) => {
@@ -310,7 +310,7 @@ module.exports = {
         let id = req.params.prod_id
         res.contentType('image/jpg')
         res.status(200).sendFile(`/home/ubuntu/preview/${id}.jpg`)
-            
+
     },
     getFac: (req, res) => {
         let id = req.params.formato
@@ -385,32 +385,33 @@ module.exports = {
                     ]
                 }
             })
-        if(id && id  != 'null') params.push({$match:{_id:ObjectId(id)}})
+        if (id && id != 'null') params.push({ $match: { _id: ObjectId(id) } })
         params.push({ $lookup: { from: 'color', localField: 'combinacion.color', foreignField: '_id', as: 'colorData' } })
         params.push({ $lookup: { from: 'tag', localField: 'tag', foreignField: '_id', as: 'tagData' } })
         params.push({ $lookup: { from: 'categoria', localField: 'categoria', foreignField: '_id', as: 'categoriaData' } })
         params.push({ $lookup: { from: 'talla', localField: 'combinacion.talla', foreignField: '_id', as: 'tallaData' } })
         params.push({ $project: { img: 0, color: 0, talla: 0, tag: 0, categoria: 0 } })
-        params.push({ $sort: { titulo:1} })
+        params.push({ $sort: { titulo: 1 } })
         models.Producto.aggregate(params).exec((err, data) => {
             if (err) res.status(400).json({
                 err: err,
                 data: data || null
             })
             else {
-                let info =[];
-                try{
-                    info =data.slice(parseInt(init),parseInt(last))
-                }catch(e){
-                    info =[]
+                let info = [];
+                try {
+                    info = data.slice(parseInt(init), parseInt(last))
+                } catch (e) {
+                    info = []
                 }
                 res.status(200).json({
-                err: err,
-                data: info
-            })}
+                    err: err,
+                    data: info
+                })
+            }
         })
     },
-    updProducto:(req, res) => {
+    updProducto: (req, res) => {
 
         let titulo = req.body.titulo
         let id = req.body.prod_id
@@ -422,19 +423,19 @@ module.exports = {
 
         models.Producto.updateOne(
             {
-                _id:id
+                _id: id
             },
             {
-                $set:{
-                    valor:valor,
-                    costo:costo,
-                    descripcion:descripcion,
-                    refInterna:refInterna,
-                    refVendedora:refVendedora,
-                    titulo:titulo
+                $set: {
+                    valor: valor,
+                    costo: costo,
+                    descripcion: descripcion,
+                    refInterna: refInterna,
+                    refVendedora: refVendedora,
+                    titulo: titulo
                 }
             },
-            (err, data)=>{
+            (err, data) => {
                 if (err) res.status(400).json({
                     err: err,
                     data: data || null
@@ -637,6 +638,7 @@ module.exports = {
                         'Prods.img': 0,
                         'Prods.talla': 0,
                         'Prods.categoria': 0,
+                        'Prods.combinacion': 0,
                         'Prods.tag': 0,
                         'Prods.color': 0,
                         'Prods.fecha': 0,
@@ -665,67 +667,93 @@ module.exports = {
     },
     saveFormato: (req, res) => {
 
-        let token = req.headers['access-token']
-        models.Carrito.find({ active: true, formato: token }, { producto: 1 }, (err, data) => {
-
-            if (err) res.status(400).json({
-                err: err,
+        models.Config.find({ titulo: 'formato' }, { csc: 1 }, (errCsc, dataCsc) => {
+            if (errCsc) res.status(400).json({
+                err: errCsc,
                 data: data || null
             })
             else {
-                let pago = 0;
 
-                data[0]['producto'].forEach(prod => {
-                    pago += parseInt(prod['cantidad']) * parseInt(prod['valor'])
-                });
-                pago += parseInt(req.body.envio)
-                flag = true
-                let Formato = new models.Formato()
-                try {
-                    Formato.formato = req.body.formato
-                    Formato.documento = req.body.documento
-                    Formato.barrio = req.body.barrio
-                    Formato.ciudad = req.body.ciudad
-                    Formato.vendedor = ObjectId(req.body.vendedor)
-                    Formato.total = pago
-                    Formato.direccion = req.body.direccion
-                    Formato.nombre = req.body.nombre
-                    Formato.telefono = req.body.telefono
-                    Formato.pago = req.body.pago
-                    Formato.Productos = data[0]['producto']
-                    Formato.envio = req.body.envio
-                }
-                catch (error) {
-                    console.log(error)
-                    flag = false
-                    res.status(400).json({
+
+                let numeroCsc = parseInt(dataCsc[0].csc) + 1
+                let consec = numeroCsc.toString().padStart(5, '0')
+
+                models.Config.updateOne({ titulo: 'formato' }, { csc: consec }, (err, data) => {
+                    if (err) res.status(400).json({
                         err: err,
                         data: data || null
                     })
-                }
+                    else {
 
-                if (flag) models.Carrito.updateOne(
-                    { active: true, formato: token },
-                    { active: false, formato: req.body.formato },
-                    (err, data) => {
-                        if (err) res.status(400).json({
-                            err: err,
-                            data: data || null
-                        })
-                        else Formato.save((err, data) => {
+                        let token = req.headers['access-token']
+                        models.Carrito.find({ active: true, formato: token }, { producto: 1 }, (err, data) => {
+
                             if (err) res.status(400).json({
                                 err: err,
                                 data: data || null
                             })
-                            else res.status(200).json({
-                                err: err,
-                                data: { msg: req.body.formato }
-                            })
-                        })
-                    })
-            }
+                            else {
+                                let pago = 0;
 
-        })
+                                data[0]['producto'].forEach(prod => {
+                                    pago += parseInt(prod['cantidad']) * parseInt(prod['valor'])
+                                });
+                                pago += parseInt(req.body.envio)
+                                flag = true
+                                let Formato = new models.Formato()
+                                try {
+                                    Formato.formato = 'FT'+consec
+                                    Formato.documento = req.body.documento
+                                    Formato.barrio = req.body.barrio
+                                    Formato.ciudad = req.body.ciudad
+                                    Formato.vendedor = ObjectId(req.body.vendedor)
+                                    Formato.total = pago
+                                    Formato.direccion = req.body.direccion
+                                    Formato.nombre = req.body.nombre
+                                    Formato.telefono = req.body.telefono
+                                    Formato.pago = req.body.pago
+                                    Formato.Productos = data[0]['producto']
+                                    Formato.envio = req.body.envio
+                                }
+                                catch (error) {
+                                    flag = false
+                                    res.status(400).json({
+                                        err: err,
+                                        data: data || null
+                                    })
+                                }
+
+                                if (flag) models.Carrito.updateOne(
+                                    { active: true, formato: token },
+                                    { active: false, formato: req.body.formato },
+                                    (err, data) => {
+                                        if (err) res.status(400).json({
+                                            err: err,
+                                            data: data || null
+                                        })
+                                        else Formato.save((err, data) => {
+                                            if (err) res.status(400).json({
+                                                err: err,
+                                                data: data || null
+                                            })
+                                            else res.status(200).json({
+                                                err: err,
+                                                data: { msg: 'FT'+consec }
+                                            })
+                                        })
+                                    })
+                            }
+                        })
+
+                    }
+                })
+
+
+
+            }
+        
+        });
+
 
     },
     getUser: (req, res) => {
