@@ -1209,7 +1209,7 @@ module.exports = {
 
         Producto.updateOne({ _id: ObjectId(idProd), 'combinacion._id': ObjectId(combi) }, {
             $set: {
-                fileName: img.originalname,
+                fileName: img.originalname.split('.')[0],
                 'combinacion.$.img': img.originalname,
             }
         }).exec((err, data) => {
