@@ -1223,5 +1223,46 @@ module.exports = {
             })
 
         })
+    },
+    addNewCombi: (req, res) => {
+
+        let img = req.files[0]
+        fs.writeFileSync(`/home/ubuntu/fullImg/${img.originalname}`, img.buffer, 'binary')
+        let process = spawn('python3', ["/home/ubuntu/rezise.py", `/home/ubuntu/fullImg/${img.originalname}`, img.originalname])
+
+        let combinacion = {
+            _id: ObjectId(),
+            img: img.originalname.split('.')[0],
+            stock: req.body.stock,
+            color: ObjectId(req.body.color),
+            talla: ObjectId(req.body.talla)
+        }
+
+        Producto.updateOne({ _id: ObjectId(req.body.idProd) }, {
+            $push: {
+                combinacion: combinacion
+            }
+        }).exec((err, data) => {
+            if (err) res.status(400).json({
+                err: err,
+                data: data || null
+            })
+            else Producto.updateOne({ _id: ObjectId(req.body.idProd) }, {
+                $set: {
+                    fileName: img.originalname.split('.')[0]
+                }
+            }).exec((errx, datax) => {
+                if (err) res.status(400).json({
+                    err: errx,
+                    data: datax || null
+                })
+                else res.status(200).json({
+                    err: errx,
+                    data: datax
+
+                })
+
+            })
+        })
     }
 }
