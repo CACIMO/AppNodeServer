@@ -168,6 +168,10 @@ let CarritoItemSchema = mongoose.Schema({
     restante: {
         type: Number,
         required: true
+    }, 
+    combinacion: {
+        type: String,
+        required: true
     }
 });
 let ConfigSchema = mongoose.Schema({

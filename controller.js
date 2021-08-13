@@ -458,6 +458,7 @@ module.exports = {
         Item.talla = ObjectId(req.body.talla)
         Item.cantidad = req.body.cantidad
         Item.restante = req.body.cantidad
+        Item.combinacion =  req.body.idCombi
 
 
         models.Carrito.find({ formato: token, active: true }, (err, data) => {
