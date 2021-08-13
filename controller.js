@@ -6,6 +6,7 @@ let fs = require('fs')
 let spawn = require("child_process").spawn;
 const { ObjectId } = require('bson')
 const { Console } = require('console')
+const { Producto } = require('./models')
 module.exports = {
 
     nuevoUsuario: (req, res) => {
@@ -458,7 +459,7 @@ module.exports = {
         Item.talla = ObjectId(req.body.talla)
         Item.cantidad = req.body.cantidad
         Item.restante = req.body.cantidad
-        Item.combinacion =  req.body.idCombi
+        Item.combinacion = req.body.idCombi
 
 
         models.Carrito.find({ formato: token, active: true }, (err, data) => {
@@ -478,7 +479,7 @@ module.exports = {
                         err: err,
                         data: data || null
                     })
-                    else models.Producto.updateOne({ _id: ObjectId(req.body.producto),'combinacion._id':ObjectId(req.body.idCombi) }, { $inc: { 'combinacion.$.stock': (-req.body.cantidad) } }, (err, datax) => {
+                    else models.Producto.updateOne({ _id: ObjectId(req.body.producto), 'combinacion._id': ObjectId(req.body.idCombi) }, { $inc: { 'combinacion.$.stock': (-req.body.cantidad) } }, (err, datax) => {
                         if (err) res.status(400).json({
                             err: err,
                             data: datax || null
@@ -497,7 +498,7 @@ module.exports = {
                         err: err,
                         data: data || null
                     })
-                    else models.Producto.updateOne({ _id: ObjectId(req.body.producto),'combinacion._id':ObjectId(req.body.idCombi) }, { $inc: { 'combinacion.$.stock': (-req.body.cantidad) } }, (err, datax) => {
+                    else models.Producto.updateOne({ _id: ObjectId(req.body.producto), 'combinacion._id': ObjectId(req.body.idCombi) }, { $inc: { 'combinacion.$.stock': (-req.body.cantidad) } }, (err, datax) => {
                         if (err) res.status(400).json({
                             err: err,
                             data: datax || null
@@ -703,7 +704,7 @@ module.exports = {
                                 flag = true
                                 let Formato = new models.Formato()
                                 try {
-                                    Formato.formato = 'FT'+consec
+                                    Formato.formato = 'FT' + consec
                                     Formato.documento = req.body.documento
                                     Formato.barrio = req.body.barrio
                                     Formato.ciudad = req.body.ciudad
@@ -739,7 +740,7 @@ module.exports = {
                                             })
                                             else res.status(200).json({
                                                 err: err,
-                                                data: { msg: 'FT'+consec }
+                                                data: { msg: 'FT' + consec }
                                             })
                                         })
                                     })
@@ -752,7 +753,7 @@ module.exports = {
 
 
             }
-        
+
         });
 
 
@@ -1180,6 +1181,19 @@ module.exports = {
                         }
                     });
              */
+        })
+    },
+    updateStock: (req, res) => {
+        Producto.updateOne({ _id: ObjectId(req.body.id), 'combinacion._id': ObjectId(req.body.combi) }, { $set: { 'combinacion.$.stock': req.body.stock } }).exec((err, data) => {
+            if (err) res.status(400).json({
+                err: err,
+                data: data || null
+            })
+            else res.status(200).json({
+                err: err,
+                data: data
+            })
+
         })
     }
 }
