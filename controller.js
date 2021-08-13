@@ -478,7 +478,7 @@ module.exports = {
                         err: err,
                         data: data || null
                     })
-                    else models.Producto.updateOne({ _id: ObjectId(req.body.producto) }, { $inc: { stock: (-req.body.cantidad) } }, (err, datax) => {
+                    else models.Producto.updateOne({ _id: ObjectId(req.body.producto),'combinacion._id':ObjectId(req.body.idCombi) }, { $inc: { 'combinacion.$.stock': (-req.body.cantidad) } }, (err, datax) => {
                         if (err) res.status(400).json({
                             err: err,
                             data: datax || null
