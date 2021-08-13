@@ -1195,5 +1195,33 @@ module.exports = {
             })
 
         })
+    },
+    changeImage: (req, res) => {
+        let lastImg = req.body.lastImg;
+        let idProd = req.body.id;
+        let combi = req.body.combi;
+
+        let img = req.files[0]
+        fs.unlinkSync(`/home/ubuntu/fullImg/${lastImg}`);
+        fs.writeFileSync(`/home/ubuntu/fullImg/${img.originalname}`, img.buffer, 'binary')
+        let process = spawn('python3', ["/home/ubuntu/rezise.py", `/home/ubuntu/fullImg/${img.originalname}`, img.originalname])
+
+
+        Producto.updateOne({ _id: ObjectId(idProd), 'combinacion._id': ObjectId(combi) }, {
+            $set: {
+                fileName: img.originalname,
+                'combinacion.$.img': img.originalname,
+            }
+        }).exec((err, data) => {
+            if (err) res.status(400).json({
+                err: err,
+                data: data || null
+            })
+            else res.status(200).json({
+                err: err,
+                data: data
+            })
+
+        })
     }
 }
