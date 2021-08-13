@@ -8,3 +8,7 @@ db.producto.find({}).forEach(prod => {
 });
 
 db.producto.updateOne({_id:ObjectId('60e8af7e7649685a09fcfa88'),'combinacion._id':ObjectId('60fbdf09449a76314ea805bd')},{$inc:{'combinacion.$.stock':1}})
+
+
+
+db.producto.find({_id:ObjectId('60e8af7e7649685a09fcfa88'),'combinacion._id':ObjectId('60fbdf09449a76314ea805bd')}).pretty()
