@@ -420,26 +420,31 @@ module.exports = {
         let refVendedora = req.body.refVendedora
         let refInterna = req.body.refInterna
 
-        models.Producto.updateOne({_id:id},{
-            $set:{
-                valor:valor,
-                costo:costo,
-                descripcion:descripcion,
-                refInterna:refInterna,
-                refVendedora:refVendedora,
-                titulo:titulo
+        models.Producto.updateOne(
+            {
+                _id:id
+            },
+            {
+                $set:{
+                    valor:valor,
+                    costo:costo,
+                    descripcion:descripcion,
+                    refInterna:refInterna,
+                    refVendedora:refVendedora,
+                    titulo:titulo
+                }
+            },
+            (err, data)=>{
+                if (err) res.status(400).json({
+                    err: err,
+                    data: data || null
+                })
+                else res.status(200).json({
+                    err: err,
+                    data: data
+                })
             }
-        },
-        (err, data)=>{
-            if (err) res.status(400).json({
-                err: err,
-                data: data || null
-            })
-            else res.status(200).json({
-                err: err,
-                data: data
-            })
-        })
+        )
     },
     addCarrito: (req, res) => {
 
@@ -621,11 +626,29 @@ module.exports = {
                 { $match: { vendedor: ObjectId(req.body.vendedor) } },
                 { $lookup: { from: 'etapa', localField: 'etapa', foreignField: '_id', as: 'Etapa' } },
                 { $lookup: { from: 'pago', localField: 'pago', foreignField: 'short', as: 'FPago' } },
+                { $lookup: { from: 'producto', localField: 'Productos.id', foreignField: '_id', as: 'Prods' } },
+                { $lookup: { from: 'color', localField: 'Productos.color', foreignField: '_id', as: 'Colores' } },
+                { $lookup: { from: 'talla', localField: 'Productos.talla', foreignField: '_id', as: 'Tallas' } },
+                { $lookup: { from: 'usuario', localField: 'vendedor', foreignField: '_id', as: 'Vendedor' } },
                 {
                     $project: {
                         Productos: 0,
                         active: 0,
                         'FPago._id:': 0,
+                        'Prods.img': 0,
+                        'Prods.talla': 0,
+                        'Prods.categoria': 0,
+                        'Prods.tag': 0,
+                        'Prods.color': 0,
+                        'Prods.fecha': 0,
+                        'Prods.fileName': 0,
+                        'Prods.refVendedora': 0,
+                        'Prods.refInterna': 0,
+                        'Prods.stock': 0,
+                        'Prods.pesoImg': 0,
+                        'Prods.valor': 0,
+                        'Prods.descripcion': 0,
+                        'Prods.__v': 0,
                         fac: 0
                     }
                 }
