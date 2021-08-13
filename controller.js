@@ -632,7 +632,6 @@ module.exports = {
                 { $lookup: { from: 'usuario', localField: 'vendedor', foreignField: '_id', as: 'Vendedor' } },
                 {
                     $project: {
-                        Productos: 0,
                         active: 0,
                         'FPago._id:': 0,
                         'Prods.img': 0,
