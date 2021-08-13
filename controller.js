@@ -1243,6 +1243,7 @@ module.exports = {
                 combinacion: combinacion
             }
         }).exec((err, data) => {
+            console.log(err);
             if (err) res.status(400).json({
                 err: err,
                 data: data || null
@@ -1252,6 +1253,7 @@ module.exports = {
                     fileName: img.originalname.split('.')[0]
                 }
             }).exec((errx, datax) => {
+                console.log(errx);
                 if (err) res.status(400).json({
                     err: errx,
                     data: datax || null
