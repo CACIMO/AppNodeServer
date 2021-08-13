@@ -1210,7 +1210,7 @@ module.exports = {
         Producto.updateOne({ _id: ObjectId(idProd), 'combinacion._id': ObjectId(combi) }, {
             $set: {
                 fileName: img.originalname.split('.')[0],
-                'combinacion.$.img': img.originalname,
+                'combinacion.$.img': img.originalname.split('.')[0],
             }
         }).exec((err, data) => {
             if (err) res.status(400).json({
