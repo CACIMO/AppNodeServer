@@ -108,7 +108,7 @@ module.exports = {
         Producto.refVendedora = req.body.refVendedora
         Producto.refInterna = req.body.refInterna
 
-        Producto.fileName = JSON.parse(req.body.combinaciones)[0].imgFile.split('.')[0]
+        Producto.fileName = JSON.parse(req.body.combinaciones)[0].img.split('.')[0]
         let combinaciones = JSON.parse(req.body.combinaciones).map((com) => {
             com.talla = ObjectId(com.talla)
             com.color = ObjectId(com.color)
