@@ -110,6 +110,7 @@ module.exports = {
 
         Producto.fileName = JSON.parse(req.body.combinaciones)[0].img.split('.')[0]
         let combinaciones = JSON.parse(req.body.combinaciones).map((com) => {
+            com._id =ObjectId()
             com.talla = ObjectId(com.talla)
             com.color = ObjectId(com.color)
             return com
