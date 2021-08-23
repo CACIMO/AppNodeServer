@@ -110,7 +110,7 @@ module.exports = {
 
         Producto.fileName = JSON.parse(req.body.combinaciones)[0].img.split('.')[0]
         let combinaciones = JSON.parse(req.body.combinaciones).map((com) => {
-            com._id =ObjectId()
+            com._id = ObjectId()
             com.talla = ObjectId(com.talla)
             com.color = ObjectId(com.color)
             return com
@@ -1267,6 +1267,29 @@ module.exports = {
                     data: datax
 
                 })
+
+            })
+        })
+    },
+    saveFactura: (req, res) => {
+
+        let img = req.files[0]
+        let nameImg = img.originalname.split('.')[0];
+        fs.writeFileSync(`/home/ubuntu/facs/${img.originalname}`, img.buffer, 'binary')
+
+        Formato.updateOne({ _id: ObjectId(req.body.id), formato: ObjectId(req.body.formato) }, {
+            $set: {
+                fac: nameImg
+            }
+        }).exec((err, data) => {
+            console.log(err);
+            if (err) res.status(400).json({
+                err: err,
+                data: data || null
+            })
+            else res.status(200).json({
+                err: err,
+                data: data
 
             })
         })
