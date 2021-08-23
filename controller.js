@@ -1274,6 +1274,7 @@ module.exports = {
 
         let img = req.files[0]
         let nameImg = img.originalname.split('.')[0];
+        console.log(nameImg)
         fs.writeFileSync(`/home/ubuntu/facs/${img.originalname}`, img.buffer, 'binary')
 
         models.Formato.updateOne({ _id: ObjectId(req.body.id), formato: req.body.formato }, {
