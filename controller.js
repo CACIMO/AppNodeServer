@@ -656,7 +656,6 @@ module.exports = {
                         'Prods.valor': 0,
                         'Prods.descripcion': 0,
                         'Prods.__v': 0,
-                        fac: 0
                     }
                 }
             ]
