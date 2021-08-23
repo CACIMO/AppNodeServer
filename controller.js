@@ -1292,5 +1292,11 @@ module.exports = {
                 data: data
             })
         })
-    }
+    },
+    getFac: (req, res) => {
+        let id = req.params.name
+        res.contentType('image/jpg')
+        res.status(200).sendFile(`/home/ubuntu/facs/${id}.jpg`)
+
+    },
 }
