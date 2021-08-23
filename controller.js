@@ -349,11 +349,9 @@ module.exports = {
             categoria = JSON.parse(req.body.cat).map((id) => ObjectId(id))
             tag = JSON.parse(req.body.tag).map((id) => ObjectId(id))
             talla = JSON.parse(req.body.tal).map((id) => ObjectId(id))
-            console.log(color)
         }
         catch (err) {
 
-            console.log('Entro aqui' ,err)
             color = []
             categoria = []
             tag = []
@@ -361,9 +359,9 @@ module.exports = {
         }
 
 
-        if (color.length) params.push({ $match: { color: { $in: color } } })
+        if (color.length) params.push({ $match: { 'combinacion.color': { $in: color } } })
         if (categoria.length) params.push({ $match: { categoria: { $in: categoria } } })
-        if (talla.length) params.push({ $match: { talla: { $in: talla } } })
+        if (talla.length) params.push({ $match: { 'combinacion.talla': { $in: talla } } })
         if (tag.length) params.push({ $match: { tag: { $in: tag } } })
 
         params.push(
