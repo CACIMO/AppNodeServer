@@ -247,7 +247,7 @@ let FormatoSchema = mongoose.Schema({
         type: Array
     },
     fac: {
-        type: Buffer,
+        type: String,
         default:null
     },
     envio: {
