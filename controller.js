@@ -343,16 +343,17 @@ module.exports = {
         let talla = []
         let params = []
 
-        console.log(req.body)
-
         try {
 
             color = JSON.parse(req.body.col).map((id) => ObjectId(id))
             categoria = JSON.parse(req.body.cat).map((id) => ObjectId(id))
             tag = JSON.parse(req.body.tag).map((id) => ObjectId(id))
             talla = JSON.parse(req.body.tal).map((id) => ObjectId(id))
+            console.log(color)
         }
         catch (err) {
+
+            console.log('Entro aqui' ,err)
             color = []
             categoria = []
             tag = []
