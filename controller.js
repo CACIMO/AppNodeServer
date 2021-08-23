@@ -331,6 +331,8 @@ module.exports = {
         });
     },
     getProductList: (req, res) => {
+
+
         let id = req.body.prod_id
         let busqueda = req.body.busqueda
         let init = req.body.init
@@ -340,6 +342,8 @@ module.exports = {
         let tag = []
         let talla = []
         let params = []
+
+        console.log(req.body)
 
         try {
 
