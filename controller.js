@@ -988,7 +988,6 @@ module.exports = {
     },
     generateQr: (req, res) => {
         try {
-            let name = JSON.parse(req.body.id)
             let data = JSON.parse(req.body.data)
             let name = req.headers['access-token']
 
