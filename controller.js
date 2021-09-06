@@ -1011,6 +1011,7 @@ module.exports = {
     },
     procesarPed: (req, res) => {
 
+        console.log(req.body)
         models.Formato.updateOne(
 
             {
