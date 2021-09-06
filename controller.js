@@ -1027,6 +1027,15 @@ module.exports = {
             {
                 $inc: { "Productos.$.restante": -1 },
                 $set: { etapa: ObjectId("604b88049ed8c060cc0e11dc") }
+            }).exec((err, data) => {
+                if (err) res.status(400).json({
+                    err: err,
+                    data: data || null
+                })
+                else res.status(200).json({
+                    err: err,
+                    data: data
+                })
             })
     },
     generateQr: (req, res) => {
@@ -1295,7 +1304,7 @@ module.exports = {
         res.status(200).sendFile(`/home/ubuntu/facs/${id}.jpg`)
 
     },
-    updFormat:(req,res)=>{
+    updFormat: (req, res) => {
 
     }
 }
