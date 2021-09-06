@@ -967,81 +967,35 @@ module.exports = {
         })
     },
     procesarPed: (req, res) => {
-        console.log(req.body)
-        models.Formato.findOne({
-            _id: ObjectId(req.body.formatoId)
-        }, {
-            _id: 0,
-            Productos: {
-                $elemMatch: {
-                    id: ObjectId(req.body.itemId),
-                    color: ObjectId(req.body.colorId),
-                    talla: ObjectId(req.body.tallaId)
-                }
-            }
-        }).exec((err, data) => {
 
+        models.Formato.updateOne(
 
-
-            let thereAreProds = data.Productos.length
-            if (err) res.status(400).json({
-                err: {
-                    msg: 'Error en el server'
-                }
-            })
-            else if (thereAreProds) {
-                let rest = data.Productos[0].restante
-                if (rest) {
-
-                    models.Formato.updateOne(
-                        {
-                            _id: ObjectId(req.body.formatoId),
-                            Productos: {
-                                $elemMatch: {
-                                    id: ObjectId(req.body.itemId),
-                                    color: ObjectId(req.body.colorId),
-                                    talla: ObjectId(req.body.tallaId)
-                                }
-                            }
-                        },
-                        {
-                            $inc: { "Productos.$.restante": -1 },
-                            $set: { etapa: ObjectId("604b88049ed8c060cc0e11dc") }
-                        }).exec((err, data) => {
-                            if (err) res.status(400).json({
-                                err: err,
-                                data: data || null
-                            })
-                            else res.status(200).json({
-                                err: err,
-                                data: data
-                            })
-                        })
-                }
-                else res.status(400).json({
-                    err: {
-                        msg: 'Ya ha registrado todas las unidades'
+            {
+                _id: ObjectId(req.body.idFor),
+                formato:req.body.formato,
+                Productos: {
+                    $elemMatch: {
+                        _id:ObjectId(req.body.idItem),
+                        talla: ObjectId(req.body.talla),
+                        color: ObjectId(req.body.color)
                     }
-                })
-            }
-            else {
-                res.status(400).json({
-                    err: { msg: 'El producto no hace parte de la orden.' }
-                })
-            }
-
-        })
+                }
+            },
+            {
+                $inc: { "Productos.$.restante": -1 },
+                $set: { etapa: ObjectId("604b88049ed8c060cc0e11dc") }
+            })
     },
     generateQr: (req, res) => {
         try {
-            console.log(req.params.id)
-            let data = JSON.parse(req.params.id)
+            let name = JSON.parse(req.body.id)
+            let data = JSON.parse(req.body.data)
             let name = req.headers['access-token']
 
-            if (fs.existsSync(`/tmp/nodetmp/${name}.png`)) fs.unlinkSync(`/tmp/nodetmp/${name}.png`)
-            qrCode.toFile(`/tmp/nodetmp/${name}.png`, req.params.id, function (err) {
+            if (fs.existsSync(`/tmp/nodetmp/${name}.jpg`)) fs.unlinkSync(`/tmp/nodetmp/${name}.jpg`)
+            qrCode.toFile(`/tmp/nodetmp/${name}.jpg`, data, function (err) {
                 if (err) res.status(400).json({})
-                res.contentType('image/png')
+                res.contentType('image/jpg')
                 res.status(200).sendFile(`/tmp/nodetmp/${name}.png`)
             })
         } catch (onError) {

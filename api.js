@@ -51,6 +51,7 @@ router.route('/formato')
 router.route('/formato/img/:name')
     .put(controller.saveFactura)
     .get(controller.getFac)
+    .post(controller.procesarPed)
 router.route('/getForm/:idClient')
     .post(controller.getFormato)
 router.route('/menuTk')
@@ -61,13 +62,10 @@ router.route('/etapa/:formato')
 router.route('/fact/:formato')
     .post(controller.subirFactura)
     .get(controller.getFac)
-router.route('/qrscann/:id')
-    .post(controller.procesarPed)
-    .get(controller.generateQr)
+router.route('/qrscann')
+    .post(controller.generateQr)
 router.route('/email')
     .post(controller.sendEmail)
-
-
 
 // Export API routes
 module.exports = router;
