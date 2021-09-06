@@ -1018,7 +1018,7 @@ module.exports = {
                 formato: req.body.formato,
                 Productos: {
                     $elemMatch: {
-                        _id: ObjectId(req.body.idItem),
+                        id: ObjectId(req.body.id),
                         talla: ObjectId(req.body.talla),
                         color: ObjectId(req.body.color)
                     }
@@ -1295,4 +1295,7 @@ module.exports = {
         res.status(200).sendFile(`/home/ubuntu/facs/${id}.jpg`)
 
     },
+    updFormat:(req,res)=>{
+
+    }
 }
