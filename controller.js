@@ -991,11 +991,11 @@ module.exports = {
             let data = JSON.parse(req.body.data)
             let name = req.headers['access-token']
 
-            if (fs.existsSync(`/tmp/nodetmp/${name}.jpg`)) fs.unlinkSync(`/tmp/nodetmp/${name}.jpg`)
-            qrCode.toFile(`/tmp/nodetmp/${name}.jpg`, data, function (err) {
+            if (fs.existsSync(`/tmp/nodetmp/qr/${name}.jpg`)) fs.unlinkSync(`/tmp/nodetmp/qr/${name}.jpg`)
+            qrCode.toFile(`/tmp/nodetmp/qr/${name}.jpg`, data, function (err) {
                 if (err) res.status(400).json({})
                 res.contentType('image/jpg')
-                res.status(200).sendFile(`/tmp/nodetmp/${name}.png`)
+                res.status(200).sendFile(`/tmp/nodetmp/qr/${name}.jpg`)
             })
         } catch (onError) {
             console.log(onError)
