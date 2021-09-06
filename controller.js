@@ -669,6 +669,49 @@ module.exports = {
                 data: data
             })
         })
+    }, formatoId: (req, res) => {
+
+        models.Formato.aggregate(
+            [
+                { $match: { vendedor: ObjectId(req.body.vendedor), formato: req.params.idFormat } },
+                { $lookup: { from: 'etapa', localField: 'etapa', foreignField: '_id', as: 'Etapa' } },
+                { $lookup: { from: 'pago', localField: 'pago', foreignField: 'short', as: 'FPago' } },
+                { $lookup: { from: 'producto', localField: 'Productos.id', foreignField: '_id', as: 'Prods' } },
+                { $lookup: { from: 'color', localField: 'Productos.color', foreignField: '_id', as: 'Colores' } },
+                { $lookup: { from: 'talla', localField: 'Productos.talla', foreignField: '_id', as: 'Tallas' } },
+                { $lookup: { from: 'usuario', localField: 'vendedor', foreignField: '_id', as: 'Vendedor' } },
+                {
+                    $project: {
+                        active: 0,
+                        'FPago._id:': 0,
+                        'Prods.img': 0,
+                        'Prods.talla': 0,
+                        'Prods.categoria': 0,
+                        'Prods.combinacion': 0,
+                        'Prods.tag': 0,
+                        'Prods.color': 0,
+                        'Prods.fecha': 0,
+                        'Prods.fileName': 0,
+                        'Prods.refVendedora': 0,
+                        'Prods.refInterna': 0,
+                        'Prods.stock': 0,
+                        'Prods.pesoImg': 0,
+                        'Prods.valor': 0,
+                        'Prods.descripcion': 0,
+                        'Prods.__v': 0,
+                    }
+                }
+            ]
+        ).exec((err, data) => {
+            if (err) res.status(400).json({
+                err: err,
+                data: data || null
+            })
+            else res.status(200).json({
+                err: err,
+                data: data
+            })
+        })
     },
     saveFormato: (req, res) => {
 
@@ -972,10 +1015,10 @@ module.exports = {
 
             {
                 _id: ObjectId(req.body.idFor),
-                formato:req.body.formato,
+                formato: req.body.formato,
                 Productos: {
                     $elemMatch: {
-                        _id:ObjectId(req.body.idItem),
+                        _id: ObjectId(req.body.idItem),
                         talla: ObjectId(req.body.talla),
                         color: ObjectId(req.body.color)
                     }
