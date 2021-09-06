@@ -1022,7 +1022,7 @@ module.exports = {
                         id: ObjectId(req.body.id),
                         talla: ObjectId(req.body.talla),
                         color: ObjectId(req.body.color),
-                        restante:{$gte:0}
+                        restante:{$gte:1}
                     }
                 }
             },
