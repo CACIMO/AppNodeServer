@@ -14,22 +14,12 @@ db.producto.updateOne({_id:ObjectId('60e8af7e7649685a09fcfa88'),'combinacion._id
 db.producto.find({_id:ObjectId('60e8af7e7649685a09fcfa88'),'combinacion._id':ObjectId('60fbdf09449a76314ea805bd')}).pretty()
 
 
-db.formato.updateOne(
-
+db.formato.update(
+    {_id: ObjectId('61362b1224ac372a0730d722'),formato:'FT00034'},
     {
-        _id: ObjectId('612450e3480a5732d2fe3f24'),
-        formato:'FT00027',
-        Productos: {
-            $elemMatch: {
-                _id:ObjectId('6124501b480a5732d2fe3f21'),
-                talla: ObjectId("60e75e337649685a09fcfa24"),
-                color: ObjectId("60e879e77649685a09fcfa52")
-            }
+        $pull:{
+            Productos:{_id:ObjectId('61362aa124ac372a0730d71f')}
         }
-    },
-    {
-        $inc: { "Productos.$.restante": -1 },
-        $set: { etapa: ObjectId("604b88049ed8c060cc0e11dc") }
     })
 
 
