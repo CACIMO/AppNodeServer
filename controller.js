@@ -1021,7 +1021,7 @@ module.exports = {
                         id: ObjectId(req.body.id),
                         talla: ObjectId(req.body.talla),
                         color: ObjectId(req.body.color),
-                        restante:{$gte:1}
+                        restante: { $gte: 1 }
                     }
                 }
             },
@@ -1307,5 +1307,24 @@ module.exports = {
     },
     updFormat: (req, res) => {
 
+    },
+    removeCombi: (req, res) => {
+        models.Formato.updateOne(
+            { _id: ObjectId(req.body.idProd) },
+            {
+                $pull: {
+                    combinaciones: { _id: ObjectId(req.body.idCombi) }
+                }
+            }).exec((err, data) => {
+                console.log(err);
+                if (err) res.status(400).json({
+                    err: err,
+                    data: data || null
+                })
+                else res.status(200).json({
+                    err: err,
+                    data: data
+                })
+            })
     }
 }
