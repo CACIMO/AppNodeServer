@@ -628,10 +628,12 @@ module.exports = {
     },
     getFormato: (req, res) => {
 
-        models.Formato.aggregate(
-            [
-                { $match: { vendedor: ObjectId(req.body.vendedor) } },
-                { $lookup: { from: 'etapa', localField: 'etapa', foreignField: '_id', as: 'Etapa' } },
+
+        if(req.params.idFormat == 'true'){
+            arrayData.push({ $match: { vendedor: ObjectId(req.body.vendedor) } });
+        }
+        arrayData.push(
+            { $lookup: { from: 'etapa', localField: 'etapa', foreignField: '_id', as: 'Etapa' } },
                 { $lookup: { from: 'pago', localField: 'pago', foreignField: 'short', as: 'FPago' } },
                 { $lookup: { from: 'producto', localField: 'Productos.id', foreignField: '_id', as: 'Prods' } },
                 { $lookup: { from: 'color', localField: 'Productos.color', foreignField: '_id', as: 'Colores' } },
@@ -658,6 +660,11 @@ module.exports = {
                         'Prods.__v': 0,
                     }
                 }
+        )
+
+        models.Formato.aggregate(
+            [
+                
             ]
         ).exec((err, data) => {
             if (err) res.status(400).json({
