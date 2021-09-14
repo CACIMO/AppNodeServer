@@ -1309,7 +1309,7 @@ module.exports = {
 
     },
     removeCombi: (req, res) => {
-        models.Formato.updateOne(
+        models.Producto.updateOne(
             { _id: ObjectId(req.body.idProd) },
             {
                 $pull: {
