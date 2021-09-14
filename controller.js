@@ -632,6 +632,12 @@ module.exports = {
         if(req.params.idFormat == 'true'){
             arrayData.push({ $match: { vendedor: ObjectId(req.body.vendedor) } });
         }
+        /* else{
+            arrayData.push({ $match: { vendedor: {
+                $regex: ``
+            } } });
+        
+        } */
         arrayData.push(
             { $lookup: { from: 'etapa', localField: 'etapa', foreignField: '_id', as: 'Etapa' } },
                 { $lookup: { from: 'pago', localField: 'pago', foreignField: 'short', as: 'FPago' } },
@@ -662,11 +668,7 @@ module.exports = {
                 }
         )
 
-        models.Formato.aggregate(
-            [
-                
-            ]
-        ).exec((err, data) => {
+        models.Formato.aggregate(arrayData).exec((err, data) => {
             if (err) res.status(400).json({
                 err: err,
                 data: data || null
