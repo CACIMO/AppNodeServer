@@ -1316,7 +1316,6 @@ module.exports = {
                     combinaciones: { _id: ObjectId(req.body.idCombi) }
                 }
             }).exec((err, data) => {
-                console.log(err);
                 if (err) res.status(400).json({
                     err: err,
                     data: data || null
