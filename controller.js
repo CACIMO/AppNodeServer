@@ -1313,7 +1313,7 @@ module.exports = {
             { _id: ObjectId(req.body.idProd) },
             {
                 $pull: {
-                    combinaciones: { _id: ObjectId(req.body.idCombi) }
+                    combinacion: { _id: ObjectId(req.body.idCombi) }
                 }
             }).exec((err, data) => {
                 if (err) res.status(400).json({
