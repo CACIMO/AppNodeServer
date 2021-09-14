@@ -629,8 +629,8 @@ module.exports = {
     getFormato: (req, res) => {
 
         let arrayData =[]
-        
-        if(req.params.idFormat == 'true'){
+
+        if(req.params.idFormat == 'false'){
             arrayData.push({ $match: { vendedor: ObjectId(req.body.vendedor) } });
         }
         /* else{
