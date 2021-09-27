@@ -205,7 +205,8 @@ module.exports = {
         })
     },
     getColor: (req, res) => {
-        models.Color.find({ active: true }, (err, data) => {
+        let act = req.params.actv == 'active'?true:false
+        models.Color.find(act?{ active: true }:{}, (err, data) => {
             if (err) res.status(400).json({
                 err: err,
                 data: data || null
@@ -216,8 +217,9 @@ module.exports = {
             })
         });
     },
-    getTalla: (req, res) => {
-        models.Talla.find({ active: true }, (err, data) => {
+    getTalla: (req, res) => { 
+        let act = req.params.actv == 'active'?true:false
+        models.Talla.find(act?{ active: true }:{}, (err, data) => {
             if (err) res.status(400).json({
                 err: err,
                 data: data || null
@@ -229,7 +231,8 @@ module.exports = {
         });
     },
     getCat: (req, res) => {
-        models.Categoria.find({ active: true }, (err, data) => {
+        let act = req.params.actv == 'active'?true:false
+        models.Categoria.find(act?{ active: true }:{}, (err, data) => {
             if (err) res.status(400).json({
                 err: err,
                 data: data || null
@@ -241,7 +244,8 @@ module.exports = {
         });
     },
     getTag: (req, res) => {
-        models.Tag.find({ active: true }, (err, data) => {
+        let act = req.params.actv == 'active'?true:false
+        models.Tag.find(act?{ active: true }:{}, (err, data) => {
             if (err) res.status(400).json({
                 err: err,
                 data: data || null
