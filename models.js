@@ -255,6 +255,10 @@ let FormatoSchema = mongoose.Schema({
         default:0,
         require: true
     },
+    observacion: {
+        type: String,
+        require: true
+    },
 })
 let ErrorLogSchema = mongoose.Schema({
     deviceId:{

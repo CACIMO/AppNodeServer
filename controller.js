@@ -775,7 +775,8 @@ module.exports = {
                                     Formato.telefono = req.body.telefono
                                     Formato.pago = req.body.pago
                                     Formato.Productos = data[0]['producto']
-                                    Formato.envio = req.body.envio
+                                    Formato.envio = req.body.envio,
+                                    Formato.observacion =req.body.obs
                                 }
                                 catch (error) {
                                     flag = false
