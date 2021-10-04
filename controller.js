@@ -1118,6 +1118,8 @@ module.exports = {
                 }
             ]
         ).exec((err, data) => {
+
+            console.log(err,data,fecFin,fecIni);
             if (err) res.status(400).json({
                 err: err,
                 data: data || null
