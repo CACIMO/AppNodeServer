@@ -654,7 +654,6 @@ module.exports = {
                     $project: {
                         active: 0,
                         'FPago._id:': 0,
-                        'Prods.img': 0,
                         'Prods.talla': 0,
                         'Prods.categoria': 0,
                         'Prods.combinacion': 0,
@@ -698,7 +697,6 @@ module.exports = {
                     $project: {
                         active: 0,
                         'FPago._id:': 0,
-                        'Prods.img': 0,
                         'Prods.talla': 0,
                         'Prods.categoria': 0,
                         'Prods.combinacion': 0,
