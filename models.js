@@ -187,7 +187,7 @@ let ConfigSchema = mongoose.Schema({
 let FormatoSchema = mongoose.Schema({
     fecha: {
         type: Date,
-        default: new Date(new Date() - 3600000 * 50)
+        default: new Date(new Date() - 3600000 * 5)
     },
     formato: {
         type: String,
