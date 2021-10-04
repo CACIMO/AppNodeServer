@@ -600,7 +600,6 @@ module.exports = {
                 { $lookup: { from: 'etapa', localField: 'etapa', foreignField: '_id', as: 'Etapa' } },
                 {
                     $project: {
-                        'Prods.img': 0,
                         'Prods.talla': 0,
                         'Prods.categoria': 0,
                         'Prods.tag': 0,
