@@ -785,7 +785,7 @@ module.exports = {
                                         data: data || null
                                     })
                                 }
-
+                                console.log(flag)
                                 if (flag) models.Carrito.updateOne(
                                     { active: true, formato: token },
                                     { active: false, formato: req.body.formato },
