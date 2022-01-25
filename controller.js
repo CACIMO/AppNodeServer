@@ -779,6 +779,7 @@ module.exports = {
                                     Formato.observacion =req.body.obs
                                 }
                                 catch (error) {
+                                    console.log('aqi')
                                     flag = false
                                     res.status(400).json({
                                         err: err,
