@@ -1,5 +1,5 @@
-const { ObjectId, ObjectID } = required('bson');
-let mongoose = required('mongoose');
+const { ObjectId, ObjectID } = require('bson');
+let mongoose = require('mongoose');
 mongoose.pluralize(null);
 let usuarioSchema = mongoose.Schema({
     usuario: {
@@ -173,10 +173,7 @@ let CarritoItemSchema = mongoose.Schema({
         type: String,
         required: true
     },
-    img:{
-        type:String,
-        required:true
-    }
+    img:{}
 });
 let ConfigSchema = mongoose.Schema({
     titulo: {
