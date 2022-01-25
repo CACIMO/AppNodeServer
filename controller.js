@@ -553,7 +553,7 @@ module.exports = {
     },
     getListCarrito: (req, res) => {
 
-        let token = req.headers['access-token']
+        let token = req.body.id_user
         models.Carrito.aggregate(
             [
                 { $match: { active: true, formato: token } },
