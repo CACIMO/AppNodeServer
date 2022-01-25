@@ -1134,6 +1134,7 @@ module.exports = {
             else if (data.length) {
                 var allLines = []
                 var arryLine = []
+                let documento = con.conf.csvEncabezado
 
                 data.forEach((ft) => {
                     ft.Productos.forEach((prod) => {
@@ -1157,18 +1158,12 @@ module.exports = {
                         arryLine.push(costUni)
                         arryLine.push(prod.valor * prod.cantidad)
                         arryLine.push(costUni * prod.cantidad)
-
+                        arryLine.push(ft.formato.substr(0, 2))
+                        arryLine.push(ft.formato.substr(2))
+                        let auxLine = arryLine.join(con.conf.separador) + '\n'
+                        documento += auxLine
+                        arryLine = []
                     })
-                    arryLine.push(ft.formato.substr(0, 2))
-                    arryLine.push(ft.formato.substr(2))
-                    allLines.push(arryLine)
-                    arryLine = []
-
-                })
-                let documento = con.conf.csvEncabezado
-                allLines.forEach((line) => {
-                    let auxLine = line.join(con.conf.separador) + '\n'
-                    documento += auxLine
                 })
 
                 message.attachments = [
