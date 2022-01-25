@@ -1100,7 +1100,7 @@ module.exports = {
                 },
                 { $lookup: { from: 'producto', localField: 'Productos.id', foreignField: '_id', as: 'ProdInfo' } },
                 { $lookup: { from: 'color', localField: 'Productos.color', foreignField: '_id', as: 'ColorInfo' } },
-                { $lookup: { from: 'usuario', localField: 'Productos.vendedor', foreignField: '_id', as: 'VendedorInfo' } },
+                { $lookup: { from: 'usuario', localField: 'vendedor', foreignField: '_id', as: 'VendedorInfo' } },
                 {
                     $project: {
                         fac: 0,
