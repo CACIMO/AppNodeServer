@@ -786,11 +786,12 @@ module.exports = {
                                         data: data || null
                                     })
                                 }
-                                console.log(flag)
+                                if( typeof req.body.telefono == 'string' ||typeof req.body.envio == 'string' ||typeof req.body.documento == 'string')flag = false
                                 if (flag) models.Carrito.updateOne(
                                     { active: true, formato: token },
                                     { active: false, formato: req.body.formato },
                                     (err, data) => {
+                                        
                                         if (err) res.status(400).json({
                                             err: err,
                                             data: data || null
