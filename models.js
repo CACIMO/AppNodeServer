@@ -1,5 +1,5 @@
-const { ObjectId, ObjectID } = require('bson');
-let mongoose = require('mongoose');
+const { ObjectId, ObjectID } = required('bson');
+let mongoose = required('mongoose');
 mongoose.pluralize(null);
 let usuarioSchema = mongoose.Schema({
     usuario: {
@@ -75,7 +75,7 @@ let ProductoSchema = mongoose.Schema({
     },
     combinacion:{
         type:Array,
-        require:true
+        required:true
     }
 
 });
@@ -172,12 +172,16 @@ let CarritoItemSchema = mongoose.Schema({
     combinacion: {
         type: String,
         required: true
+    },
+    img:{
+        type:String,
+        required:true
     }
 });
 let ConfigSchema = mongoose.Schema({
     titulo: {
         type: String,
-        require: true
+        required: true
 
     },
     csc: {
@@ -191,52 +195,52 @@ let FormatoSchema = mongoose.Schema({
     },
     formato: {
         type: String,
-        require: true
+        required: true
 
     },
     documento: {
         type: Number,
-        require: true
+        required: true
 
     },
     nombre: {
         type: String,
-        require: true
+        required: true
 
     },
     barrio: {
         type: String,
-        require: true
+        required: true
 
     },
     ciudad: {
         type: String,
-        require: true
+        required: true
 
     },
     vendedor: {
         type: ObjectId,
-        require: true
+        required: true
 
     },
     total: {
         type: Number,
-        require: true
+        required: true
 
     },
     direccion: {
         type: String,
-        require: true
+        required: true
 
     },
     telefono: {
         type: Number,
-        require: true
+        required: true
 
     },
     pago: {
         type: String,
-        require: true
+        required: true
 
     },
     etapa: {
@@ -253,17 +257,17 @@ let FormatoSchema = mongoose.Schema({
     envio: {
         type: Number,
         default:0,
-        require: true
+        required: true
     },
     observacion: {
         type: String,
-        require: true
+        required: true
     },
 })
 let ErrorLogSchema = mongoose.Schema({
     deviceId:{
         type:String,
-        require:true
+        required:true
     },
     error: {
         type: Object
@@ -277,19 +281,19 @@ let ErrorLogSchema = mongoose.Schema({
 let CombinacionSchema = mongoose.Schema({
     talla:{
         type:ObjectId,
-        require:true,
+        required:true,
     },
     color:{
         type:ObjectId,
-        require:true,
+        required:true,
     },
     stock:{
         type: Number,
-        require:true
+        required:true
     },
     img:{
         type:String,
-        require:true
+        required:true
     }
 
 })

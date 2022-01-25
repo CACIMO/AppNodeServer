@@ -472,6 +472,7 @@ module.exports = {
         Item.cantidad = req.body.cantidad
         Item.restante = req.body.cantidad
         Item.combinacion = req.body.idCombi
+        Item.img = req.body.imgCombi
 
 
         models.Carrito.find({ formato: token, active: true }, (err, data) => {
@@ -684,7 +685,8 @@ module.exports = {
                 data: data
             })
         })
-    }, formatoId: (req, res) => {
+    }, 
+    formatoId: (req, res) => {
 
         models.Formato.aggregate(
             [
