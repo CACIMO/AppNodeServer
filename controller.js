@@ -743,7 +743,7 @@ module.exports = {
                     })
                     else {
 
-                        let token = req.headers['access-token']
+                        let token = req.body.cc
                         models.Carrito.find({ active: true, formato: token }, { producto: 1 }, (err, data) => {
 
                             if (err) res.status(400).json({
