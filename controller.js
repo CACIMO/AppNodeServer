@@ -744,7 +744,8 @@ module.exports = {
                     else {
 
                         let token = req.body.cc
-                        models.Carrito.find({ active: true, formato: token }, { producto: 1 }, (err, data) => {
+                        console.log(typeof req.body.cc)
+                      /*   models.Carrito.find({ active: true, formato: token }, { producto: 1 }, (err, data) => {
 
                             if (err) res.status(400).json({
                                 err: err,
@@ -802,7 +803,7 @@ module.exports = {
                                         })
                                     })
                             }
-                        })
+                        }) */
 
                     }
                 })
