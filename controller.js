@@ -552,11 +552,9 @@ module.exports = {
 
     },
     getListCarrito: (req, res) => {
-
-        let token = req.body.id_user
         models.Carrito.aggregate(
             [
-                { $match: { active: true, formato: token } },
+                { $match: { active: true, formato: req.params.cc } },
                 { $lookup: { from: 'producto', localField: 'producto.id', foreignField: '_id', as: 'Productos' } },
                 { $lookup: { from: 'color', localField: 'producto.color', foreignField: '_id', as: 'Colores' } },
                 { $lookup: { from: 'talla', localField: 'producto.talla', foreignField: '_id', as: 'Tallas' } },
