@@ -765,28 +765,28 @@ module.exports = {
                                 let Formato = new models.Formato()
                                 try {
                                     Formato.formato = 'FT' + consec
-                                    Formato.documento = req.body.documento
+                                    Formato.documento = parseInt(req.body.documento)
                                     Formato.barrio = req.body.barrio
                                     Formato.ciudad = req.body.ciudad
                                     Formato.vendedor = ObjectId(req.body.vendedor)
                                     Formato.total = pago
                                     Formato.direccion = req.body.direccion
                                     Formato.nombre = req.body.nombre
-                                    Formato.telefono = req.body.telefono
+                                    Formato.telefono = parseInt(req.body.telefono)
                                     Formato.pago = req.body.pago
                                     Formato.Productos = data[0]['producto']
-                                    Formato.envio = req.body.envio,
+                                    Formato.envio = parseInt(req.body.envio)
                                     Formato.observacion =req.body.obs
                                 }
                                 catch (error) {
                                     console.log('aqi')
                                     flag = false
                                     res.status(400).json({
-                                        err: err,
+                                        err: error,
                                         data: data || null
                                     })
                                 }
-                                if( typeof req.body.telefono == 'string' ||typeof req.body.envio == 'string' ||typeof req.body.documento == 'string')flag = false
+                        
                                 if (flag) models.Carrito.updateOne(
                                     { active: true, formato: token },
                                     { active: false, formato: req.body.formato },
