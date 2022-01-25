@@ -461,9 +461,8 @@ module.exports = {
         )
     },
     addCarrito: (req, res) => {
-
-        let token = req.headers['access-token']
-
+        
+        let token = req.body.id_user
         let Item = new models.CarritoItem()
         Item.id = ObjectId(req.body.producto)
         Item.valor = req.body.precio
@@ -472,7 +471,7 @@ module.exports = {
         Item.cantidad = req.body.cantidad
         Item.restante = req.body.cantidad
         Item.combinacion = req.body.idCombi
-
+        
 
         models.Carrito.find({ formato: token, active: true }, (err, data) => {
             if (err) res.status(400).json({})
