@@ -750,7 +750,7 @@ module.exports = {
 
                             console.log(data)
 
-                            /* if (err) res.status(400).json({
+                            if (err) res.status(400).json({
                                 err: err,
                                 data: data || null
                             })
@@ -805,7 +805,7 @@ module.exports = {
                                             })
                                         })
                                     })
-                            } */
+                            }
                         })
 
                     }
