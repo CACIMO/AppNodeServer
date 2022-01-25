@@ -172,8 +172,7 @@ let CarritoItemSchema = mongoose.Schema({
     combinacion: {
         type: String,
         required: true
-    },
-    img:{}
+    }
 });
 let ConfigSchema = mongoose.Schema({
     titulo: {

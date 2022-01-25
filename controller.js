@@ -472,7 +472,6 @@ module.exports = {
         Item.cantidad = req.body.cantidad
         Item.restante = req.body.cantidad
         Item.combinacion = req.body.idCombi
-        Item.img = req.body.imgCombi
 
 
         models.Carrito.find({ formato: token, active: true }, (err, data) => {
@@ -703,7 +702,6 @@ module.exports = {
                         'FPago._id:': 0,
                         'Prods.talla': 0,
                         'Prods.categoria': 0,
-                        'Prods.combinacion': 0,
                         'Prods.tag': 0,
                         'Prods.color': 0,
                         'Prods.fecha': 0,
