@@ -109,14 +109,15 @@ module.exports = {
         Producto.refInterna = req.body.refInterna
 
         Producto.fileName = JSON.parse(req.body.combinaciones)[0].img.split('.')[0]
-        let combinaciones = JSON.parse(req.body.combinaciones).map((com) => {
+        let combinaciones = []
+        JSON.parse(req.body.combinaciones).forEach((com) => {
             let auxCombi  = new models.Combinacion()
             auxCombi.talla = ObjectId(com.talla)
             auxCombi.color = ObjectId(com.color)
             auxCombi.img = com.img
             let stockAux = typeof com.stock == 'string'? parseInt(com.stock):com.stock
             auxCombi.stock = stockAux
-            return auxCombi
+            combinaciones.push(auxCombi)
         })
         Producto.combinacion = combinaciones
 

@@ -274,6 +274,25 @@ let ErrorLogSchema = mongoose.Schema({
         //required: true
     }
 })
+let CombinacionSchema = mongoose.Schema({
+    talla:{
+        type:ObjectId,
+        require:true,
+    },
+    color:{
+        type:ObjectId,
+        require:true,
+    },
+    stock:{
+        type: Number,
+        require:true
+    },
+    img:{
+        type:String,
+        require:true
+    }
+
+})
 
 // Export Contact model
 module.exports = {
@@ -288,4 +307,5 @@ module.exports = {
     Config: mongoose.model('config', ConfigSchema),
     ErrorLog: mongoose.model('log', ErrorLogSchema),
     Formato: mongoose.model('formato', FormatoSchema),
+    Combinacion : mongoose.model('combinacion',CombinacionSchema)
 }
