@@ -1100,6 +1100,7 @@ module.exports = {
                 },
                 { $lookup: { from: 'producto', localField: 'Productos.id', foreignField: '_id', as: 'ProdInfo' } },
                 { $lookup: { from: 'color', localField: 'Productos.color', foreignField: '_id', as: 'ColorInfo' } },
+                { $lookup: { from: 'usuario', localField: 'Productos.vendedor', foreignField: '_id', as: 'VendedorInfo' } },
                 {
                     $project: {
                         fac: 0,
@@ -1160,6 +1161,10 @@ module.exports = {
                         arryLine.push(costUni * prod.cantidad)
                         arryLine.push(ft.formato.substr(0, 2))
                         arryLine.push(ft.formato.substr(2))
+                        console.log(ft.VendedorInfo)
+                        /* ft.ColorInfo.forEach((info) => {
+                            if (info._id.equals(prod.color)) arryLine.push(info.titulo)
+                        }) */
                         let auxLine = arryLine.join(con.conf.separador) + '\n'
                         documento += auxLine
                         arryLine = []
@@ -1172,8 +1177,6 @@ module.exports = {
                         content: documento
                     }
                 ]
-
-                console.log(message)
 
                 con.conf.transport.sendMail(message, function (err, info) {
                     console.log(err);
