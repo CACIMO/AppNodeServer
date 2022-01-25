@@ -1161,7 +1161,8 @@ module.exports = {
                         arryLine.push(costUni * prod.cantidad)
                         arryLine.push(ft.formato.substr(0, 2))
                         arryLine.push(ft.formato.substr(2))
-                        console.log(ft.VendedorInfo)
+                        let vendedora = `${ft.VendedorInfo[0].nombre} ${ft.VendedorInfo[0].apellido}`
+                        arryLine.push(vendedora)
                         /* ft.ColorInfo.forEach((info) => {
                             if (info._id.equals(prod.color)) arryLine.push(info.titulo)
                         }) */
