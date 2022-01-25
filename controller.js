@@ -110,10 +110,13 @@ module.exports = {
 
         Producto.fileName = JSON.parse(req.body.combinaciones)[0].img.split('.')[0]
         let combinaciones = JSON.parse(req.body.combinaciones).map((com) => {
-            com._id = ObjectId()
-            com.talla = ObjectId(com.talla)
-            com.color = ObjectId(com.color)
-            return com
+            let auxCombi  = new models.Combinacion()
+            auxCombi.talla = ObjectId(com.talla)
+            auxCombi.color = ObjectId(com.color)
+            auxCombi.img = com.img
+            let stockAux = typeof com.stock == 'string'? parseInt(com.stock):com.stock
+            auxCombi.stock = stockAux
+            return auxCombi
         })
         Producto.combinacion = combinaciones
 
@@ -1205,7 +1208,8 @@ module.exports = {
         })
     },
     updateStock: (req, res) => {
-        Producto.updateOne({ _id: ObjectId(req.body.id), 'combinacion._id': ObjectId(req.body.combi) }, { $set: { 'combinacion.$.stock': req.body.stock } }).exec((err, data) => {
+        let auxStock = typeof req.body.stock == "string" ? parseInt(req.body.stock ):req.body.stock 
+        Producto.updateOne({ _id: ObjectId(req.body.id), 'combinacion._id': ObjectId(req.body.combi) }, { $set: { 'combinacion.$.stock': auxStock} }).exec((err, data) => {
             if (err) res.status(400).json({
                 err: err,
                 data: data || null
@@ -1251,17 +1255,17 @@ module.exports = {
         fs.writeFileSync(`/home/ubuntu/fullImg/${img.originalname}`, img.buffer, 'binary')
         let process = spawn('python3', ["/home/ubuntu/rezise.py", `/home/ubuntu/fullImg/${img.originalname}`, img.originalname])
 
-        let combinacion = {
-            _id: ObjectId(),
-            img: img.originalname.split('.')[0],
-            stock: req.body.stock,
-            color: ObjectId(req.body.color),
-            talla: ObjectId(req.body.talla)
-        }
+
+        let auxCombi  = new models.Combinacion()
+            auxCombi.talla = ObjectId(req.body.talla)
+            auxCombi.color = ObjectId(req.body.color)
+            auxCombi.img = img.originalname.split('.')[0]
+            let stockAux = typeof req.body.stock == 'string'? parseInt(req.body.stock):req.body.stock
+            auxCombi.stock = stockAux
 
         Producto.updateOne({ _id: ObjectId(req.body.idProd) }, {
             $push: {
-                combinacion: combinacion
+                combinacion: auxCombi
             }
         }).exec((err, data) => {
             console.log(err);
