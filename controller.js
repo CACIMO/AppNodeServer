@@ -111,11 +111,11 @@ module.exports = {
         Producto.fileName = JSON.parse(req.body.combinaciones)[0].img.split('.')[0]
         let combinaciones = []
         JSON.parse(req.body.combinaciones).forEach((com) => {
-            let auxCombi  = new models.Combinacion()
+            let auxCombi = new models.Combinacion()
             auxCombi.talla = ObjectId(com.talla)
             auxCombi.color = ObjectId(com.color)
             auxCombi.img = com.img
-            let stockAux = typeof com.stock == 'string'? parseInt(com.stock):com.stock
+            let stockAux = typeof com.stock == 'string' ? parseInt(com.stock) : com.stock
             auxCombi.stock = stockAux
             combinaciones.push(auxCombi)
         })
@@ -209,8 +209,8 @@ module.exports = {
         })
     },
     getColor: (req, res) => {
-        let act = req.params.actv == 'active'?true:false
-        models.Color.find(act?{ active: true }:{}, (err, data) => {
+        let act = req.params.actv == 'active' ? true : false
+        models.Color.find(act ? { active: true } : {}, (err, data) => {
             if (err) res.status(400).json({
                 err: err,
                 data: data || null
@@ -221,9 +221,9 @@ module.exports = {
             })
         });
     },
-    getTalla: (req, res) => { 
-        let act = req.params.actv == 'active'?true:false
-        models.Talla.find(act?{ active: true }:{}, (err, data) => {
+    getTalla: (req, res) => {
+        let act = req.params.actv == 'active' ? true : false
+        models.Talla.find(act ? { active: true } : {}, (err, data) => {
             if (err) res.status(400).json({
                 err: err,
                 data: data || null
@@ -235,8 +235,8 @@ module.exports = {
         });
     },
     getCat: (req, res) => {
-        let act = req.params.actv == 'active'?true:false
-        models.Categoria.find(act?{ active: true }:{}, (err, data) => {
+        let act = req.params.actv == 'active' ? true : false
+        models.Categoria.find(act ? { active: true } : {}, (err, data) => {
             if (err) res.status(400).json({
                 err: err,
                 data: data || null
@@ -248,8 +248,8 @@ module.exports = {
         });
     },
     getTag: (req, res) => {
-        let act = req.params.actv == 'active'?true:false
-        models.Tag.find(act?{ active: true }:{}, (err, data) => {
+        let act = req.params.actv == 'active' ? true : false
+        models.Tag.find(act ? { active: true } : {}, (err, data) => {
             if (err) res.status(400).json({
                 err: err,
                 data: data || null
@@ -461,7 +461,7 @@ module.exports = {
         )
     },
     addCarrito: (req, res) => {
-        
+
         let token = req.body.id_user
         let Item = new models.CarritoItem()
         Item.id = ObjectId(req.body.producto)
@@ -471,7 +471,7 @@ module.exports = {
         Item.cantidad = req.body.cantidad
         Item.restante = req.body.cantidad
         Item.combinacion = req.body.idCombi
-        
+
 
         models.Carrito.find({ formato: token, active: true }, (err, data) => {
             if (err) res.status(400).json({})
@@ -632,9 +632,9 @@ module.exports = {
     },
     getFormato: (req, res) => {
 
-        let arrayData =[]
+        let arrayData = []
 
-        if(req.params.idFormat == 'false'){
+        if (req.params.idFormat == 'false') {
             arrayData.push({ $match: { vendedor: ObjectId(req.body.vendedor) } });
         }
         /* else{
@@ -645,30 +645,30 @@ module.exports = {
         } */
         arrayData.push(
             { $lookup: { from: 'etapa', localField: 'etapa', foreignField: '_id', as: 'Etapa' } },
-                { $lookup: { from: 'pago', localField: 'pago', foreignField: 'short', as: 'FPago' } },
-                { $lookup: { from: 'producto', localField: 'Productos.id', foreignField: '_id', as: 'Prods' } },
-                { $lookup: { from: 'color', localField: 'Productos.color', foreignField: '_id', as: 'Colores' } },
-                { $lookup: { from: 'talla', localField: 'Productos.talla', foreignField: '_id', as: 'Tallas' } },
-                { $lookup: { from: 'usuario', localField: 'vendedor', foreignField: '_id', as: 'Vendedor' } },
-                {
-                    $project: {
-                        active: 0,
-                        'FPago._id:': 0,
-                        'Prods.talla': 0,
-                        'Prods.categoria': 0,
-                        'Prods.combinacion': 0,
-                        'Prods.tag': 0,
-                        'Prods.color': 0,
-                        'Prods.fecha': 0,
-                        'Prods.refVendedora': 0,
-                        'Prods.refInterna': 0,
-                        'Prods.stock': 0,
-                        'Prods.pesoImg': 0,
-                        'Prods.valor': 0,
-                        'Prods.descripcion': 0,
-                        'Prods.__v': 0,
-                    }
+            { $lookup: { from: 'pago', localField: 'pago', foreignField: 'short', as: 'FPago' } },
+            { $lookup: { from: 'producto', localField: 'Productos.id', foreignField: '_id', as: 'Prods' } },
+            { $lookup: { from: 'color', localField: 'Productos.color', foreignField: '_id', as: 'Colores' } },
+            { $lookup: { from: 'talla', localField: 'Productos.talla', foreignField: '_id', as: 'Tallas' } },
+            { $lookup: { from: 'usuario', localField: 'vendedor', foreignField: '_id', as: 'Vendedor' } },
+            {
+                $project: {
+                    active: 0,
+                    'FPago._id:': 0,
+                    'Prods.talla': 0,
+                    'Prods.categoria': 0,
+                    'Prods.combinacion': 0,
+                    'Prods.tag': 0,
+                    'Prods.color': 0,
+                    'Prods.fecha': 0,
+                    'Prods.refVendedora': 0,
+                    'Prods.refInterna': 0,
+                    'Prods.stock': 0,
+                    'Prods.pesoImg': 0,
+                    'Prods.valor': 0,
+                    'Prods.descripcion': 0,
+                    'Prods.__v': 0,
                 }
+            }
         )
 
         models.Formato.aggregate(arrayData).exec((err, data) => {
@@ -681,7 +681,7 @@ module.exports = {
                 data: data
             })
         })
-    }, 
+    },
     formatoId: (req, res) => {
 
         models.Formato.aggregate(
@@ -776,7 +776,7 @@ module.exports = {
                                     Formato.pago = req.body.pago
                                     Formato.Productos = data[0]['producto']
                                     Formato.envio = parseInt(req.body.envio)
-                                    Formato.observacion =req.body.obs
+                                    Formato.observacion = req.body.obs
                                 }
                                 catch (error) {
                                     console.log('aqi')
@@ -786,12 +786,12 @@ module.exports = {
                                         data: data || null
                                     })
                                 }
-                        
+
                                 if (flag) models.Carrito.updateOne(
                                     { active: true, formato: token },
                                     { active: false, formato: req.body.formato },
                                     (err, data) => {
-                                        
+
                                         if (err) res.status(400).json({
                                             err: err,
                                             data: data || null
@@ -1009,22 +1009,93 @@ module.exports = {
     },
     removeCarrtito: (req, res) => {
 
-        models.Producto.updateOne({ _id: ObjectId(req.body.idProducto) }, { $inc: { stock: (req.body.cantidad) } }, (err, datax) => {
-            if (err) res.status(400).json({
-                err: err,
-                data: datax || null
+
+        let token = req.body.id_user
+        //let Item = new models.CarritoItem()
+        let prodId = ObjectId(req.body.prodId)
+        /* Item.valor = req.body.precio
+        Item.color = ObjectId(req.body.color)
+        Item.talla = ObjectId(req.body.talla)
+        Item.cantidad = req.body.cantidad
+        Item.restante = req.body.cantidad
+        Item.combinacion = req.body.idCombi */
+        let flag = false
+
+        //Eliminar Producto del carrito
+        try {
+            let auxCarrito = models.Carrito.updateOne(
+                { formato: token, active: true },
+                { $pull: { 'producto._id': prodId } }
+
+            ).exec()
+            flag = true
+
+            res.status(200).json({
+                err: null,
+                data: auxCarrito
             })
-            else models.Carrito.update({ _id: ObjectId(req.body.idCarrito) }, { $pull: { producto: { _id: ObjectId(req.body.iditem) } } }).exec((err, data) => {
+        } catch (error) {
+            res.status(400).json({
+                err: "Error al eliminar el producto.",
+                data: null
+            })
+        }
+        // Regresar saldo al inventario
+        if(false)try {
+            models.Producto.updateOne({ _id: ObjectId(req.body.producto), 'combinacion._id': ObjectId(req.body.idCombi) }, { $inc: { 'combinacion.$.stock': (req.body.cantidad) } }, (err, datax) => {
                 if (err) res.status(400).json({
                     err: err,
-                    data: data || null
+                    data: datax || null
                 })
                 else res.status(200).json({
                     err: err,
-                    data: data
+                    data: datax
                 })
             })
-        })
+        } catch (error) {
+            
+        }
+
+
+        /*  models.Carrito.find({ formato: token, active: true }, (err, data) => {
+             if (err) res.status(400).json({})
+ 
+             if (!data.length) {
+ 
+                 let Carrito = new models.Carrito()
+                 Carrito.formato = token
+                 Carrito.active = true
+                 Carrito.producto = [Item]
+                 Carrito.envio = req.body.envio
+ 
+                 Carrito.save((err, data) => {
+ 
+                     if (err) res.status(400).json({
+                         err: err,
+                         data: data || null
+                     })
+                     else models.Producto.updateOne({ _id: ObjectId(req.body.producto), 'combinacion._id': ObjectId(req.body.idCombi) }, { $inc: { 'combinacion.$.stock': (-req.body.cantidad) } }, (err, datax) => {
+                         if (err) res.status(400).json({
+                             err: err,
+                             data: datax || null
+                         })
+                         else res.status(200).json({
+                             err: err,
+                             data: data
+                         })
+                     })
+                 })
+             }
+             else {
+                 
+             }
+         })
+ 
+*/
+
+
+
+
     },
     procesarPed: (req, res) => {
 
@@ -1127,7 +1198,7 @@ module.exports = {
             ]
         ).exec((err, data) => {
 
-            console.log(err,data,fecFin,fecIni);
+            console.log(err, data, fecFin, fecIni);
             if (err) res.status(400).json({
                 err: err,
                 data: data || null
@@ -1211,8 +1282,8 @@ module.exports = {
         })
     },
     updateStock: (req, res) => {
-        let auxStock = typeof req.body.stock == "string" ? parseInt(req.body.stock ):req.body.stock 
-        Producto.updateOne({ _id: ObjectId(req.body.id), 'combinacion._id': ObjectId(req.body.combi) }, { $set: { 'combinacion.$.stock': auxStock} }).exec((err, data) => {
+        let auxStock = typeof req.body.stock == "string" ? parseInt(req.body.stock) : req.body.stock
+        Producto.updateOne({ _id: ObjectId(req.body.id), 'combinacion._id': ObjectId(req.body.combi) }, { $set: { 'combinacion.$.stock': auxStock } }).exec((err, data) => {
             if (err) res.status(400).json({
                 err: err,
                 data: data || null
@@ -1259,12 +1330,12 @@ module.exports = {
         let process = spawn('python3', ["/home/ubuntu/rezise.py", `/home/ubuntu/fullImg/${img.originalname}`, img.originalname])
 
 
-        let auxCombi  = new models.Combinacion()
-            auxCombi.talla = ObjectId(req.body.talla)
-            auxCombi.color = ObjectId(req.body.color)
-            auxCombi.img = img.originalname.split('.')[0]
-            let stockAux = typeof req.body.stock == 'string'? parseInt(req.body.stock):req.body.stock
-            auxCombi.stock = stockAux
+        let auxCombi = new models.Combinacion()
+        auxCombi.talla = ObjectId(req.body.talla)
+        auxCombi.color = ObjectId(req.body.color)
+        auxCombi.img = img.originalname.split('.')[0]
+        let stockAux = typeof req.body.stock == 'string' ? parseInt(req.body.stock) : req.body.stock
+        auxCombi.stock = stockAux
 
         Producto.updateOne({ _id: ObjectId(req.body.idProd) }, {
             $push: {
