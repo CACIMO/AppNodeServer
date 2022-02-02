@@ -1000,7 +1000,7 @@ module.exports = {
             })
         else res.status(400).json({})
     },
-    removeCarrtito: (req, res) => {
+    removeCarrtito: async (req, res) => {
 
 
         let token = req.body.id_user
@@ -1017,22 +1017,16 @@ module.exports = {
         let flag = false
 
         //Eliminar Producto del carrito
-        console.log(`request data: ${req.body}`)
         try {
-            let auxCarrito = models.Carrito.updateOne(
+            let auxCarrito = await models.Carrito.updateOne(
                 { _id: carrId, formato: token, active: true },
                 { $pull:
                     { producto:{ id: prodId, _id:itemId }} 
                 }
 
             ).exec()
-            console.log(`response${auxCarrito}`)
+            console.log(auxCarrito)
             flag = true
-
-            /* res.status(200).json({
-                err: null,
-                data: auxCarrito
-            }) */
         } catch (error) {
             console.log('catch error')
             res.status(400).json({
