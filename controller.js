@@ -1008,25 +1008,21 @@ module.exports = {
         let prodId = ObjectId(req.body.prodId)
         let carrId = ObjectId(req.body.carritoId)
         let itemId = ObjectId(req.body.itemId)
-        /* Item.valor = req.body.precio
-        Item.color = ObjectId(req.body.color)
-        Item.talla = ObjectId(req.body.talla)
-        Item.cantidad = req.body.cantidad
-        Item.restante = req.body.cantidad
-        Item.combinacion = req.body.idCombi */
+        let combId = ObjectId(req.body.combId)
+        let cantid = parseInt(req.body.cantidad)
         let flag = false
 
         //Eliminar Producto del carrito
         try {
             let auxCarrito = await models.Carrito.updateOne(
                 { _id: carrId, formato: token, active: true },
-                { $pull:
-                    { producto:{ idxx: prodId, _id:itemId }} 
+                {
+                    $pull:
+                        { producto: { id: prodId, _id: itemId } }
                 }
 
             ).exec()
-            console.log(auxCarrito)
-            flag = true
+            if (auxCarrito.nModified > 0) flag = true
         } catch (error) {
             console.log('catch error')
             res.status(400).json({
@@ -1035,17 +1031,20 @@ module.exports = {
             })
         }
         // Regresar saldo al inventario
-        if (false) try {
-            models.Producto.updateOne({ _id: ObjectId(req.body.producto), 'combinacion._id': ObjectId(req.body.idCombi) }, { $inc: { 'combinacion.$.stock': (req.body.cantidad) } }, (err, datax) => {
-                if (err) res.status(400).json({
-                    err: err,
-                    data: datax || null
+        if (flag) try {
+            models.Producto.updateOne(
+                { _id: prodId, 'combinacion._id': combId },
+                { $inc: { 'combinacion.$.stock': (cantid) } },
+                (err, datax) => {
+                    if (err) res.status(400).json({
+                        err: 'Error al actualizar el invetario, actualice manualmente.',
+                        data: datax || null
+                    })
+                    else res.status(200).json({
+                        err: err,
+                        data: datax
+                    })
                 })
-                else res.status(200).json({
-                    err: err,
-                    data: datax
-                })
-            })
         } catch (error) {
 
         }
