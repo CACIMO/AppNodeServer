@@ -5,7 +5,6 @@ let jwt = require('jsonwebtoken')
 let fs = require('fs')
 let spawn = require("child_process").spawn;
 const { ObjectId } = require('bson')
-const { Console } = require('console')
 const { Producto } = require('./models')
 module.exports = {
 
@@ -744,12 +743,7 @@ module.exports = {
                     else {
 
                         let token = req.body.cc
-
-                        console.log(token)
                         models.Carrito.find({ active: true, formato: token }, { producto: 1 }, (err, data) => {
-
-                            console.log(data)
-
                             if (err) res.status(400).json({
                                 err: err,
                                 data: data || null
@@ -779,7 +773,6 @@ module.exports = {
                                     Formato.observacion = req.body.obs
                                 }
                                 catch (error) {
-                                    console.log('aqi')
                                     flag = false
                                     res.status(400).json({
                                         err: error,
@@ -1013,6 +1006,8 @@ module.exports = {
         let token = req.body.id_user
         //let Item = new models.CarritoItem()
         let prodId = ObjectId(req.body.prodId)
+        let carrId = ObjectId(req.body.carritoId)
+        let itemId = ObjectId(req.body.itemId)
         /* Item.valor = req.body.precio
         Item.color = ObjectId(req.body.color)
         Item.talla = ObjectId(req.body.talla)
@@ -1024,24 +1019,26 @@ module.exports = {
         //Eliminar Producto del carrito
         try {
             let auxCarrito = models.Carrito.updateOne(
-                { formato: token, active: true },
-                { $pull: { 'producto._id': prodId } }
+                { _id: carrId, formato: token, active: true },
+                { $pull: { 'producto.id': prodId, 'producto._id':itemId } }
 
             ).exec()
+            console.log(`response${auxCarrito}`)
             flag = true
 
-            res.status(200).json({
+            /* res.status(200).json({
                 err: null,
                 data: auxCarrito
-            })
+            }) */
         } catch (error) {
+            console.log('catch error')
             res.status(400).json({
                 err: "Error al eliminar el producto.",
                 data: null
             })
         }
         // Regresar saldo al inventario
-        if(false)try {
+        if (false) try {
             models.Producto.updateOne({ _id: ObjectId(req.body.producto), 'combinacion._id': ObjectId(req.body.idCombi) }, { $inc: { 'combinacion.$.stock': (req.body.cantidad) } }, (err, datax) => {
                 if (err) res.status(400).json({
                     err: err,
@@ -1053,7 +1050,7 @@ module.exports = {
                 })
             })
         } catch (error) {
-            
+
         }
 
 
@@ -1139,7 +1136,6 @@ module.exports = {
                 res.status(200).sendFile(`/tmp/nodetmp/qr/${name}.jpg`)
             })
         } catch (onError) {
-            console.log(onError)
             res.status(400).json({
                 err: onError
             })
@@ -1147,7 +1143,6 @@ module.exports = {
 
     },
     sendEmail: (req, res) => {
-        console.log(req.body)
         let fecIni = new Date(`${req.body.fecini}T00:00:00Z`)
         let fecFin = new Date(`${req.body.fecfin}T23:59:59Z`)
         let email = req.body.email
@@ -1197,8 +1192,6 @@ module.exports = {
                 }
             ]
         ).exec((err, data) => {
-
-            console.log(err, data, fecFin, fecIni);
             if (err) res.status(400).json({
                 err: err,
                 data: data || null
@@ -1251,7 +1244,6 @@ module.exports = {
                 ]
 
                 con.conf.transport.sendMail(message, function (err, info) {
-                    console.log(err);
                     if (err) res.status(400).json({})
                     else res.status(200).json({})
                 });
@@ -1263,22 +1255,6 @@ module.exports = {
                     data: data || null
                 })
             }
-
-            /* 
-                    const message = {
-                        from: 'admin@amordebb.com', // Sender address
-                        to: 'cart684@gmail.com',         // List of recipients
-                        subject: 'Design Your Model S | Tesla', // Subject line
-                        text: 'Have the most fun you can in a car. Get your Tesla today!' // Plain text body
-                    };
-                    con.conf.transport.sendMail(message, function (err, info) {
-                        if (err) {
-                            console.log(err)
-                        } else {
-                            console.log(info);
-                        }
-                    });
-             */
         })
     },
     updateStock: (req, res) => {
@@ -1342,7 +1318,6 @@ module.exports = {
                 combinacion: auxCombi
             }
         }).exec((err, data) => {
-            console.log(err);
             if (err) res.status(400).json({
                 err: err,
                 data: data || null
@@ -1352,7 +1327,6 @@ module.exports = {
                     fileName: img.originalname.split('.')[0]
                 }
             }).exec((errx, datax) => {
-                console.log(errx);
                 if (err) res.status(400).json({
                     err: errx,
                     data: datax || null
@@ -1370,7 +1344,6 @@ module.exports = {
 
         let img = req.files[0]
         let nameImg = img.originalname.split('.')[0];
-        console.log(nameImg)
         fs.writeFileSync(`/home/ubuntu/facs/${img.originalname}`, img.buffer, 'binary')
 
         models.Formato.updateOne({ _id: ObjectId(req.body.id), formato: req.body.formato }, {
@@ -1378,7 +1351,6 @@ module.exports = {
                 fac: nameImg
             }
         }).exec((err, data) => {
-            console.log(err);
             if (err) res.status(400).json({
                 err: err,
                 data: data || null
