@@ -1017,6 +1017,7 @@ module.exports = {
         let flag = false
 
         //Eliminar Producto del carrito
+        console.log(`request data: ${req.body}`)
         try {
             let auxCarrito = models.Carrito.updateOne(
                 { _id: carrId, formato: token, active: true },
