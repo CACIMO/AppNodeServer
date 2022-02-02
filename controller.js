@@ -1021,7 +1021,7 @@ module.exports = {
             let auxCarrito = await models.Carrito.updateOne(
                 { _id: carrId, formato: token, active: true },
                 { $pull:
-                    { producto:{ id: prodId, _id:itemId }} 
+                    { producto:{ idxx: prodId, _id:itemId }} 
                 }
 
             ).exec()
