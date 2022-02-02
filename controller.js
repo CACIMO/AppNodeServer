@@ -1020,7 +1020,9 @@ module.exports = {
         try {
             let auxCarrito = models.Carrito.updateOne(
                 { _id: carrId, formato: token, active: true },
-                { $pull: { 'producto.id': prodId, 'producto._id':itemId } }
+                { $pull:
+                    { producto:{ id: prodId, _id:itemId }} 
+                }
 
             ).exec()
             console.log(`response${auxCarrito}`)
