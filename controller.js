@@ -632,7 +632,7 @@ module.exports = {
     getFormato: (req, res) => {
 
         let arrayData = []
-        console.log(req.body.fecin.split(' '))
+        console.log(req.body.fecini.split(' '))
         if (req.params.idFormat == 'false') {
             arrayData.push({ $match: { vendedor: ObjectId(req.body.vendedor) } });
         }
