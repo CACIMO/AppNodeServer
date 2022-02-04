@@ -632,17 +632,24 @@ module.exports = {
     getFormato: (req, res) => {
 
         let arrayData = []
-        console.log(req.body.fecini.split(' '))
         if (req.params.idFormat == 'false') {
             arrayData.push({ $match: { vendedor: ObjectId(req.body.vendedor) } });
+        } else if (req.params.idFormat != 'false' && req.body.venfil != 'all') {
+            arrayData.push({ $match: { vendedor: ObjectId(req.body.venfil) } });
         }
 
-        //Obetener los filtros de busqueda
 
-        //let dateIni = new Date(req)
+        dateIni = new Date(`${dateIni}T00:00:00Z`)
+        dateFin = new Date(`${dateFin}T23:59:59Z`)
 
-
-
+        arrayData.push({
+            $match: {
+                fecha: {
+                    $gte: dateIni,
+                    $lte: dateFin
+                }
+            }
+        })
 
 
         arrayData.push(
