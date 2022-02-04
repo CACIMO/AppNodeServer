@@ -632,10 +632,19 @@ module.exports = {
     getFormato: (req, res) => {
 
         let arrayData = []
-        console.log(req.body)
+        console.log(req.body.fecin.split(' '))
         if (req.params.idFormat == 'false') {
             arrayData.push({ $match: { vendedor: ObjectId(req.body.vendedor) } });
         }
+
+        //Obetener los filtros de busqueda
+
+        //let dateIni = new Date(req)
+
+
+
+
+
         arrayData.push(
             { $lookup: { from: 'etapa', localField: 'etapa', foreignField: '_id', as: 'Etapa' } },
             { $lookup: { from: 'pago', localField: 'pago', foreignField: 'short', as: 'FPago' } },
