@@ -632,16 +632,10 @@ module.exports = {
     getFormato: (req, res) => {
 
         let arrayData = []
-
+        console.log(req.body)
         if (req.params.idFormat == 'false') {
             arrayData.push({ $match: { vendedor: ObjectId(req.body.vendedor) } });
         }
-        /* else{
-            arrayData.push({ $match: { vendedor: {
-                $regex: ``
-            } } });
-        
-        } */
         arrayData.push(
             { $lookup: { from: 'etapa', localField: 'etapa', foreignField: '_id', as: 'Etapa' } },
             { $lookup: { from: 'pago', localField: 'pago', foreignField: 'short', as: 'FPago' } },
