@@ -639,6 +639,8 @@ module.exports = {
         }
 
 
+        let dateIni = req.body.fecini.split(' ')[0];
+        let dateFin = req.body.fecfin.split(' ')[0];
         dateIni = new Date(`${dateIni}T00:00:00Z`)
         dateFin = new Date(`${dateFin}T23:59:59Z`)
 
