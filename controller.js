@@ -679,6 +679,9 @@ module.exports = {
                     'Prods.descripcion': 0,
                     'Prods.__v': 0,
                 }
+            },
+            {
+                $sort: { fecha: -1 }
             }
         )
 
