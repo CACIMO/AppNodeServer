@@ -10,7 +10,7 @@ module.exports = {
         
         let usu = req.body.usuario
         let pass = req.body.password
-        await transaction(req,es,async (session)=>{
+        await transaction(req,res,async (session)=>{
             //it's searched, if the user are in the db
             let user = await models.Usuario.find({usuario:usu})
             let token
