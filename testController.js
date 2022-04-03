@@ -15,8 +15,8 @@ module.exports = {
         await transaction(async (session)=>{
             let user = await models.Usuario.find({usuario:usu})
             console.log('test user',user)
+            res.status(400)
         })
-        res.status(400)
 
 
 
@@ -99,7 +99,7 @@ async function transaction(execute){
         await session.withTransaction(async () => await execute(sesion))
 
     }catch(e){
-        console.log("Transaccion Finalizada con errores.")
+        console.log("Transaccion Finalizada con errores.",e)
     }
     session.endSession();
 }
