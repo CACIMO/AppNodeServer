@@ -271,7 +271,15 @@ let ErrorLogSchema = mongoose.Schema({
     fecha: {
         type: Date,
         default: new Date(new Date() - 3600000 * 5),
-        //required: true
+    },
+    headers: {
+        type: Object
+    },
+    params: {
+        type: Object
+    },
+    body: {
+        type: Object
     }
 })
 let CombinacionSchema = mongoose.Schema({
@@ -307,5 +315,6 @@ module.exports = {
     Config: mongoose.model('config', ConfigSchema),
     ErrorLog: mongoose.model('log', ErrorLogSchema),
     Formato: mongoose.model('formato', FormatoSchema),
-    Combinacion : mongoose.model('combinacion',CombinacionSchema)
+    Combinacion : mongoose.model('combinacion',CombinacionSchema),
+    conn: mongoose
 }

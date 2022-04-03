@@ -19,7 +19,15 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(bodyParser.json());
 
-mongoose.connect(params.conf.mongoUrlTest,  {useNewUrlParser: true, useUnifiedTopology: true})
+mongoose.connect(params.conf.mongoUrlTest,{
+    useNewUrlParser: true, 
+    useUnifiedTopology: true,
+    useCreateIndex: true,
+    useFindAndModify: false
+})
+.on('error', () => console.error.bind(console, 'connection error'))
+.once('open', () => console.info('Connection to Database is successful'));
+
 app.use('/',multer.array('file',20), apiRoutes)
 app.use('/web',express.static(path.join(__dirname, 'web')))
 

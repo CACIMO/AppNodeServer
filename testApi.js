@@ -1,7 +1,13 @@
 let router = require('express').Router()
 var controller = require('./testController')
 
-router.route('/producto')
+
+//-----LOGIN ENPOINTS-----\\
+
+router.route('/login')
+    .post(controller.logIn)
+
+/* router.route('/producto')
     .put(controller.newProd)
     .post(controller.getProductList)
     .delete(controller.deleteProd)
@@ -68,7 +74,7 @@ router.route('/fact/:formato')
 router.route('/qrscann')
     .post(controller.generateQr)
 router.route('/email')
-    .post(controller.sendEmail)
+    .post(controller.sendEmail) */
 
 // Export API routes
 module.exports = router;
