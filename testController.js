@@ -96,7 +96,7 @@ async function transaction(execute){
     const session = await models.conn.startSession();
     try{
         const session = await models.conn.startSession();
-        await session.withTransaction(async () => await execute(sesion))
+        await session.withTransaction(async () => await execute(session))
 
     }catch(e){
         console.log("Transaccion Finalizada con errores.",e)
