@@ -2,6 +2,7 @@ const nodemailer = require('nodemailer');
 module.exports = {
     conf: {
         mongoUrl: 'mongodb://localhost/app_amdbb',
+        mongoUrlTest: 'mongodb://localhost/test_amdbb',
         port: 3000,
         testPort:3001,
         separador:',',
