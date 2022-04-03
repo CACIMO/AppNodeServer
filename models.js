@@ -7,8 +7,6 @@ let connection = mongoose.connection
 connection.on('error', () => console.error.bind(console, 'connection error'));
 connection.once('open', () => console.info('Connection to Database is successful'));
 
-module.exports = conn;
-
 let usuarioSchema = mongoose.Schema({
     usuario: {
         type: String,
