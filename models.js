@@ -1,6 +1,14 @@
 const { ObjectId, ObjectID } = require('bson');
+
 let mongoose = require('mongoose');
+
 mongoose.pluralize(null);
+let conection = mongoose.conection
+conection.on('error', () => console.error.bind(console, 'connection error'));
+conection.once('open', () => console.info('Connection to Database is successful'));
+
+module.exports = conn;
+
 let usuarioSchema = mongoose.Schema({
     usuario: {
         type: String,
@@ -316,5 +324,5 @@ module.exports = {
     ErrorLog: mongoose.model('log', ErrorLogSchema),
     Formato: mongoose.model('formato', FormatoSchema),
     Combinacion : mongoose.model('combinacion',CombinacionSchema),
-    conn: mongoose
+    conn: conection
 }
