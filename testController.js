@@ -12,8 +12,10 @@ module.exports = {
         let pass = req.body.password
 
         //it's searched, if the user are in the db
-
-        let user = await models.Usuario.find({usuario:usu})
+        await transaction((session)=>{
+            let user = await models.Usuario.find({usuario:usu})
+            console.log('test user',user)
+        })
         res.status(400)
 
 
