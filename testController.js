@@ -19,6 +19,8 @@ module.exports = {
                 user = models.Usuario.find(
                     { usuario: usu, password: pass }, 
                     { token: 0, password: 0 })
+
+                    console.log(user,usu,pass)
                 // if the user exist and them pass its correct, it's generated the token 
                 if(user.length>0)token=await jwt.sign({ expiresIn: "30d" }, con.conf.key)
                 else{
