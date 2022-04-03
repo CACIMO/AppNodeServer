@@ -4,34 +4,6 @@ let qrCode = require('qrcode')
 let jwt = require('jsonwebtoken')
 let fs = require('fs')
 let spawn = require("child_process").spawn;
-module.exports = {
-    logIn: async (req, res) => {
-        debugReq(req)
-        
-        let usu = req.body.usuario
-        let pass = req.body.password
-        await transaction(req,res,async (session)=>{
-            //it's searched, if the user are in the db
-            let user = await models.Usuario.find({usuario:usu})
-
-            let token
-            //it's searched, if the user and pass are in the db
-            if(user.length >0){
-                user = await models.Usuario.find(
-                    { usuario: usu, password: pass }, 
-                    { token: 0, password: 0 })
-
-                    console.log(user,usu,pass)
-                // if the user exist and them pass its correct, it's generated the token 
-                if(user.length>0)token=await jwt.sign({ expiresIn: "30d" }, con.conf.key)
-                else{
-                    throw "La contraseña es incorrecta."
-                }    
-            }else throw "El usuario no existe."
-            return token
-        })
-    }
-}
 
 function debugReq(req){
     if(con.conf.debugMode){
@@ -43,7 +15,6 @@ function debugReq(req){
         console.log(req.body)
     }
 }
-
 function errorDTO(req,error){
 
     console.log("########## -- ENCABEZADOS -- ##########")
@@ -86,4 +57,30 @@ async function transaction(req,res,execute){
         console.log("Transaccion Finalizada con errores.",e)
     }
     session.endSession();
+}
+module.exports = {
+    logIn: async (req, res) => {
+        debugReq(req)
+        
+        let usu = req.body.usuario
+        let pass = req.body.password
+        await transaction(req,res,async (session)=>{
+            //it's searched, if the user are in the db
+            let user = await models.Usuario.find({usuario:usu})
+
+            let token
+            //it's searched, if the user and pass are in the db
+            if(user.length >0){
+                user = await models.Usuario.find(
+                    { usuario: usu, password: pass }, 
+                    { token: 0, password: 0 })
+                // if the user exist and them pass its correct, it's generated the token 
+                if(user.length>0)token=await jwt.sign({ expiresIn: "30d" }, con.conf.key)
+                else{
+                    throw "La contraseña es incorrecta."
+                }    
+            }else throw "El usuario no existe."
+            return token
+        })
+    }
 }
