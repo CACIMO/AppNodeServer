@@ -12,7 +12,7 @@ module.exports = {
         let pass = req.body.password
 
         //it's searched, if the user are in the db
-        await transaction((session)=>{
+        await transaction(async (session)=>{
             let user = await models.Usuario.find({usuario:usu})
             console.log('test user',user)
         })
@@ -96,7 +96,7 @@ async function transaction(execute){
     const session = await models.conn.startSession();
     try{
         const session = await models.conn.startSession();
-        await session.withTransaction(async () => execute(sesion))
+        await session.withTransaction(async () => await execute(sesion))
 
     }catch(e){
         console.log("Transaccion Finalizada con errores.")
