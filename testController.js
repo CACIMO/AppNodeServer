@@ -87,7 +87,9 @@ module.exports = {
         let dataSet = req.body
         await transaction(req,res,async (session)=>{
             //It's created the new usuer 
-            models.Usuario.create(dataSet)
+            let usuario = new models.Usuario()
+            Object.keys(dataSet).forEach((key)=>usuario[key]=dataSet[key])
+            usuario.save()
             session.commitTransaction()
             return "Usuario creado con exito."
         })
