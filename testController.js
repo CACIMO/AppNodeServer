@@ -90,7 +90,7 @@ module.exports = {
         let permiso = req.body.permiso
 
         await transaction(req, res, async (session) => {
-            let arrayMen = models.Permiso.aggregate([
+            let arrayMen = await models.Permiso.aggregate([
                 {
                     $match: {
                         _id: ObjectId(permiso)
