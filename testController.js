@@ -87,6 +87,7 @@ module.exports = {
     },
     getMenuData: async (req, res) => {
         debugReq(req)
+        
         let permiso = req.body.permiso
 
         await transaction(req, res, async (session) => {
@@ -110,7 +111,9 @@ module.exports = {
                         "_id":0
                     }
                 }
-            ])
+            ]). exec()
+
+            console.log("Agregate",arrayMen)
             return arrayMen
         })
     }
