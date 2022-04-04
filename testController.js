@@ -4,6 +4,7 @@ let qrCode = require('qrcode')
 let jwt = require('jsonwebtoken')
 let fs = require('fs')
 let spawn = require("child_process").spawn;
+const { ObjectId } = require('bson')
 
 function debugReq(req) {
     if (con.conf.debugMode) {
