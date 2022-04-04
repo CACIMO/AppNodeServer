@@ -6,6 +6,8 @@ var controller = require('./testController')
 
 router.route('/login')
     .post(controller.logIn)
+router.route('/login/menu')
+    .post(controller.getMenuData)
 
 /* router.route('/producto')
     .put(controller.newProd)
