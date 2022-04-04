@@ -307,6 +307,14 @@ let CombinacionSchema = mongoose.Schema({
     }
 
 })
+let PermisoSchema = mongoose.Schema({
+    menuOptions:{
+        type:Object
+    },
+    titulo:{
+        type:String
+    }
+})
 
 // Export Contact model
 module.exports = {
@@ -322,5 +330,6 @@ module.exports = {
     ErrorLog: mongoose.model('log', ErrorLogSchema),
     Formato: mongoose.model('formato', FormatoSchema),
     Combinacion : mongoose.model('combinacion',CombinacionSchema),
+    Permiso:mongoose.model('permiso',PermisoSchema),
     conn: connection
 }
