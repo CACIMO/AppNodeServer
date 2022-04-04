@@ -82,5 +82,14 @@ module.exports = {
             }else throw "El usuario no existe."
             return token
         })
+    },
+    newUser :async (req, res) => {
+        let dataSet = req.body
+        await transaction(req,res,async (session)=>{
+            //It's created the new usuer 
+            models.Usuario.create(dataSet)
+            session.commitTransaction()
+            return "Usuario creado con exito."
+        })
     }
 }
