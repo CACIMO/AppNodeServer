@@ -84,6 +84,7 @@ module.exports = {
         })
     },
     newUser :async (req, res) => {
+        debugReq(req)
         let dataSet = req.body
         await transaction(req,res,async (session)=>{
             //It's created the new usuer 
