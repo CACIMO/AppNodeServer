@@ -80,7 +80,8 @@ module.exports = {
                     throw "La contraseña es incorrecta."
                 }
             } else throw "El usuario no existe."
-            return token
+            user[0].token = token
+            return  user[0]
         })
     },
     getMenuData: async (req, res) => {
