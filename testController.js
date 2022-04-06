@@ -128,10 +128,10 @@ module.exports = {
         let talla = []
         let params = []
 
-        try { color = JSON.parse(req.body.col).map((id) => ObjectId(id)) } catch { }
-        try { categoria = JSON.parse(req.body.cat).map((id) => ObjectId(id)) } catch { }
-        try { tag = JSON.parse(req.body.tag).map((id) => ObjectId(id)) } catch { }
-        try { talla = JSON.parse(req.body.tal).map((id) => ObjectId(id)) } catch { }
+        try { color = JSON.parse(req.body.col).map((id) => ObjectId(id)) } catch(e) { }
+        try { categoria = JSON.parse(req.body.cat).map((id) => ObjectId(id)) } catch(e) { }
+        try { tag = JSON.parse(req.body.tag).map((id) => ObjectId(id)) } catch(e) { }
+        try { talla = JSON.parse(req.body.tal).map((id) => ObjectId(id)) } catch(e){ }
 
         if (color.length) params.push({ $match: { 'combinacion.color': { $in: color } } })
         if (categoria.length) params.push({ $match: { categoria: { $in: categoria } } })
