@@ -82,12 +82,12 @@ module.exports = {
                 }
             } else throw "El usuario no existe."
             user[0].token = token
-            return  user[0]
+            return user[0]
         })
     },
     getMenuData: async (req, res) => {
         debugReq(req)
-        
+
         let permiso = req.body.permiso
 
         await transaction(req, res, async (session) => {
@@ -99,22 +99,83 @@ module.exports = {
                 },
                 {
                     $lookup: {
-                        from:'menu',
-                        localField:'menuOptions',
-                        foreignField:"_id",
-                        as:'menu'
+                        from: 'menu',
+                        localField: 'menuOptions',
+                        foreignField: "_id",
+                        as: 'menu'
                     }
                 },
                 {
-                    $project:{
-                        "menuOptions":0,
-                        "_id":0
+                    $project: {
+                        "menuOptions": 0,
+                        "_id": 0
                     }
                 }
-            ]). exec()
-
-            console.log("Agregate",arrayMen)
+            ]).exec()
             return arrayMen
         })
+    },
+    getProductList: async (req, res) => {
+        debugReq(req)
+
+        let id = req.body.prod_id
+        let busqueda = req.body.busqueda
+        let init = req.body.init
+        let last = req.body.last
+        let color = []
+        let categoria = []
+        let tag = []
+        let talla = []
+        let params = []
+
+        try { color = JSON.parse(req.body.col).map((id) => ObjectId(id)) } catch { }
+        try { categoria = JSON.parse(req.body.cat).map((id) => ObjectId(id)) } catch { }
+        try { tag = JSON.parse(req.body.tag).map((id) => ObjectId(id)) } catch { }
+        try { talla = JSON.parse(req.body.tal).map((id) => ObjectId(id)) } catch { }
+
+        if (color.length) params.push({ $match: { 'combinacion.color': { $in: color } } })
+        if (categoria.length) params.push({ $match: { categoria: { $in: categoria } } })
+        if (talla.length) params.push({ $match: { 'combinacion.talla': { $in: talla } } })
+        if (tag.length) params.push({ $match: { tag: { $in: tag } } })
+        params.push({
+            $match: {
+                $or: [
+                    {
+                        titulo: {
+                            $regex: `^${busqueda != 'null' ? busqueda : ''}`,
+                            $options: 'i'
+                        }
+                    },
+                    {
+                        refVendedora: {
+                            $regex: `^${busqueda != 'null' ? busqueda : ''}`,
+                            $options: 'i'
+                        }
+                    },
+                    {
+                        refInterna: {
+                            $regex: `^${busqueda != 'null' ? busqueda : ''}`,
+                            $options: 'i'
+                        }
+                    }
+
+                ]
+            }
+        })
+
+        if (id && id != 'null') params.push({ $match: { _id: ObjectId(id) } })
+        params.push({ $lookup: { from: 'color', localField: 'combinacion.color', foreignField: '_id', as: 'colorData' } })
+        params.push({ $lookup: { from: 'tag', localField: 'tag', foreignField: '_id', as: 'tagData' } })
+        params.push({ $lookup: { from: 'categoria', localField: 'categoria', foreignField: '_id', as: 'categoriaData' } })
+        params.push({ $lookup: { from: 'talla', localField: 'combinacion.talla', foreignField: '_id', as: 'tallaData' } })
+        params.push({ $project: { img: 0, color: 0, talla: 0, tag: 0, categoria: 0 } })
+        params.push({ $sort: { titulo: 1 } })
+
+        await transaction(req, res, async (session) => {
+            let arrayProds = await models.Producto.aggregate(params).exec()
+            arrayProds=arrayProds.slice(parseInt(init), parseInt(last))
+            return arrayProds
+        })
+
     }
 }
