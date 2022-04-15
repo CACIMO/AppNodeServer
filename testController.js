@@ -188,5 +188,13 @@ module.exports = {
             arrayProds=arrayProds.slice(parseInt(init), parseInt(last))
             return arrayProds
         })
+    },
+    getColor: async (req, res) => {
+
+        await transaction(req, res, async (session) => {
+            let arrayColors = await models.Color.find()
+            return arrayColors
+        })
+            
     }
 }
