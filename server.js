@@ -7,7 +7,13 @@ let apiRoutes= require('./api')
 let multer = require('multer')()
 let app = express()
 var path = require('path');
-//var cookieParser = require('cookie-parser');
+const WebSocket = require('ws')
+const wss = new WebSocket.Server({ port: 5011 }) 
+
+wss.on('connection',  (ws, req)=>  {
+    console.log(ws)
+    console.log(req)
+})
 
 app.use(cors({
     origin: '*',
