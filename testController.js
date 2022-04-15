@@ -196,5 +196,13 @@ module.exports = {
             return arrayColors
         })
             
+    },
+    getTalla: async (req, res) => {
+
+        await transaction(req, res, async (session) => {
+            let arrayTallas = await models.Talla.find()
+            return arrayTallas
+        })
+            
     }
 }
