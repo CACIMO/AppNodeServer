@@ -190,6 +190,7 @@ module.exports = {
         })
     },
     getColor: async (req, res) => {
+        debugReq(req)
 
         await transaction(req, res, async (session) => {
             let arrayColors = await models.Color.find()
@@ -198,6 +199,7 @@ module.exports = {
 
     },
     getTalla: async (req, res) => {
+        debugReq(req)
 
         await transaction(req, res, async (session) => {
             let arrayTallas = await models.Talla.find()
