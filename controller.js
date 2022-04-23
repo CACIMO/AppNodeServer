@@ -779,6 +779,7 @@ module.exports = {
                                     Formato.ciudad = req.body.ciudad
                                     Formato.vendedor = ObjectId(req.body.vendedor)
                                     Formato.total = pago
+                                    Formato.fecha = new Date(new Date() - 3600000 * 5)
                                     Formato.direccion = req.body.direccion
                                     Formato.nombre = req.body.nombre
                                     Formato.telefono = parseInt(req.body.telefono)
