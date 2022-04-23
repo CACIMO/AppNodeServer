@@ -219,7 +219,7 @@ module.exports = {
             auxCombi.stock = stockAux
             auxCombi.img =req.body.img
 
-            await Producto.updateOne({ _id: ObjectId(req.body.idProd) }, {
+            await models.Producto.updateOne({ _id: ObjectId(req.body.idProd) }, {
                 $push: {
                     combinacion: auxCombi
                 }
