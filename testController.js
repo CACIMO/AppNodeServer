@@ -115,13 +115,13 @@ module.exports = {
             return arrayMen
         })
     },
-    newUser :async (req, res) => {
+    newUser: async (req, res) => {
         debugReq(req)
         let dataSet = req.body
-        await transaction(req,res,async (session)=>{
+        await transaction(req, res, async (session) => {
             //It's created the new usuer 
             let usuario = new models.Usuario()
-            Object.keys(dataSet).forEach((key)=>usuario[key]=dataSet[key])
+            Object.keys(dataSet).forEach((key) => usuario[key] = dataSet[key])
             usuario.save()
             session.commitTransaction()
             return "Usuario creado con exito."
@@ -140,10 +140,10 @@ module.exports = {
         let talla = []
         let params = []
 
-        try { color = JSON.parse(req.body.col).map((id) => ObjectId(id)) } catch(e) { }
-        try { categoria = JSON.parse(req.body.cat).map((id) => ObjectId(id)) } catch(e) { }
-        try { tag = JSON.parse(req.body.tag).map((id) => ObjectId(id)) } catch(e) { }
-        try { talla = JSON.parse(req.body.tal).map((id) => ObjectId(id)) } catch(e){ }
+        try { color = JSON.parse(req.body.col).map((id) => ObjectId(id)) } catch (e) { }
+        try { categoria = JSON.parse(req.body.cat).map((id) => ObjectId(id)) } catch (e) { }
+        try { tag = JSON.parse(req.body.tag).map((id) => ObjectId(id)) } catch (e) { }
+        try { talla = JSON.parse(req.body.tal).map((id) => ObjectId(id)) } catch (e) { }
 
         if (color.length) params.push({ $match: { 'combinacion.color': { $in: color } } })
         if (categoria.length) params.push({ $match: { categoria: { $in: categoria } } })
@@ -185,7 +185,7 @@ module.exports = {
 
         await transaction(req, res, async (session) => {
             let arrayProds = await models.Producto.aggregate(params).exec()
-            arrayProds=arrayProds.slice(parseInt(init), parseInt(last))
+            arrayProds = arrayProds.slice(parseInt(init), parseInt(last))
             return arrayProds
         })
     },
@@ -195,7 +195,7 @@ module.exports = {
             let arrayColors = await models.Color.find()
             return arrayColors
         })
-            
+
     },
     getTalla: async (req, res) => {
 
@@ -203,6 +203,26 @@ module.exports = {
             let arrayTallas = await models.Talla.find()
             return arrayTallas
         })
-            
+
+    },
+    addNewCombi: async (req, res) => {
+
+
+        await transaction(req, res, async (session) => {
+            let auxCombi = new models.Combinacion()
+            auxCombi.talla = ObjectId(req.body.talla)
+            auxCombi.color = ObjectId(req.body.color)
+            let stockAux = typeof req.body.stock == 'string' ? parseInt(req.body.stock) : req.body.stock
+            auxCombi.stock = stockAux
+            auxCombi.img =req.body.img
+
+            await Producto.updateOne({ _id: ObjectId(req.body.idProd) }, {
+                $push: {
+                    combinacion: auxCombi
+                }
+            })
+            session.commitTransaction()
+            return "Combinación añadida con exito."
+        })
     }
 }
