@@ -208,6 +208,7 @@ module.exports = {
 
     },
     addNewCombi: async (req, res) => {
+        debugReq(req)
 
 
         await transaction(req, res, async (session) => {
