@@ -1027,6 +1027,7 @@ module.exports = {
         let combId = ObjectId(req.body.combId)
         let cantid = parseInt(req.body.cantidad)
         let flag = false
+        console.log(req.body)
 
         //Eliminar Producto del carrito
         try {
@@ -1040,7 +1041,7 @@ module.exports = {
             ).exec()
             if (auxCarrito.nModified > 0) flag = true
         } catch (error) {
-            console.log('catch error')
+            console.log(error)
             res.status(400).json({
                 err: "Error al eliminar el producto.",
                 data: null
